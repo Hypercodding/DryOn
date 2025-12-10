@@ -1,0 +1,168 @@
+{
+    "Navigation": {
+        "home": "Home",
+        "products": "Products",
+        "about": "About Us",
+        "admin": "Admin"
+    },
+    "Navbar": {
+        "damagePrevention": "Damage Prevention",
+        "products": "Products",
+        "talkToExpert": "Talk to an Expert",
+        "insights": "Insights",
+        "sustainability": "Sustainability",
+        "about": "About",
+        "contact": "Contact",
+        "admin": "Admin",
+        "search": "Search"
+    },
+    "HomePage": {
+        "Hero": {
+            "title1": "Prevent moisture damage.",
+            "title2": "Protect your cargo.",
+            "description": "We help companies prevent moisture-related losses in shipping and storage through data-driven analysis, tailored strategies, and efficient protection products.",
+            "cta": "Talk to an expert"
+        },
+        "MoistureDamage": {
+            "title": "Moisture damage is costly and preventable",
+            "description": "From container rain to collapsed packaging, moisture silently threatens your cargo. We help you stop damage before it starts.",
+            "cta": "Moisture damage risks"
+        },
+        "Prevention": {
+            "title": "Prevention backed by data, not guesswork",
+            "description": "We use Absortech to measure your cargo's actual moisture risk. Then we recommend the most efficient solution — including which product and how much to use.",
+            "cta": "AbsorTest"
+        },
+        "Sustainability": {
+            "title": "Less damage. Less waste. Lower impact.",
+            "description": "When you prevent damage, you reduce reshipping, packaging waste, and emissions. We help companies meet sustainability goals through smarter moisture protection.",
+            "cta": "Sustainability by prevention"
+        },
+        "Footer": {
+            "newsletter": {
+                "title": "Subscribe to our newsletter",
+                "description": "Sign up for our newsletter to receive the latest updates and insights in moisture damage prevention.",
+                "disclaimer": "By subscribing, you agree to receive email from Absortech and to our Privacy Policy. You can unsubscribe at any time. Terms and conditions apply."
+            },
+            "form": {
+                "name": "NAME*",
+                "email": "EMAIL*",
+                "company": "COMPANY*",
+                "country": "SELECT YOUR COUNTRY*",
+                "captcha": "I'm not a robot",
+                "submit": "Sign Up"
+            },
+            "sections": {
+                "contact": "Contact",
+                "moistureDamage": "Moisture Damage",
+                "aboutUs": "About Us",
+                "absortner": "Absortner"
+            },
+            "links": {
+                "talkToExpert": "TALK TO AN EXPERT",
+                "findContact": "FIND A CONTACT",
+                "blog": "BLOG",
+                "preventionProcess": "PREVENTION PROCESS",
+                "products": "PRODUCTS",
+                "absortest": "ABSORTEST",
+                "industries": "INDUSTRIES WE WORK WITH",
+                "ourCompany": "OUR COMPANY",
+                "sustainability": "SUSTAINABILITY",
+                "news": "NEWS",
+                "whistleblowing": "WHISTLEBLOWING"
+            },
+            "bottom": {
+                "cookies": "Cookies & GDPR",
+                "settings": "Cookie Settings",
+                "terms": "Terms of Use",
+                "impressum": "Impressum",
+                "copyright": "Copyright © 2024 Absortech"
+            }
+        }
+    },
+    "ProductsPage": {
+        "title": "Our Products",
+        "description": "Explore our range of cargo protection solutions."
+    },
+    "TalkToExpertPage": {
+        "title": "Talk to an Expert",
+        "subtitle": "Get personalized advice from our moisture damage prevention specialists",
+        "callUs": "Call Us",
+        "callUsDesc": "Speak directly with our team",
+        "emailUs": "Email Us",
+        "emailUsDesc": "Get a response within 24 hours",
+        "scheduleCall": "Schedule a Call",
+        "scheduleCallDesc": "Book a consultation",
+        "viewCalendar": "View Calendar",
+        "sendMessage": "Send Us a Message",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "company": "Company",
+        "subject": "Subject",
+        "message": "Message",
+        "sendBtn": "Send Message"
+    },
+    "InsightsPage": {
+        "title": "Insights & Resources",
+        "subtitle": "Expert knowledge on moisture damage prevention and cargo protection",
+        "articles": "Articles",
+        "caseStudies": "Case Studies",
+        "bestPractices": "Best Practices",
+        "readMore": "Read More"
+    },
+    "SustainabilityPage": {
+        "title": "Sustainability",
+        "subtitle": "Protecting cargo while protecting the planet",
+        "wasteReduction": "Waste Reduction",
+        "co2Saved": "Tons CO₂ Saved",
+        "recyclable": "Recyclable Materials",
+        "harmfulChemicals": "Harmful Chemicals",
+        "ecoFriendly": "Eco-Friendly Products",
+        "ecoFriendlyDesc": "All our desiccants are made from natural, biodegradable materials that break down safely without harming the environment.",
+        "circularEconomy": "Circular Economy",
+        "circularEconomyDesc": "We've implemented a take-back program where used products are collected, recycled, and reintegrated into our supply chain.",
+        "carbonReduction": "Carbon Reduction",
+        "carbonReductionDesc": "By preventing damage, we reduce the need for re-shipping, cutting transportation emissions by up to 40%.",
+        "certifiedGreen": "Certified Green",
+        "certifiedGreenDesc": "ISO 14001 certified environmental management system ensuring continuous improvement in sustainability."
+    },
+    "AboutPage": {
+        "title": "About DryOn",
+        "subtitle": "Leading the fight against moisture damage since 2010",
+        "ourStory": "Our Story",
+        "storyP1": "Founded in 2010, DryOn emerged from a simple observation: billions of dollars worth of cargo was being lost to preventable moisture damage every year. Our founders, a team of logistics experts and materials scientists, set out to change that.",
+        "storyP2": "Today, we're the trusted partner of over 5,000 companies worldwide, protecting everything from electronics to pharmaceuticals, from furniture to food products. Our data-driven approach and innovative solutions have prevented over $500 million in cargo losses.",
+        "ourMission": "Our Mission",
+        "missionDesc": "To eliminate cargo loss due to moisture damage through innovation, education, and sustainable solutions.",
+        "ourVision": "Our Vision",
+        "visionDesc": "A world where every shipment arrives in perfect condition, reducing waste and environmental impact.",
+        "ourTeam": "Our Team",
+        "teamDesc": "50+ dedicated professionals across engineering, logistics, and customer success, all committed to protecting your cargo.",
+        "certifications": "Certifications & Awards"
+    },
+    "ContactPage": {
+        "title": "Contact Us",
+        "subtitle": "We're here to help protect your cargo",
+        "getInTouch": "Get in Touch",
+        "headOffice": "Head Office",
+        "businessHours": "Business Hours",
+        "mondayFriday": "Monday - Friday: 9:00 AM - 6:00 PM",
+        "saturday": "Saturday: 10:00 AM - 2:00 PM",
+        "fullName": "Full Name",
+        "required": "*"
+    },
+    "DamagePreventionPage": {
+        "title": "Damage Prevention",
+        "subtitle": "Comprehensive solutions to protect your cargo from moisture damage",
+        "theProblem": "The Problem",
+        "problemP1": "Moisture damage costs the global shipping industry billions annually. From container rain to mold growth, the effects can be devastating—ruined products, rejected shipments, and damaged reputations.",
+        "problemP2": "But it doesn't have to be this way. With the right prevention strategy, moisture damage is almost entirely avoidable.",
+        "assessment": "Assessment",
+        "assessmentDesc": "We analyze your cargo, route, and climate conditions to identify risk factors.",
+        "solutionDesign": "Solution Design",
+        "solutionDesignDesc": "Custom protection plan using the right products in the right quantities.",
+        "implementation": "Implementation",
+        "implementationDesc": "Training and support to ensure proper application and maximum protection."
+    }
+}

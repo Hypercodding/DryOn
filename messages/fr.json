@@ -1,0 +1,168 @@
+{
+    "Navigation": {
+        "home": "Accueil",
+        "products": "Produits",
+        "about": "À propos",
+        "admin": "Admin"
+    },
+    "Navbar": {
+        "damagePrevention": "Prévention des Dommages",
+        "products": "Produits",
+        "talkToExpert": "Parler à un Expert",
+        "insights": "Perspectives",
+        "sustainability": "Durabilité",
+        "about": "À Propos",
+        "contact": "Contact",
+        "admin": "Admin",
+        "search": "Rechercher"
+    },
+    "HomePage": {
+        "Hero": {
+            "title1": "Prévenir les dommages dus à l'humidité.",
+            "title2": "Protégez votre cargaison.",
+            "description": "Nous aidons les entreprises à prévenir les pertes liées à l'humidité lors de l'expédition et du stockage grâce à une analyse basée sur des données, des stratégies adaptées et des produits de protection efficaces.",
+            "cta": "Parler à un expert"
+        },
+        "MoistureDamage": {
+            "title": "Les dégâts d'humidité sont coûteux et évitables",
+            "description": "De la pluie de conteneurs aux emballages effondrés, l'humidité menace silencieusement votre cargaison. Nous vous aidons à arrêter les dégâts avant qu'ils ne commencent.",
+            "cta": "Risques liés à l'humidité"
+        },
+        "Prevention": {
+            "title": "Une prévention appuyée par des données, pas des suppositions",
+            "description": "Nous utilisons Absortech pour mesurer le risque réel d'humidité de votre cargaison. Ensuite, nous recommandons la solution la plus efficace — y compris quel produit et quelle quantité utiliser.",
+            "cta": "AbsorTest"
+        },
+        "Sustainability": {
+            "title": "Moins de dégâts. Moins de déchets. Impact réduit.",
+            "description": "Lorsque vous prévenez les dommages, vous réduisez la réexpédition, les déchets d'emballage et les émissions. Nous aidons les entreprises à atteindre leurs objectifs de développement durable grâce à une protection contre l'humidité plus intelligente.",
+            "cta": "Durabilité par la prévention"
+        },
+        "Footer": {
+            "newsletter": {
+                "title": "Abonnez-vous à notre newsletter",
+                "description": "Inscrivez-vous pour recevoir les dernières mises à jour et des informations sur la prévention des dégâts d'humidité.",
+                "disclaimer": "En vous abonnant, vous acceptez de recevoir des e-mails d'Absortech et notre politique de confidentialité."
+            },
+            "form": {
+                "name": "NOM*",
+                "email": "EMAIL*",
+                "company": "ENTREPRISE*",
+                "country": "SÉLECTIONNEZ VOTRE PAYS*",
+                "captcha": "Je ne suis pas un robot",
+                "submit": "S'inscrire"
+            },
+            "sections": {
+                "contact": "Contact",
+                "moistureDamage": "Dégâts d'humidité",
+                "aboutUs": "À propos de nous",
+                "absortner": "Absortner"
+            },
+            "links": {
+                "talkToExpert": "PARLER À UN EXPERT",
+                "findContact": "TROUVER UN CONTACT",
+                "blog": "BLOG",
+                "preventionProcess": "PROCESSUS DE PRÉVENTION",
+                "products": "PRODUITS",
+                "absortest": "ABSORTEST",
+                "industries": "INDUSTRIES AVEC LESQUELLES NOUS TRAVAILLONS",
+                "ourCompany": "NOTRE SOCIÉTÉ",
+                "sustainability": "DURABILITÉ",
+                "news": "NOUVELLES",
+                "whistleblowing": "DÉNONCIATION"
+            },
+            "bottom": {
+                "cookies": "Cookies et RGPD",
+                "settings": "Paramètres des cookies",
+                "terms": "Conditions d'utilisation",
+                "impressum": "Mentions légales",
+                "copyright": "Copyright © 2024 Absortech"
+            }
+        }
+    },
+    "ProductsPage": {
+        "title": "Nos Produits",
+        "description": "Découvrez notre gamme de solutions de protection de cargaison."
+    },
+    "TalkToExpertPage": {
+        "title": "Parler à un Expert",
+        "subtitle": "Obtenez des conseils personnalisés de nos spécialistes en prévention des dommages dus à l'humidité",
+        "callUs": "Appelez-nous",
+        "callUsDesc": "Parlez directement avec notre équipe",
+        "emailUs": "Envoyez-nous un email",
+        "emailUsDesc": "Obtenez une réponse sous 24 heures",
+        "scheduleCall": "Planifier un appel",
+        "scheduleCallDesc": "Réserver une consultation",
+        "viewCalendar": "Voir le calendrier",
+        "sendMessage": "Envoyez-nous un message",
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "company": "Entreprise",
+        "subject": "Sujet",
+        "message": "Message",
+        "sendBtn": "Envoyer le message"
+    },
+    "InsightsPage": {
+        "title": "Perspectives et Ressources",
+        "subtitle": "Expertise sur la prévention des dommages dus à l'humidité et la protection des cargaisons",
+        "articles": "Articles",
+        "caseStudies": "Études de cas",
+        "bestPractices": "Meilleures pratiques",
+        "readMore": "Lire la suite"
+    },
+    "SustainabilityPage": {
+        "title": "Durabilité",
+        "subtitle": "Protéger les cargaisons tout en protégeant la planète",
+        "wasteReduction": "Réduction des déchets",
+        "co2Saved": "Tonnes de CO₂ économisées",
+        "recyclable": "Matériaux recyclables",
+        "harmfulChemicals": "Produits chimiques nocifs",
+        "ecoFriendly": "Produits écologiques",
+        "ecoFriendlyDesc": "Tous nos déshydratants sont fabriqués à partir de matériaux naturels et biodégradables qui se décomposent en toute sécurité sans nuire à l'environnement.",
+        "circularEconomy": "Économie circulaire",
+        "circularEconomyDesc": "Nous avons mis en place un programme de reprise où les produits usagés sont collectés, recyclés et réintégrés dans notre chaîne d'approvisionnement.",
+        "carbonReduction": "Réduction du carbone",
+        "carbonReductionDesc": "En prévenant les dommages, nous réduisons le besoin de réexpédition, réduisant ainsi les émissions de transport jusqu'à 40%.",
+        "certifiedGreen": "Certifié vert",
+        "certifiedGreenDesc": "Système de gestion environnementale certifié ISO 14001 garantissant une amélioration continue de la durabilité."
+    },
+    "AboutPage": {
+        "title": "À propos de DryOn",
+        "subtitle": "Leader dans la lutte contre les dommages dus à l'humidité depuis 2010",
+        "ourStory": "Notre histoire",
+        "storyP1": "Fondée en 2010, DryOn est née d'une simple observation : des milliards de dollars de marchandises étaient perdus chaque année à cause de dommages évitables dus à l'humidité. Nos fondateurs, une équipe d'experts en logistique et de scientifiques des matériaux, se sont donné pour mission de changer cela.",
+        "storyP2": "Aujourd'hui, nous sommes le partenaire de confiance de plus de 5 000 entreprises dans le monde, protégeant tout, de l'électronique aux produits pharmaceutiques, des meubles aux produits alimentaires. Notre approche basée sur les données et nos solutions innovantes ont permis d'éviter plus de 500 millions de dollars de pertes de cargaison.",
+        "ourMission": "Notre mission",
+        "missionDesc": "Éliminer les pertes de cargaison dues aux dommages causés par l'humidité grâce à l'innovation, à l'éducation et à des solutions durables.",
+        "ourVision": "Notre vision",
+        "visionDesc": "Un monde où chaque expédition arrive en parfait état, réduisant les déchets et l'impact environnemental.",
+        "ourTeam": "Notre équipe",
+        "teamDesc": "Plus de 50 professionnels dévoués dans les domaines de l'ingénierie, de la logistique et du service client, tous engagés à protéger votre cargaison.",
+        "certifications": "Certifications et récompenses"
+    },
+    "ContactPage": {
+        "title": "Contactez-nous",
+        "subtitle": "Nous sommes là pour protéger votre cargaison",
+        "getInTouch": "Entrer en contact",
+        "headOffice": "Siège social",
+        "businessHours": "Heures d'ouverture",
+        "mondayFriday": "Lundi - Vendredi : 9h00 - 18h00",
+        "saturday": "Samedi : 10h00 - 14h00",
+        "fullName": "Nom complet",
+        "required": "*"
+    },
+    "DamagePreventionPage": {
+        "title": "Prévention des dommages",
+        "subtitle": "Solutions complètes pour protéger votre cargaison contre les dommages dus à l'humidité",
+        "theProblem": "Le problème",
+        "problemP1": "Les dommages dus à l'humidité coûtent des milliards à l'industrie maritime mondiale chaque année. De la pluie dans les conteneurs à la croissance de moisissures, les effets peuvent être dévastateurs : produits ruinés, expéditions rejetées et réputations endommagées.",
+        "problemP2": "Mais cela ne doit pas être ainsi. Avec la bonne stratégie de prévention, les dommages dus à l'humidité sont presque entièrement évitables.",
+        "assessment": "Évaluation",
+        "assessmentDesc": "Nous analysons votre cargaison, votre itinéraire et les conditions climatiques pour identifier les facteurs de risque.",
+        "solutionDesign": "Conception de solution",
+        "solutionDesignDesc": "Plan de protection personnalisé utilisant les bons produits dans les bonnes quantités.",
+        "implementation": "Mise en œuvre",
+        "implementationDesc": "Formation et support pour assurer une application correcte et une protection maximale."
+    }
+}

@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String // Hashed
+  role     String @default("ADMIN")
+}
+
+model Product {
+  id              String   @id @default(uuid())
+  sku             String   @unique
+  images          String   // JSON string of url array
+  containerPoints String?  // JSON string of points data
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  translations    ProductTranslation[]
+}
+
+model ProductTranslation {
+  id          String  @id @default(uuid())
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  locale      String
+  name        String
+  description String
+  
+  @@unique([productId, locale])
+}

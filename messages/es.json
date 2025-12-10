@@ -1,0 +1,168 @@
+{
+    "Navigation": {
+        "home": "Inicio",
+        "products": "Productos",
+        "about": "Nosotros",
+        "admin": "Admin"
+    },
+    "Navbar": {
+        "damagePrevention": "Prevención de Daños",
+        "products": "Productos",
+        "talkToExpert": "Hablar con un Experto",
+        "insights": "Perspectivas",
+        "sustainability": "Sostenibilidad",
+        "about": "Acerca de",
+        "contact": "Contacto",
+        "admin": "Admin",
+        "search": "Buscar"
+    },
+    "HomePage": {
+        "Hero": {
+            "title1": "Prevenir daños por humedad.",
+            "title2": "Proteja su carga.",
+            "description": "Ayudamos a las empresas a prevenir pérdidas relacionadas con la humedad en el envío y almacenamiento a través de análisis basados en datos, estrategias adaptadas y productos de protección eficientes.",
+            "cta": "Hable con un experto"
+        },
+        "MoistureDamage": {
+            "title": "El daño por humedad es costoso y prevenible",
+            "description": "Desde la lluvia de contenedores hasta el embalaje colapsado, la humedad amenaza silenciosamente su carga. Le ayudamos a detener el daño antes de que comience.",
+            "cta": "Riesgos de daños por humedad"
+        },
+        "Prevention": {
+            "title": "Prevención respaldada por datos, no conjeturas",
+            "description": "Usamos Absortech para medir el riesgo real de humedad de su carga. Luego recomendamos la solución más eficiente, incluido qué producto y cuánto usar.",
+            "cta": "AbsorTest"
+        },
+        "Sustainability": {
+            "title": "Menos daño. Menos desperdicio. Menor impacto.",
+            "description": "Cuando previene daños, reduce el reenvío, el desperdicio de envases y las emisiones. Ayudamos a las empresas a cumplir los objetivos de sostenibilidad a través de una protección contra la humedad más inteligente.",
+            "cta": "Sostenibilidad por prevención"
+        },
+        "Footer": {
+            "newsletter": {
+                "title": "Suscríbete a nuestro boletín",
+                "description": "Regístrese para recibir las últimas actualizaciones e ideas sobre la prevención de daños por humedad.",
+                "disclaimer": "Al suscribirse, acepta recibir correos electrónicos de Absortech y nuestra Política de privacidad."
+            },
+            "form": {
+                "name": "NOMBRE*",
+                "email": "CORREO*",
+                "company": "EMPRESA*",
+                "country": "SELECCIONE SU PAÍS*",
+                "captcha": "No soy un robot",
+                "submit": "Registrarse"
+            },
+            "sections": {
+                "contact": "Contacto",
+                "moistureDamage": "Daño por humedad",
+                "aboutUs": "Sobre nosotros",
+                "absortner": "Absortner"
+            },
+            "links": {
+                "talkToExpert": "HABLE CON UN EXPERTO",
+                "findContact": "ENCONTRAR UN CONTACTO",
+                "blog": "BLOG",
+                "preventionProcess": "PROCESO DE PREVENCIÓN",
+                "products": "PRODUCTOS",
+                "absortest": "ABSORTEST",
+                "industries": "INDUSTRIAS CON LAS QUE TRABAJAMOS",
+                "ourCompany": "NUESTRA EMPRESA",
+                "sustainability": "SOSTENIBILIDAD",
+                "news": "NOTICIAS",
+                "whistleblowing": "DENUNCIAS"
+            },
+            "bottom": {
+                "cookies": "Cookies y RGPD",
+                "settings": "Configuración de cookies",
+                "terms": "Condiciones de uso",
+                "impressum": "Aviso legal",
+                "copyright": "Copyright © 2024 Absortech"
+            }
+        }
+    },
+    "ProductsPage": {
+        "title": "Nuestros Productos",
+        "description": "Explore nuestra gama de soluciones de protección de carga."
+    },
+    "TalkToExpertPage": {
+        "title": "Hablar con un Experto",
+        "subtitle": "Obtenga asesoramiento personalizado de nuestros especialistas en prevención de daños por humedad",
+        "callUs": "Llámenos",
+        "callUsDesc": "Hable directamente con nuestro equipo",
+        "emailUs": "Envíenos un correo",
+        "emailUsDesc": "Obtenga una respuesta en 24 horas",
+        "scheduleCall": "Programar una llamada",
+        "scheduleCallDesc": "Reserve una consulta",
+        "viewCalendar": "Ver calendario",
+        "sendMessage": "Envíenos un mensaje",
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "phone": "Teléfono",
+        "company": "Empresa",
+        "subject": "Asunto",
+        "message": "Mensaje",
+        "sendBtn": "Enviar mensaje"
+    },
+    "InsightsPage": {
+        "title": "Perspectivas y Recursos",
+        "subtitle": "Conocimiento experto sobre prevención de daños por humedad y protección de carga",
+        "articles": "Artículos",
+        "caseStudies": "Estudios de caso",
+        "bestPractices": "Mejores prácticas",
+        "readMore": "Leer más"
+    },
+    "SustainabilityPage": {
+        "title": "Sostenibilidad",
+        "subtitle": "Protegiendo la carga mientras protegemos el planeta",
+        "wasteReduction": "Reducción de residuos",
+        "co2Saved": "Toneladas de CO₂ ahorradas",
+        "recyclable": "Materiales reciclables",
+        "harmfulChemicals": "Químicos dañinos",
+        "ecoFriendly": "Productos ecológicos",
+        "ecoFriendlyDesc": "Todos nuestros desecantes están hechos de materiales naturales y biodegradables que se descomponen de manera segura sin dañar el medio ambiente.",
+        "circularEconomy": "Economía circular",
+        "circularEconomyDesc": "Hemos implementado un programa de devolución donde los productos usados se recolectan, reciclan y reintegran en nuestra cadena de suministro.",
+        "carbonReduction": "Reducción de carbono",
+        "carbonReductionDesc": "Al prevenir daños, reducimos la necesidad de reenvío, reduciendo las emisiones de transporte hasta en un 40%.",
+        "certifiedGreen": "Certificado verde",
+        "certifiedGreenDesc": "Sistema de gestión ambiental certificado ISO 14001 que garantiza la mejora continua en sostenibilidad."
+    },
+    "AboutPage": {
+        "title": "Acerca de DryOn",
+        "subtitle": "Liderando la lucha contra los daños por humedad desde 2010",
+        "ourStory": "Nuestra historia",
+        "storyP1": "Fundada en 2010, DryOn surgió de una simple observación: miles de millones de dólares en carga se perdían cada año debido a daños evitables por humedad. Nuestros fundadores, un equipo de expertos en logística y científicos de materiales, se propusieron cambiar eso.",
+        "storyP2": "Hoy somos el socio de confianza de más de 5,000 empresas en todo el mundo, protegiendo desde electrónica hasta productos farmacéuticos, desde muebles hasta productos alimenticios. Nuestro enfoque basado en datos y soluciones innovadoras han prevenido más de $500 millones en pérdidas de carga.",
+        "ourMission": "Nuestra misión",
+        "missionDesc": "Eliminar la pérdida de carga debido a daños por humedad a través de la innovación, educación y soluciones sostenibles.",
+        "ourVision": "Nuestra visión",
+        "visionDesc": "Un mundo donde cada envío llega en perfectas condiciones, reduciendo el desperdicio y el impacto ambiental.",
+        "ourTeam": "Nuestro equipo",
+        "teamDesc": "Más de 50 profesionales dedicados en ingeniería, logística y éxito del cliente, todos comprometidos con proteger su carga.",
+        "certifications": "Certificaciones y premios"
+    },
+    "ContactPage": {
+        "title": "Contáctenos",
+        "subtitle": "Estamos aquí para ayudar a proteger su carga",
+        "getInTouch": "Póngase en contacto",
+        "headOffice": "Oficina principal",
+        "businessHours": "Horario comercial",
+        "mondayFriday": "Lunes - Viernes: 9:00 AM - 6:00 PM",
+        "saturday": "Sábado: 10:00 AM - 2:00 PM",
+        "fullName": "Nombre completo",
+        "required": "*"
+    },
+    "DamagePreventionPage": {
+        "title": "Prevención de daños",
+        "subtitle": "Soluciones integrales para proteger su carga de daños por humedad",
+        "theProblem": "El problema",
+        "problemP1": "Los daños por humedad cuestan miles de millones a la industria naviera global anualmente. Desde lluvia en contenedores hasta crecimiento de moho, los efectos pueden ser devastadores: productos arruinados, envíos rechazados y reputaciones dañadas.",
+        "problemP2": "Pero no tiene que ser así. Con la estrategia de prevención adecuada, los daños por humedad son casi completamente evitables.",
+        "assessment": "Evaluación",
+        "assessmentDesc": "Analizamos su carga, ruta y condiciones climáticas para identificar factores de riesgo.",
+        "solutionDesign": "Diseño de solución",
+        "solutionDesignDesc": "Plan de protección personalizado utilizando los productos correctos en las cantidades correctas.",
+        "implementation": "Implementación",
+        "implementationDesc": "Capacitación y soporte para garantizar la aplicación adecuada y la máxima protección."
+    }
+}
