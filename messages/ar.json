@@ -6,12 +6,11 @@
         "admin": "Admin"
     },
     "Navbar": {
-        "damagePrevention": "منع الأضرار",
-        "products": "المنتجات",
-        "talkToExpert": "تحدث إلى خبير",
-        "insights": "رؤى",
-        "sustainability": "الاستدامة",
         "about": "حول",
+        "products": "المنتجات",
+        "moistureDamagePrevention": "الرطوبة ومنع الأضرار",
+        "insights": "رؤى",
+        "solutionsByIndustry": "الحلول حسب الصناعة",
         "contact": "اتصل بنا",
         "admin": "Admin",
         "search": "بحث"
@@ -164,5 +163,16 @@
         "solutionDesignDesc": "خطة حماية مخصصة باستخدام المنتجات المناسبة بالكميات المناسبة.",
         "implementation": "التنفيذ",
         "implementationDesc": "التدريب والدعم لضمان التطبيق الصحيح والحماية القصوى."
+    },
+    "SolutionsByIndustryPage": {
+        "title": "الحلول حسب الصناعة",
+        "subtitle": "حلول حماية من الرطوبة مصممة خصيصًا لاحتياجات صناعتك",
+        "filterByIndustry": "تصفية حسب الصناعة",
+        "allIndustries": "جميع الصناعات",
+        "recommendedProducts": "المنتجات الموصى بها",
+        "viewProducts": "عرض المنتجات",
+        "ctaTitle": "هل تحتاج حلاً مخصصًا؟",
+        "ctaDescription": "يمكن لخبرائنا تصميم خطة حماية من الرطوبة مصممة وفقًا لمتطلبات صناعتك.",
+        "ctaButton": "تواصل معنا"
     }
 }

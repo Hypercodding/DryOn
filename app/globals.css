@@ -2,15 +2,24 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1e293b;
   
-  /* Custom Colors */
-  --teal-500: #00BFA5;
-  --teal-600: #00897B;
-  --beige-100: #E6E1D3; /* The warm section background */
-  --beige-50: #F2F0E9;
-  --navy-900: #0F172A;
-  --mint-100: #E0EAE8; /* The light greenish section */
+  /* Brand Colors from Logo */
+  --brand-green: #06a652;
+  --brand-green-dark: #058a45;
+  --brand-blue: #014184;
+  --brand-blue-dark: #01356d;
+  
+  /* Professional Colors */
+  --charcoal: #1e293b;
+  --charcoal-light: #334155;
+  --slate: #475569;
+  --gray-soft: #f8fafc;
+  --gray-border: #e2e8f0;
+  
+  /* Accent backgrounds */
+  --section-alt: #f1f5f9;
+  --section-warm: #fafaf9;
 }
 
 @theme inline {
@@ -19,17 +28,28 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --color-primary: var(--teal-500);
-  --color-primary-dark: var(--teal-600);
-  --color-beige: var(--beige-100);
-  --color-mint: var(--mint-100);
-  --color-navy: var(--navy-900);
+  /* Primary = Green from logo */
+  --color-primary: var(--brand-green);
+  --color-primary-dark: var(--brand-green-dark);
+  
+  /* Secondary = Blue from logo */
+  --color-secondary: var(--brand-blue);
+  --color-secondary-dark: var(--brand-blue-dark);
+  
+  /* Navy/Dark colors */
+  --color-navy: var(--charcoal);
+  --color-navy-light: var(--charcoal-light);
+  
+  /* Section backgrounds */
+  --color-beige: var(--section-warm);
+  --color-mint: var(--section-alt);
+  --color-slate: var(--slate);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff; /* Keeping light mode default for now as per design */
-    --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #1e293b;
   }
 }
 
@@ -38,4 +58,107 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection colors */
+::selection {
+  background-color: var(--brand-green);
+  color: white;
+}
+
+/* ===== Subtle 3D Effects ===== */
+
+/* Card with subtle lift effect */
+.card-3d {
+  transform: translateZ(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.card-3d:hover {
+  transform: translateY(-4px) translateZ(0);
+  box-shadow: 
+    0 12px 20px -8px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Subtle floating shadow */
+.shadow-float {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.07),
+    0 2px 4px -1px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-float-lg {
+  box-shadow: 
+    0 10px 25px -5px rgba(0, 0, 0, 0.08),
+    0 4px 10px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Button press effect */
+.btn-3d {
+  transform: translateZ(0);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-3d:hover {
+  transform: translateY(-2px) translateZ(0);
+}
+
+.btn-3d:active {
+  transform: translateY(1px) translateZ(0);
+}
+
+/* Subtle depth border */
+.border-3d {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Icon container with depth */
+.icon-3d {
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.icon-3d:hover {
+  transform: scale(1.05) translateZ(0);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Navbar shadow on scroll */
+.nav-shadow {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+/* Section divider with depth */
+.section-divider {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.03) 0%,
+    transparent 100%
+  );
+  height: 1px;
+}
+
+/* Text shadow for headings on images */
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }

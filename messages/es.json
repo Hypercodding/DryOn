@@ -6,12 +6,11 @@
         "admin": "Admin"
     },
     "Navbar": {
-        "damagePrevention": "Prevención de Daños",
-        "products": "Productos",
-        "talkToExpert": "Hablar con un Experto",
-        "insights": "Perspectivas",
-        "sustainability": "Sostenibilidad",
         "about": "Acerca de",
+        "products": "Productos",
+        "moistureDamagePrevention": "Humedad y Prevención de Daños",
+        "insights": "Perspectivas",
+        "solutionsByIndustry": "Soluciones por Industria",
         "contact": "Contacto",
         "admin": "Admin",
         "search": "Buscar"
@@ -164,5 +163,16 @@
         "solutionDesignDesc": "Plan de protección personalizado utilizando los productos correctos en las cantidades correctas.",
         "implementation": "Implementación",
         "implementationDesc": "Capacitación y soporte para garantizar la aplicación adecuada y la máxima protección."
+    },
+    "SolutionsByIndustryPage": {
+        "title": "Soluciones por Industria",
+        "subtitle": "Soluciones de protección contra la humedad diseñadas para las necesidades de su industria",
+        "filterByIndustry": "Filtrar por Industria",
+        "allIndustries": "Todas las Industrias",
+        "recommendedProducts": "Productos Recomendados",
+        "viewProducts": "Ver Productos",
+        "ctaTitle": "¿Necesita una Solución Personalizada?",
+        "ctaDescription": "Nuestros expertos pueden diseñar un plan de protección contra la humedad adaptado a los requisitos de su industria.",
+        "ctaButton": "Contáctenos"
     }
 }

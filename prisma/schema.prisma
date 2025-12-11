@@ -7,18 +7,140 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ==================== RBAC Models ====================
+
 model AdminUser {
-  id       String @id @default(uuid())
-  email    String @unique
-  password String // Hashed
-  role     String @default("ADMIN")
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String   // Hashed
+  name          String   @default("")
+  avatar        String?
+  roleId        String?
+  role          Role?    @relation(fields: [roleId], references: [id], onDelete: SetNull)
+  isActive      Boolean  @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  activityLogs  ActivityLog[]
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String   @default("")
+  color       String   @default("bg-gray-500")
+  permissions Permission[]
+  users       AdminUser[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Permission {
+  id          String   @id @default(uuid())
+  name        String   @unique  // e.g., "products.create", "users.delete"
+  description String   @default("")
+  module      String   // e.g., "products", "users", "categories"
+  action      String   // e.g., "create", "read", "update", "delete"
+  roles       Role[]
+  createdAt   DateTime @default(now())
+}
+
+model ActivityLog {
+  id          String   @id @default(uuid())
+  userId      String
+  user        AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action      String   // e.g., "create", "update", "delete", "login"
+  module      String   // e.g., "products", "categories", "auth"
+  details     String   // JSON string with additional details
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+}
+
+// ==================== Settings ====================
+
+model Setting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  type      String   @default("string") // string, number, boolean, json
+  group     String   @default("general") // general, contact, seo, social
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== Contact Inquiries ====================
+
+model ContactInquiry {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  company   String?
+  phone     String?
+  message   String
+  status    String   @default("new") // new, read, replied, archived
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==================== Product Models ====================
+
+model ProductCategory {
+  id           String   @id @default(uuid())
+  slug         String   @unique
+  icon         String   @default("Package")
+  color        String   @default("from-blue-500 to-blue-600")
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  products     Product[]
+  translations ProductCategoryTranslation[]
+}
+
+model ProductCategoryTranslation {
+  id                String          @id @default(uuid())
+  productCategoryId String
+  productCategory   ProductCategory @relation(fields: [productCategoryId], references: [id], onDelete: Cascade)
+  locale            String
+  name              String
+  description       String          @default("")
+
+  @@unique([productCategoryId, locale])
+}
+
+model IndustryCategory {
+  id           String   @id @default(uuid())
+  slug         String   @unique
+  icon         String   @default("Factory")
+  color        String   @default("bg-gray-500")
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  products     Product[]
+  translations IndustryCategoryTranslation[]
+}
+
+model IndustryCategoryTranslation {
+  id                 String           @id @default(uuid())
+  industryCategoryId String
+  industryCategory   IndustryCategory @relation(fields: [industryCategoryId], references: [id], onDelete: Cascade)
+  locale             String
+  name               String
+
+  @@unique([industryCategoryId, locale])
 }
 
 model Product {
   id              String   @id @default(uuid())
   sku             String   @unique
-  images          String   // JSON string of url array
-  containerPoints String?  // JSON string of points data
+  categoryId      String?
+  category        ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  industryId      String?
+  industry        IndustryCategory? @relation(fields: [industryId], references: [id], onDelete: SetNull)
+  images          String
+  containerPoints String?
+  featured        Boolean  @default(false)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   translations    ProductTranslation[]

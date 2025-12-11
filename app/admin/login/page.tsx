@@ -3,16 +3,21 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { Lock, Mail, Eye, EyeOff, AlertCircle, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
 
         try {
             const result = await signIn('credentials', {
@@ -22,57 +27,145 @@ export default function LoginPage() {
             });
 
             if (result?.error) {
-                setError('Invalid credentials');
+                setError('Invalid email or password');
             } else {
                 router.push('/admin');
                 router.refresh();
             }
         } catch (err) {
-            setError('An error occurred');
+            setError('An error occurred. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-                <h1 className="text-2xl font-bold mb-6 text-center text-navy">Admin Login</h1>
-
-                {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                        {error}
+        <div className="min-h-screen flex">
+            {/* Left Side - Branding */}
+            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-900 via-slate-800 to-primary/30 flex-col justify-between p-12">
+                <div>
+                    <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary-dark rounded-xl flex items-center justify-center shadow-lg">
+                            <span className="text-white font-bold text-2xl">D</span>
+                        </div>
+                        <div>
+                            <h1 className="text-white font-bold text-2xl">DryON</h1>
+                            <span className="text-primary text-sm font-medium">Admin Panel</span>
+                        </div>
                     </div>
-                )}
+                </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-primary"
-                            required
-                        />
+                <div className="space-y-6">
+                    <h2 className="text-4xl font-bold text-white leading-tight">
+                        Manage Your<br />
+                        <span className="text-primary">Business</span> with Ease
+                    </h2>
+                    <p className="text-slate-400 text-lg max-w-md">
+                        Access your admin dashboard to manage products, users, categories, and more.
+                    </p>
+                </div>
+
+                <div className="flex items-center gap-8 text-slate-400 text-sm">
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                        System Operational
+                    </div>
+                    <div>© 2024 DryON Pakistan</div>
+                </div>
+            </div>
+
+            {/* Right Side - Login Form */}
+            <div className="flex-1 flex items-center justify-center p-8 bg-slate-50">
+                <div className="w-full max-w-md">
+                    {/* Mobile Logo */}
+                    <div className="lg:hidden text-center mb-8">
+                        <div className="flex items-center justify-center gap-3">
+                            <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary-dark rounded-xl flex items-center justify-center shadow-lg">
+                                <span className="text-white font-bold text-2xl">D</span>
+                            </div>
+                            <div className="text-left">
+                                <h1 className="text-slate-800 font-bold text-2xl">DryON</h1>
+                                <span className="text-primary text-sm font-medium">Admin Panel</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-primary"
-                            required
-                        />
+                    <div className="bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
+                        <div className="text-center mb-8">
+                            <h2 className="text-2xl font-bold text-slate-800">Welcome Back</h2>
+                            <p className="text-slate-500 mt-2">Sign in to your admin account</p>
+                        </div>
+
+                        {error && (
+                            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6 flex items-center gap-3">
+                                <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                                <span className="text-sm">{error}</span>
+                            </div>
+                        )}
+
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
+                                <div className="relative">
+                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                                    <input
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-full border border-slate-300 rounded-xl pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+                                        placeholder="admin@dryon.pk"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Password</label>
+                                <div className="relative">
+                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                                    <input
+                                        type={showPassword ? 'text' : 'password'}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="w-full border border-slate-300 rounded-xl pl-12 pr-12 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+                                        placeholder="••••••••"
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                    >
+                                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full bg-gradient-to-r from-primary to-primary-dark text-white py-3.5 rounded-xl hover:opacity-90 transition-all font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/30 disabled:opacity-50"
+                            >
+                                {loading ? (
+                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                ) : (
+                                    <>
+                                        Sign In
+                                        <ArrowRight className="w-5 h-5" />
+                                    </>
+                                )}
+                            </button>
+                        </form>
+
+                        <div className="mt-6 text-center text-sm text-slate-500">
+                            <p>Demo credentials: admin@dryon.pk / admin123</p>
+                        </div>
                     </div>
 
-                    <button
-                        type="submit"
-                        className="w-full bg-navy text-white py-2 px-4 rounded hover:bg-opacity-90 transition-colors font-bold"
-                    >
-                        Sign In
-                    </button>
-                </form>
+                    <p className="text-center text-sm text-slate-400 mt-6">
+                        Protected by enterprise-grade security
+                    </p>
+                </div>
             </div>
         </div>
     );

@@ -2,6 +2,25 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+export async function GET(req: Request, props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
+
+    const product = await prisma.product.findUnique({
+        where: { id: params.id },
+        include: {
+            translations: true,
+            category: { include: { translations: true } },
+            industry: { include: { translations: true } }
+        }
+    });
+
+    if (!product) {
+        return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(product);
+}
+
 export async function PUT(req: Request, props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
     const session = await auth();
@@ -9,7 +28,7 @@ export async function PUT(req: Request, props: { params: Promise<{ id: string }>
 
     try {
         const body = await req.json();
-        const { sku, images, containerPoints, translations } = body;
+        const { sku, categoryId, industryId, featured, images, containerPoints, translations } = body;
 
         // Transaction to update product and replace translations
         const product = await prisma.$transaction(async (tx) => {
@@ -17,6 +36,9 @@ export async function PUT(req: Request, props: { params: Promise<{ id: string }>
                 where: { id: params.id },
                 data: {
                     sku,
+                    categoryId: categoryId || null,
+                    industryId: industryId || null,
+                    featured: featured || false,
                     images: JSON.stringify(images),
                     containerPoints: typeof containerPoints === 'string' ? containerPoints : JSON.stringify(containerPoints),
                 }

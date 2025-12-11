@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Save, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -9,8 +9,29 @@ import ImageUploader from './ImageUploader';
 
 const LOCALES = ['en', 'fr', 'es', 'ar'];
 
+interface Category {
+    id: string;
+    slug: string;
+    name: string;
+}
+
+interface Industry {
+    id: string;
+    slug: string;
+    name: string;
+}
+
 interface ProductFormProps {
-    initialData?: any;
+    initialData?: {
+        id: string;
+        sku: string;
+        categoryId?: string | null;
+        industryId?: string | null;
+        featured: boolean;
+        images: string;
+        containerPoints?: string | null;
+        translations: Array<{ locale: string; name: string; description: string }>;
+    };
 }
 
 export default function ProductForm({ initialData }: ProductFormProps) {
@@ -18,15 +39,35 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     const [loading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState('en');
 
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [industries, setIndustries] = useState<Industry[]>([]);
+
     const [sku, setSku] = useState(initialData?.sku || '');
+    const [categoryId, setCategoryId] = useState(initialData?.categoryId || '');
+    const [industryId, setIndustryId] = useState(initialData?.industryId || '');
+    const [featured, setFeatured] = useState(initialData?.featured || false);
     const [imagesJson, setImagesJson] = useState(initialData?.images || '[]');
     const [containerPoints, setContainerPoints] = useState(initialData?.containerPoints || '[]');
 
-    const [translations, setTranslations] = useState<Record<string, any>>(
-        initialData?.translations?.reduce((acc: any, t: any) => ({
+    const [translations, setTranslations] = useState<Record<string, { locale: string; name: string; description: string }>>(
+        initialData?.translations?.reduce((acc, t) => ({
             ...acc, [t.locale]: t
         }), {}) || {}
     );
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const [catRes, indRes] = await Promise.all([
+                fetch('/api/product-categories'),
+                fetch('/api/industry-categories')
+            ]);
+            const catData = await catRes.json();
+            const indData = await indRes.json();
+            setCategories(catData);
+            setIndustries(indData);
+        };
+        fetchData();
+    }, []);
 
     const handleTransChange = (field: string, value: string) => {
         setTranslations(prev => ({
@@ -44,12 +85,14 @@ export default function ProductForm({ initialData }: ProductFormProps) {
         setLoading(true);
 
         try {
-            // API expects images as array, it handles stringification
             const payload = {
                 sku,
+                categoryId: categoryId || null,
+                industryId: industryId || null,
+                featured,
                 translations: Object.values(translations),
-                containerPoints, // string
-                images: JSON.parse(imagesJson) // array
+                containerPoints,
+                images: JSON.parse(imagesJson)
             };
 
             const res = await fetch(initialData ? `/api/products/${initialData.id}` : '/api/products', {
@@ -92,13 +135,54 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             </div>
 
             <div className="bg-white p-6 rounded shadow-sm border border-gray-200">
-                <label className="block text-sm font-bold text-gray-700 mb-2">SKU</label>
-                <input
-                    value={sku}
-                    onChange={e => setSku(e.target.value)}
-                    className="w-full max-w-md border border-gray-300 p-2 rounded"
-                    required
-                />
+                <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-2">SKU</label>
+                        <input
+                            value={sku}
+                            onChange={e => setSku(e.target.value)}
+                            className="w-full border border-gray-300 p-2 rounded focus:border-primary focus:outline-none"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-2">Product Category</label>
+                        <select
+                            value={categoryId}
+                            onChange={e => setCategoryId(e.target.value)}
+                            className="w-full border border-gray-300 p-2 rounded focus:border-primary focus:outline-none bg-white"
+                        >
+                            <option value="">-- Select Category --</option>
+                            {categories.map(cat => (
+                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                <div className="mt-4">
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Industry Category</label>
+                    <select
+                        value={industryId}
+                        onChange={e => setIndustryId(e.target.value)}
+                        className="w-full border border-gray-300 p-2 rounded focus:border-primary focus:outline-none bg-white"
+                    >
+                        <option value="">-- Select Industry --</option>
+                        {industries.map(ind => (
+                            <option key={ind.id} value={ind.id}>{ind.name}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="mt-4">
+                    <label className="flex items-center gap-3 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            checked={featured}
+                            onChange={e => setFeatured(e.target.checked)}
+                            className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary"
+                        />
+                        <span className="text-sm font-medium text-gray-700">Featured Product (Show on homepage)</span>
+                    </label>
+                </div>
             </div>
 
             <div className="bg-white rounded shadow-sm border border-gray-200 overflow-hidden">

@@ -6,12 +6,11 @@
         "admin": "Admin"
     },
     "Navbar": {
-        "damagePrevention": "Damage Prevention",
-        "products": "Products",
-        "talkToExpert": "Talk to an Expert",
-        "insights": "Insights",
-        "sustainability": "Sustainability",
         "about": "About",
+        "products": "Products",
+        "moistureDamagePrevention": "Moisture and Damage Prevention",
+        "insights": "Insights",
+        "solutionsByIndustry": "Solutions by Industry",
         "contact": "Contact",
         "admin": "Admin",
         "search": "Search"
@@ -164,5 +163,16 @@
         "solutionDesignDesc": "Custom protection plan using the right products in the right quantities.",
         "implementation": "Implementation",
         "implementationDesc": "Training and support to ensure proper application and maximum protection."
+    },
+    "SolutionsByIndustryPage": {
+        "title": "Solutions by Industry",
+        "subtitle": "Tailored moisture protection solutions designed for your specific industry needs",
+        "filterByIndustry": "Filter by Industry",
+        "allIndustries": "All Industries",
+        "recommendedProducts": "Recommended Products",
+        "viewProducts": "View Products",
+        "ctaTitle": "Need a Custom Solution?",
+        "ctaDescription": "Our experts can design a moisture protection plan tailored to your specific industry requirements.",
+        "ctaButton": "Get in Touch"
     }
 }

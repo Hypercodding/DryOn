@@ -75,12 +75,10 @@ export default async function ProductDetailsPage(props: {
 
                         {/* Action Buttons */}
                         <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <button className="bg-[#00BFA5] hover:bg-[#00897B] text-white font-bold py-4 px-6 rounded-xl transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            {/* <button className="bg-[#00BFA5] hover:bg-[#00897B] text-white font-bold py-4 px-6 rounded-xl transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                                 {locale === 'ar' ? 'تواصل معنا' : 'Contact Us'}
-                            </button>
-                            <button className="bg-white border-2 border-[#0F172A] text-[#0F172A] hover:bg-[#0F172A] hover:text-white font-bold py-4 px-6 rounded-xl transition-all">
-                                {locale === 'ar' ? 'تحميل المواصفات' : 'Download Spec Sheet'}
-                            </button>
+                            </button> */}
+                           
                         </div>
                     </div>
                 </div>

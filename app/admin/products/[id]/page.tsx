@@ -20,7 +20,7 @@ export default async function ProductEditPage(props: { params: Promise<{ id: str
 
     return (
         <div className="max-w-4xl mx-auto">
-            <ProductForm initialData={product} />
+            <ProductForm initialData={product ?? undefined} />
         </div>
     );
 }
