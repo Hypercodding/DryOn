@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Leaf, Shirt, Package, Apple, Wrench, Car, Ship, Factory, Coffee, Box, Building, Truck } from 'lucide-react';
+import { ArrowRight, Leaf, Shirt, Package, Apple, Wrench, Car, Ship, Factory, Coffee, Box, Building, Truck, Anchor } from 'lucide-react';
 import { Link } from '@/lib/navigation';
 import { useEffect, useState } from 'react';
 
@@ -41,6 +41,24 @@ const fallbackIndustries = [
     { id: '9', slug: 'logistics', icon: 'Ship', name: 'Logistics', color: 'bg-cyan-600' },
 ];
 
+// Container Ship SVG
+const ContainerShipSVG = ({ className = '' }: { className?: string }) => (
+    <svg 
+        className={className}
+        viewBox="0 0 200 80" 
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path d="M10,60 L30,75 L170,75 L190,60 L180,60 L180,45 L20,45 L20,60 Z" opacity="0.3" />
+        <rect x="25" y="25" width="20" height="20" rx="2" opacity="0.4" />
+        <rect x="50" y="25" width="20" height="20" rx="2" opacity="0.5" />
+        <rect x="75" y="25" width="20" height="20" rx="2" opacity="0.4" />
+        <rect x="100" y="25" width="20" height="20" rx="2" opacity="0.5" />
+        <rect x="125" y="25" width="20" height="20" rx="2" opacity="0.4" />
+        <rect x="155" y="5" width="20" height="20" rx="2" opacity="0.6" />
+    </svg>
+);
+
 export default function IndustriesSection() {
     const [industries, setIndustries] = useState<IndustryCategory[]>(fallbackIndustries);
 
@@ -61,9 +79,61 @@ export default function IndustriesSection() {
 
     return (
         <section className="py-24 bg-gradient-to-br from-secondary via-secondary-dark to-secondary overflow-hidden relative">
+            {/* Wave Pattern Top */}
+            <svg 
+                className="absolute -top-1 left-0 w-full h-16"
+                viewBox="0 0 1440 64" 
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path 
+                    fill="white"
+                    d="M0,32 C240,64 480,0 720,32 C960,64 1200,0 1440,32 L1440,0 L0,0 Z"
+                />
+            </svg>
+
+            {/* Ocean Wave Animation */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <svg 
+                    className="absolute bottom-0 left-0 w-[200%] h-24 opacity-5 animate-wave"
+                    viewBox="0 0 2880 80" 
+                    preserveAspectRatio="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path 
+                        fill="white"
+                        d="M0,40 C480,80 960,0 1440,40 C1920,80 2400,0 2880,40 L2880,80 L0,80 Z"
+                    />
+                </svg>
+            </div>
+
+            {/* Floating Container Ship */}
+            <motion.div 
+                className="absolute bottom-10 right-10 opacity-10 hidden lg:block"
+                animate={{ 
+                    y: [0, -8, 0],
+                    rotate: [-1, 1, -1]
+                }}
+                transition={{ 
+                    repeat: Infinity, 
+                    duration: 4,
+                    ease: "easeInOut"
+                }}
+            >
+                <ContainerShipSVG className="w-40 text-white" />
+            </motion.div>
+
+            {/* Anchor Decoration */}
+            <div className="absolute top-20 left-10 opacity-5 hidden md:block">
+                <Anchor className="w-24 h-24 text-white" />
+            </div>
+
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23ffffff" fill-opacity="1" fill-rule="evenodd"%3E%3Cpath d="M0 40L40 0H20L0 20M40 40V20L20 40"/%3E%3C/g%3E%3C/svg%3E")' }} />
+                <div className="absolute inset-0" style={{ 
+                    backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+                    backgroundSize: '50px 50px'
+                }} />
             </div>
 
             <div className="container mx-auto px-6 relative z-10">
@@ -75,7 +145,10 @@ export default function IndustriesSection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Industries We Serve</span>
+                        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 px-4 py-2 rounded-full text-sm font-medium mb-4 border border-white/20">
+                            <Ship className="w-4 h-4" />
+                            <span>Maritime Cargo Protection</span>
+                        </div>
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
                             Protecting Cargo Across All Industries
                         </h2>
@@ -111,7 +184,7 @@ export default function IndustriesSection() {
                                     >
                                         <Link
                                             href={`/solutions-by-industry?industry=${industry.slug}`}
-                                            className="block bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center hover:bg-white/20 transition-all group cursor-pointer"
+                                            className="block bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center hover:bg-white/20 transition-all group cursor-pointer border border-white/10"
                                         >
                                             <div className={`w-12 h-12 ${industry.color} rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform shadow-lg`}>
                                                 <IconComponent className="w-6 h-6 text-white" />
@@ -125,6 +198,19 @@ export default function IndustriesSection() {
                     </motion.div>
                 </div>
             </div>
+
+            {/* Wave Pattern Bottom */}
+            <svg 
+                className="absolute -bottom-1 left-0 w-full h-16"
+                viewBox="0 0 1440 64" 
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path 
+                    fill="white"
+                    d="M0,32 C240,0 480,64 720,32 C960,0 1200,64 1440,32 L1440,64 L0,64 Z"
+                />
+            </svg>
         </section>
     );
 }

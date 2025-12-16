@@ -4,6 +4,7 @@ import "@/app/globals.css";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import Navbar from "@/components/Navbar";
+import SocialFloatingButtons from "@/components/SocialFloatingButtons";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default async function LocaleLayout(props: {
             >
                 <NextIntlClientProvider messages={messages}>
                     <Navbar />
+                    <SocialFloatingButtons />
                     {children}
                 </NextIntlClientProvider>
             </body>

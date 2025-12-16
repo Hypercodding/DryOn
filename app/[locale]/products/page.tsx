@@ -4,52 +4,17 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/lib/navigation';
 import { useSearchParams } from 'next/navigation';
-import { Filter, CheckCircle, Droplets, Package, Leaf, Apple, Shield } from 'lucide-react';
+import { Filter, CheckCircle, Droplets, Package, Leaf, Apple, Shield, Box } from 'lucide-react';
 
-const CATEGORIES = [
-    { 
-        id: 'all', 
-        slug: 'all',
-        name: 'All Products', 
-        icon: Package,
-        description: 'View our complete range'
-    },
-    { 
-        id: 'dryon', 
-        slug: 'dryon',
-        name: 'DryON', 
-        icon: Droplets,
-        description: 'Calcium Chloride-Based Container Desiccants designed for installing in Shipping Containers.'
-    },
-    { 
-        id: 'super-dryon', 
-        slug: 'super-dryon',
-        name: 'Super DryON', 
-        icon: Package,
-        description: 'In-Box Desiccants designed for placing in cartons, boxes or polybags.'
-    },
-    { 
-        id: 'greenpro', 
-        slug: 'greenpro',
-        name: 'GreenPro', 
-        icon: Shield,
-        description: 'Transafeliners and hermetic packaging for bulk cargo protection.'
-    },
-    { 
-        id: 'freshon', 
-        slug: 'freshon',
-        name: 'FreshON', 
-        icon: Apple,
-        description: 'Ethylene Absorber for extending shelf-life of fruits and vegetables.'
-    },
-    { 
-        id: 'drypak-eco', 
-        slug: 'drypak-eco',
-        name: 'DryPak ECO', 
-        icon: Leaf,
-        description: '100% Sustainable and Plastic-Free Desiccants for Textile Apparels, Shoes, Leather & Accessories.'
-    },
-];
+// Icon mapping for categories
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+    Droplets,
+    Package,
+    Shield,
+    Apple,
+    Leaf,
+    Box,
+};
 
 const WHY_CHOOSE = [
     'High Absorption Capacity of up to 300%',
@@ -74,6 +39,22 @@ const BENEFITS = [
     'Cost-Effective Moisture Prevention Solution',
 ];
 
+interface ProductCategoryFromAPI {
+    id: string;
+    slug: string;
+    icon: string;
+    color: string;
+    translations: Array<{ locale: string; name: string }>;
+}
+
+interface DisplayCategory {
+    id: string;
+    slug: string;
+    name: string;
+    icon: React.ComponentType<{ className?: string }>;
+    description: string;
+}
+
 interface ProductCategory {
     id: string;
     slug: string;
@@ -96,18 +77,65 @@ interface Product {
 
 export default function ProductsPage() {
     const [products, setProducts] = useState<Product[]>([]);
+    const [categories, setCategories] = useState<DisplayCategory[]>([]);
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [loading, setLoading] = useState(true);
+    const [categoriesLoading, setCategoriesLoading] = useState(true);
     const t = useTranslations('ProductsPage');
     const searchParams = useSearchParams();
+
+    // Fetch categories from backend
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const res = await fetch('/api/product-categories');
+                if (res.ok) {
+                    const data: ProductCategoryFromAPI[] = await res.json();
+                    
+                    // Transform API data to display format
+                    const displayCategories: DisplayCategory[] = [
+                        {
+                            id: 'all',
+                            slug: 'all',
+                            name: 'All Products',
+                            icon: Package,
+                            description: 'View our complete range'
+                        },
+                        ...data.map(cat => ({
+                            id: cat.id,
+                            slug: cat.slug,
+                            name: cat.translations?.find(t => t.locale === 'en')?.name || cat.slug,
+                            icon: iconMap[cat.icon] || Package,
+                            description: ''
+                        }))
+                    ];
+                    
+                    setCategories(displayCategories);
+                }
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+                // Fallback to just "All Products"
+                setCategories([{
+                    id: 'all',
+                    slug: 'all',
+                    name: 'All Products',
+                    icon: Package,
+                    description: 'View our complete range'
+                }]);
+            } finally {
+                setCategoriesLoading(false);
+            }
+        };
+        fetchCategories();
+    }, []);
 
     // Set initial category from URL
     useEffect(() => {
         const categoryParam = searchParams.get('category');
-        if (categoryParam && CATEGORIES.some(c => c.slug === categoryParam)) {
+        if (categoryParam && categories.some(c => c.slug === categoryParam)) {
             setSelectedCategory(categoryParam);
         }
-    }, [searchParams]);
+    }, [searchParams, categories]);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -136,6 +164,10 @@ export default function ProductsPage() {
         if (!product.category) return 'Uncategorized';
         const catTrans = product.category.translations?.find(t => t.locale === 'en');
         return catTrans?.name || product.category.slug;
+    };
+
+    const getSelectedCategoryInfo = () => {
+        return categories.find(c => c.slug === selectedCategory);
     };
 
     return (
@@ -176,29 +208,40 @@ export default function ProductsPage() {
                         <h2 className="text-lg font-bold text-secondary">Filter by Category</h2>
                     </div>
                     
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                        {CATEGORIES.map((cat) => (
-                            <button
-                                key={cat.id}
-                                onClick={() => setSelectedCategory(cat.slug)}
-                                className={`p-4 rounded-xl text-left transition-all ${
-                                    selectedCategory === cat.slug 
-                                        ? 'bg-primary text-white shadow-lg scale-[1.02]' 
-                                        : 'bg-gray-50 hover:bg-gray-100 text-secondary border border-gray-200'
-                                }`}
-                            >
-                                <cat.icon className={`w-6 h-6 mb-2 ${selectedCategory === cat.slug ? 'text-white' : 'text-primary'}`} />
-                                <div className="font-bold text-sm">{cat.name}</div>
-                            </button>
-                        ))}
-                    </div>
+                    {categoriesLoading ? (
+                        <div className="flex gap-4">
+                            {[1, 2, 3, 4, 5].map(i => (
+                                <div key={i} className="h-20 w-32 bg-gray-100 rounded-xl animate-pulse" />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                            {categories.map((cat) => {
+                                const IconComponent = cat.icon;
+                                return (
+                                    <button
+                                        key={cat.id}
+                                        onClick={() => setSelectedCategory(cat.slug)}
+                                        className={`p-4 rounded-xl text-left transition-all ${
+                                            selectedCategory === cat.slug 
+                                                ? 'bg-primary text-white shadow-lg scale-[1.02]' 
+                                                : 'bg-gray-50 hover:bg-gray-100 text-secondary border border-gray-200'
+                                        }`}
+                                    >
+                                        <IconComponent className={`w-6 h-6 mb-2 ${selectedCategory === cat.slug ? 'text-white' : 'text-primary'}`} />
+                                        <div className="font-bold text-sm">{cat.name}</div>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    )}
 
                     {/* Category Description */}
-                    {selectedCategory !== 'all' && (
+                    {selectedCategory !== 'all' && getSelectedCategoryInfo() && (
                         <div className="mt-6 p-4 bg-primary/5 rounded-xl border border-primary/10">
                             <p className="text-slate">
-                                <strong className="text-secondary">{CATEGORIES.find(c => c.slug === selectedCategory)?.name}:</strong>{' '}
-                                {CATEGORIES.find(c => c.slug === selectedCategory)?.description}
+                                <strong className="text-secondary">{getSelectedCategoryInfo()?.name}:</strong>{' '}
+                                {getSelectedCategoryInfo()?.description || 'Browse products in this category.'}
                             </p>
                         </div>
                     )}
@@ -225,22 +268,22 @@ export default function ProductsPage() {
                             </button>
                         </div>
                     ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {filteredProducts.map((product) => {
                                 const translation = getTranslation(product);
                                 const images = JSON.parse(product.images || '[]');
                                 const categorySlug = product.category?.slug || '';
-                                const categoryInfo = CATEGORIES.find(c => c.slug === categorySlug);
+                                const categoryInfo = categories.find(c => c.slug === categorySlug);
                                 const categoryName = getCategoryName(product);
 
-                        return (
-                            <Link
-                                key={product.id}
-                                href={`/products/${product.sku}`}
-                                className="group block h-full"
-                            >
+                                return (
+                                    <Link
+                                        key={product.id}
+                                        href={`/products/${product.sku}`}
+                                        className="group block h-full"
+                                    >
                                         <div className="bg-white rounded-xl overflow-hidden shadow-float hover:shadow-xl transition-all duration-300 h-full border border-gray-100 card-3d flex flex-col">
-                                    {/* Image Area */}
+                                            {/* Image Area */}
                                             <div className="h-56 bg-gradient-to-br from-gray-50 to-gray-100 relative flex items-center justify-center overflow-hidden">
                                                 {images[0] ? (
                                                     <img 
@@ -265,33 +308,33 @@ export default function ProductsPage() {
                                                     <div className="absolute top-3 right-3">
                                                         <span className="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
                                                             Featured
-                                        </span>
+                                                        </span>
                                                     </div>
                                                 )}
-                                    </div>
+                                            </div>
 
-                                    {/* Content Area */}
-                                    <div className="p-6 flex-1 flex flex-col">
+                                            {/* Content Area */}
+                                            <div className="p-6 flex-1 flex flex-col">
                                                 <h3 className="text-xl font-bold text-secondary mb-3 group-hover:text-primary transition-colors">
-                                            {translation?.name || 'Unnamed Product'}
+                                                    {translation?.name || 'Unnamed Product'}
                                                 </h3>
                                                 <p className="text-slate text-sm line-clamp-3 mb-6 flex-1 leading-relaxed">
-                                            {translation?.description || 'No description available.'}
-                                        </p>
+                                                    {translation?.description || 'No description available.'}
+                                                </p>
 
-                                        <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                                                <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
                                                     <span className="text-xs font-mono bg-gray-50 px-3 py-1.5 rounded-md text-slate">
-                                                SKU: {product.sku}
-                                            </span>
+                                                        SKU: {product.sku}
+                                                    </span>
                                                     <span className="text-primary font-semibold text-sm flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
                                                         View Details →
-                                            </span>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </Link>
-                        );
-                    })}
+                                    </Link>
+                                );
+                            })}
                         </div>
                     )}
                 </div>
@@ -362,7 +405,7 @@ export default function ProductsPage() {
                     >
                         Contact Us Today
                     </a>
-            </div>
+                </div>
             </section>
         </div>
     );
