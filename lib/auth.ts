@@ -18,7 +18,11 @@ export const authConfig: NextAuthConfig = {
                     where: { email: credentials.email as string },
                     include: { 
                         role: {
-                            include: { permissions: true }
+                            include: { 
+                                rolePermissions: {
+                                    include: { permission: true }
+                                }
+                            }
                         }
                     }
                 });
@@ -52,7 +56,7 @@ export const authConfig: NextAuthConfig = {
                         email: user.email, 
                         name: user.name,
                         role: user.role?.name || 'User',
-                        permissions: user.role?.permissions.map(p => p.name) || []
+                        permissions: user.role?.rolePermissions.map(rp => rp.permission.name) || []
                     };
                 }
 

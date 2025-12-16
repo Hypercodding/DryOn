@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Search, Globe, ChevronDown, Building2, Award, History, MapPin, Droplets, Package, Shield, Apple, Leaf, Factory, Shirt, Wrench, Car, Ship, Coffee, Box, Building, Truck, TreePine, Menu, X } from 'lucide-react';
+import { Search, Globe, ChevronDown, Building2, Award, History, MapPin, Droplets, Package, Shield, Apple, Leaf, Factory, Shirt, Wrench, Car, Ship, Coffee, Box, Building, Truck, TreePine, Menu, X, Heart, FlaskConical } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, usePathname, useRouter } from '@/lib/navigation';
 import { useTranslations } from 'next-intl';
@@ -128,8 +128,10 @@ export default function Navbar() {
         { href: '/about', label: 'Company Overview', icon: Building2 },
         { href: '/about#achievements', label: 'Achievements', icon: Award },
         { href: '/about#history', label: 'Our History', icon: History },
-        { href: '/about#branches', label: 'Branches', icon: MapPin },
+        // { href: '/about#branches', label: 'Branches', icon: MapPin },
         { href: '/about#sustainability', label: 'Sustainability', icon: TreePine },
+        { href: '/about/csr', label: 'CSR', icon: Heart },
+        { href: '/about/rd', label: 'R&D', icon: FlaskConical },
     ];
 
     // Helper to get category name from translations
@@ -272,9 +274,6 @@ export default function Navbar() {
                         </AnimatePresence>
                     </div>
 
-                    <Link href="/damage-prevention" className="hover:text-primary transition-all uppercase tracking-wide py-2 hover:-translate-y-0.5">{t('moistureDamagePrevention')}</Link>
-                    <Link href="/insights" className="hover:text-primary transition-all uppercase tracking-wide py-2 hover:-translate-y-0.5">{t('insights')}</Link>
-                    
                     {/* Solutions by Industry Dropdown */}
                     <div 
                         className="relative"
@@ -339,6 +338,11 @@ export default function Navbar() {
                             )}
                         </AnimatePresence>
                     </div>
+
+                    <Link href="/damage-prevention" className="hover:text-primary transition-all uppercase tracking-wide py-2 hover:-translate-y-0.5">{t('moistureDamagePrevention')}</Link>
+                    <Link href="/insights" className="hover:text-primary transition-all uppercase tracking-wide py-2 hover:-translate-y-0.5">{t('insights')}</Link>
+                    
+                    
 
                     <Link href="/contact" className="btn-3d bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-md uppercase tracking-wide shadow-md hover:shadow-lg">{t('contact')}</Link>
                 </div>
@@ -498,24 +502,6 @@ export default function Navbar() {
                                 </AnimatePresence>
                             </div>
 
-                            {/* Damage Prevention */}
-                            <Link
-                                href="/damage-prevention"
-                                onClick={() => setShowMobileMenu(false)}
-                                className="block py-3 text-secondary hover:text-primary transition-colors uppercase tracking-wide font-medium"
-                            >
-                                {t('moistureDamagePrevention')}
-                            </Link>
-
-                            {/* Insights */}
-                            <Link
-                                href="/insights"
-                                onClick={() => setShowMobileMenu(false)}
-                                className="block py-3 text-secondary hover:text-primary transition-colors uppercase tracking-wide font-medium"
-                            >
-                                {t('insights')}
-                            </Link>
-
                             {/* Solutions by Industry Dropdown Mobile */}
                             <div>
                                 <button
@@ -565,6 +551,26 @@ export default function Navbar() {
                                     )}
                                 </AnimatePresence>
                             </div>
+
+                            {/* Damage Prevention */}
+                            <Link
+                                href="/damage-prevention"
+                                onClick={() => setShowMobileMenu(false)}
+                                className="block py-3 text-secondary hover:text-primary transition-colors uppercase tracking-wide font-medium"
+                            >
+                                {t('moistureDamagePrevention')}
+                            </Link>
+
+                            {/* Insights */}
+                            <Link
+                                href="/insights"
+                                onClick={() => setShowMobileMenu(false)}
+                                className="block py-3 text-secondary hover:text-primary transition-colors uppercase tracking-wide font-medium"
+                            >
+                                {t('insights')}
+                            </Link>
+
+                            
 
                             {/* Contact */}
                             <Link

@@ -16,7 +16,7 @@ interface Role {
     name: string;
     description: string;
     color: string;
-    permissions: Permission[];
+    rolePermissions: Array<{ permission: Permission }>;
     _count: { users: number };
 }
 
@@ -71,7 +71,7 @@ export default function RolesPage() {
             name: role.name,
             description: role.description,
             color: role.color,
-            permissionIds: role.permissions.map(p => p.id),
+            permissionIds: role.rolePermissions.map(rp => rp.permission.id),
         });
         setEditingId(role.id);
         setShowForm(true);
@@ -274,17 +274,17 @@ export default function RolesPage() {
                                 <Users className="w-4 h-4" />
                                 <span>{role._count.users} users</span>
                                 <span className="mx-2">•</span>
-                                <span>{role.permissions.length} permissions</span>
+                                <span>{role.rolePermissions.length} permissions</span>
                             </div>
                             <div className="flex flex-wrap gap-1 mb-4">
-                                {role.permissions.slice(0, 5).map(perm => (
-                                    <span key={perm.id} className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">
-                                        {perm.name}
+                                {role.rolePermissions.slice(0, 5).map(rp => (
+                                    <span key={rp.permission.id} className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">
+                                        {rp.permission.name}
                                     </span>
                                 ))}
-                                {role.permissions.length > 5 && (
+                                {role.rolePermissions.length > 5 && (
                                     <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">
-                                        +{role.permissions.length - 5} more
+                                        +{role.rolePermissions.length - 5} more
                                     </span>
                                 )}
                             </div>

@@ -28,7 +28,7 @@ const WhatsAppIcon = ({ className = '' }: { className?: string }) => (
 
 export default function SocialFloatingButtons() {
     // WhatsApp number - replace with actual number
-    const whatsappNumber = '923001234567'; // Format: country code + number without +
+    const whatsappNumber = '923111775999'; // Format: country code + number without +
     const whatsappMessage = encodeURIComponent('Hello! I am interested in DryON products. Can you please provide more information?');
     
     // LinkedIn URL - replace with actual company page

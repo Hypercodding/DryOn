@@ -99,7 +99,11 @@ async function main() {
             name: 'Super Admin',
             description: 'Full access to all system features',
             color: 'bg-red-500',
-            permissions: { connect: allPermissions.map(p => ({ id: p.id })) }
+            rolePermissions: {
+                create: allPermissions.map(p => ({
+                    permission: { connect: { id: p.id } }
+                }))
+            }
         }
     });
 
@@ -112,7 +116,11 @@ async function main() {
             name: 'Admin',
             description: 'Manage content and view reports',
             color: 'bg-blue-500',
-            permissions: { connect: adminPermissions.map(p => ({ id: p.id })) }
+            rolePermissions: {
+                create: adminPermissions.map(p => ({
+                    permission: { connect: { id: p.id } }
+                }))
+            }
         }
     });
 
@@ -127,7 +135,11 @@ async function main() {
             name: 'Editor',
             description: 'Manage products and categories',
             color: 'bg-green-500',
-            permissions: { connect: editorPermissions.map(p => ({ id: p.id })) }
+            rolePermissions: {
+                create: editorPermissions.map(p => ({
+                    permission: { connect: { id: p.id } }
+                }))
+            }
         }
     });
 
@@ -140,7 +152,11 @@ async function main() {
             name: 'Viewer',
             description: 'View-only access to dashboard',
             color: 'bg-gray-500',
-            permissions: { connect: viewerPermissions.map(p => ({ id: p.id })) }
+            rolePermissions: {
+                create: viewerPermissions.map(p => ({
+                    permission: { connect: { id: p.id } }
+                }))
+            }
         }
     });
     console.log('   ✅ Created 4 roles\n');

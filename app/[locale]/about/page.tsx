@@ -40,38 +40,38 @@ export default async function AboutPage() {
         { icon: Ship, name: 'Transportation & Logistics' },
     ];
 
-    const branches = [
-        {
-            city: 'Lahore',
-            type: 'Head Office',
-            description: 'Our main headquarters and primary operations center',
-            isHQ: true
-        },
-        {
-            city: 'Karachi',
-            type: 'Distribution Center',
-            description: 'Serving the southern region and port operations',
-            isHQ: false
-        },
-        {
-            city: 'Sialkot',
-            type: 'Regional Office',
-            description: 'Supporting the sports goods and leather industry',
-            isHQ: false
-        },
-        {
-            city: 'Faisalabad',
-            type: 'Regional Office',
-            description: 'Serving the textile hub of Pakistan',
-            isHQ: false
-        },
-        {
-            city: 'Multan',
-            type: 'Regional Office',
-            description: 'Supporting agricultural exports',
-            isHQ: false
-        },
-    ];
+    // const branches = [
+    //     {
+    //         city: 'Lahore',
+    //         type: 'Head Office',
+    //         description: 'Our main headquarters and primary operations center',
+    //         isHQ: true
+    //     },
+    //     {
+    //         city: 'Karachi',
+    //         type: 'Distribution Center',
+    //         description: 'Serving the southern region and port operations',
+    //         isHQ: false
+    //     },
+    //     {
+    //         city: 'Sialkot',
+    //         type: 'Regional Office',
+    //         description: 'Supporting the sports goods and leather industry',
+    //         isHQ: false
+    //     },
+    //     {
+    //         city: 'Faisalabad',
+    //         type: 'Regional Office',
+    //         description: 'Serving the textile hub of Pakistan',
+    //         isHQ: false
+    //     },
+    //     {
+    //         city: 'Multan',
+    //         type: 'Regional Office',
+    //         description: 'Supporting agricultural exports',
+    //         isHQ: false
+    //     },
+    // ];
 
     return (
         <div className="min-h-screen bg-white pt-20">
@@ -175,52 +175,7 @@ export default async function AboutPage() {
                 </div>
             </section>
 
-            {/* Branches */}
-            <section id="branches" className="py-20 bg-white scroll-mt-24">
-                <div className="container mx-auto px-6 max-w-6xl">
-                    <div className="text-center mb-16">
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Our Presence</span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">Branches & Distribution</h2>
-                        <p className="text-slate max-w-2xl mx-auto">
-                            DryON currently functions from Pakistan with a growing national footmark, serving clients across major industrial cities.
-                        </p>
-                    </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {branches.map((branch, idx) => (
-                            <div 
-                                key={idx} 
-                                className={`rounded-2xl p-6 card-3d transition-all ${
-                                    branch.isHQ 
-                                        ? 'bg-gradient-to-br from-secondary to-secondary-dark text-white col-span-full md:col-span-2 lg:col-span-1' 
-                                        : 'bg-white border border-gray-100 shadow-float'
-                                }`}
-                            >
-                                <div className="flex items-start gap-4">
-                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                                        branch.isHQ ? 'bg-white/20' : 'bg-primary/10'
-                                    }`}>
-                                        <MapPin className={`w-6 h-6 ${branch.isHQ ? 'text-white' : 'text-primary'}`} />
-                                    </div>
-                                    <div>
-                                        <span className={`text-xs font-semibold uppercase tracking-wider ${
-                                            branch.isHQ ? 'text-primary' : 'text-primary'
-                                        }`}>
-                                            {branch.type}
-                                        </span>
-                                        <h3 className={`text-xl font-bold mt-1 ${branch.isHQ ? 'text-white' : 'text-secondary'}`}>
-                                            {branch.city}
-                                        </h3>
-                                        <p className={`text-sm mt-2 ${branch.isHQ ? 'text-white/80' : 'text-slate'}`}>
-                                            {branch.description}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
             {/* History */}
             <section id="history" className="py-20 bg-gray-50 scroll-mt-24">

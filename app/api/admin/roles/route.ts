@@ -8,7 +8,9 @@ export async function GET() {
 
     const roles = await prisma.role.findMany({
         include: {
-            permissions: true,
+            rolePermissions: {
+                include: { permission: true }
+            },
             _count: { select: { users: true } }
         },
         orderBy: { createdAt: 'asc' }
@@ -30,11 +32,17 @@ export async function POST(req: Request) {
                 name,
                 description: description || '',
                 color: color || 'bg-gray-500',
-                permissions: {
-                    connect: permissionIds?.map((id: string) => ({ id })) || []
+                rolePermissions: {
+                    create: permissionIds?.map((id: string) => ({
+                        permission: { connect: { id } }
+                    })) || []
                 }
             },
-            include: { permissions: true }
+            include: { 
+                rolePermissions: {
+                    include: { permission: true }
+                }
+            }
         });
 
         return NextResponse.json(role);

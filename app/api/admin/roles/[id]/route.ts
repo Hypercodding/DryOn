@@ -12,24 +12,29 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         const body = await req.json();
         const { name, description, color, permissionIds } = body;
 
-        // First disconnect all permissions
-        await prisma.role.update({
-            where: { id },
-            data: { permissions: { set: [] } }
+        // First delete all existing role permissions
+        await prisma.rolePermission.deleteMany({
+            where: { roleId: id }
         });
 
-        // Then update with new permissions
+        // Then create new role permissions
         const role = await prisma.role.update({
             where: { id },
             data: {
                 name,
                 description,
                 color,
-                permissions: {
-                    connect: permissionIds?.map((pid: string) => ({ id: pid })) || []
+                rolePermissions: {
+                    create: permissionIds?.map((pid: string) => ({
+                        permission: { connect: { id: pid } }
+                    })) || []
                 }
             },
-            include: { permissions: true }
+            include: { 
+                rolePermissions: {
+                    include: { permission: true }
+                }
+            }
         });
 
         return NextResponse.json(role);

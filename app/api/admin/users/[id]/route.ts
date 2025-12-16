@@ -11,7 +11,15 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
     const user = await prisma.adminUser.findUnique({
         where: { id },
-        include: { role: { include: { permissions: true } } }
+        include: { 
+            role: { 
+                include: { 
+                    rolePermissions: {
+                        include: { permission: true }
+                    }
+                } 
+            } 
+        }
     });
 
     if (!user) {

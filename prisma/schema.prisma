@@ -3,19 +3,19 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 // ==================== RBAC Models ====================
 
 model AdminUser {
-  id            String   @id @default(uuid())
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
   email         String   @unique
   password      String   // Hashed
   name          String   @default("")
   avatar        String?
-  roleId        String?
+  roleId        String?  @db.ObjectId
   role          Role?    @relation(fields: [roleId], references: [id], onDelete: SetNull)
   isActive      Boolean  @default(true)
   lastLoginAt   DateTime?
@@ -25,29 +25,42 @@ model AdminUser {
 }
 
 model Role {
-  id          String   @id @default(uuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String   @unique
   description String   @default("")
   color       String   @default("bg-gray-500")
-  permissions Permission[]
+  rolePermissions RolePermission[]
   users       AdminUser[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
 model Permission {
-  id          String   @id @default(uuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String   @unique  // e.g., "products.create", "users.delete"
   description String   @default("")
   module      String   // e.g., "products", "users", "categories"
   action      String   // e.g., "create", "read", "update", "delete"
-  roles       Role[]
+  rolePermissions RolePermission[]
   createdAt   DateTime @default(now())
 }
 
+model RolePermission {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  roleId       String     @db.ObjectId
+  permissionId String     @db.ObjectId
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+
+  @@unique([roleId, permissionId])
+  @@index([roleId])
+  @@index([permissionId])
+}
+
 model ActivityLog {
-  id          String   @id @default(uuid())
-  userId      String
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
   user        AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
   action      String   // e.g., "create", "update", "delete", "login"
   module      String   // e.g., "products", "categories", "auth"
@@ -60,7 +73,7 @@ model ActivityLog {
 // ==================== Settings ====================
 
 model Setting {
-  id        String   @id @default(uuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   key       String   @unique
   value     String
   type      String   @default("string") // string, number, boolean, json
@@ -72,7 +85,7 @@ model Setting {
 // ==================== Contact Inquiries ====================
 
 model ContactInquiry {
-  id        String   @id @default(uuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   email     String
   company   String?
@@ -87,7 +100,7 @@ model ContactInquiry {
 // ==================== Product Models ====================
 
 model ProductCategory {
-  id           String   @id @default(uuid())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   slug         String   @unique
   icon         String   @default("Package")
   color        String   @default("from-blue-500 to-blue-600")
@@ -99,8 +112,8 @@ model ProductCategory {
 }
 
 model ProductCategoryTranslation {
-  id                String          @id @default(uuid())
-  productCategoryId String
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  productCategoryId String   @db.ObjectId
   productCategory   ProductCategory @relation(fields: [productCategoryId], references: [id], onDelete: Cascade)
   locale            String
   name              String
@@ -110,7 +123,7 @@ model ProductCategoryTranslation {
 }
 
 model IndustryCategory {
-  id           String   @id @default(uuid())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   slug         String   @unique
   icon         String   @default("Factory")
   color        String   @default("bg-gray-500")
@@ -122,8 +135,8 @@ model IndustryCategory {
 }
 
 model IndustryCategoryTranslation {
-  id                 String           @id @default(uuid())
-  industryCategoryId String
+  id                 String           @id @default(auto()) @map("_id") @db.ObjectId
+  industryCategoryId String   @db.ObjectId
   industryCategory   IndustryCategory @relation(fields: [industryCategoryId], references: [id], onDelete: Cascade)
   locale             String
   name               String
@@ -132,11 +145,11 @@ model IndustryCategoryTranslation {
 }
 
 model Product {
-  id              String   @id @default(uuid())
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
   sku             String   @unique
-  categoryId      String?
+  categoryId      String?   @db.ObjectId
   category        ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  industryId      String?
+  industryId      String?   @db.ObjectId
   industry        IndustryCategory? @relation(fields: [industryId], references: [id], onDelete: SetNull)
   images          String
   containerPoints String?
@@ -147,8 +160,8 @@ model Product {
 }
 
 model ProductTranslation {
-  id          String  @id @default(uuid())
-  productId   String
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId   String   @db.ObjectId
   product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   locale      String
   name        String
