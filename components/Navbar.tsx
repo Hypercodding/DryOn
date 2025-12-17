@@ -581,6 +581,15 @@ export default function Navbar() {
                                 {t('contact')}
                             </Link>
 
+                            {/* Admin Link */}
+                            <Link
+                                href="/admin/login"
+                                onClick={() => setShowMobileMenu(false)}
+                                className="block py-3 text-center font-semibold text-xs border-2 border-secondary text-secondary hover:bg-secondary hover:text-white rounded-md uppercase tracking-wide transition-all"
+                            >
+                                {t('admin')}
+                            </Link>
+
                             {/* Mobile Icons */}
                             <div className="flex items-center justify-center gap-4 pt-4 border-t border-gray-100">
                                 <button
