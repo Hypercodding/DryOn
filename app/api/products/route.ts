@@ -9,7 +9,27 @@ import IndustryCategoryTranslation from "@/models/IndustryCategoryTranslation";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-    await connectDB();
+    const mongoose = await connectDB();
+    
+    // Ensure all models are registered (required for serverless environments)
+    if (!mongoose.models.Product) {
+        await import('@/models/Product');
+    }
+    if (!mongoose.models.ProductTranslation) {
+        await import('@/models/ProductTranslation');
+    }
+    if (!mongoose.models.ProductCategory) {
+        await import('@/models/ProductCategory');
+    }
+    if (!mongoose.models.IndustryCategory) {
+        await import('@/models/IndustryCategory');
+    }
+    if (!mongoose.models.ProductCategoryTranslation) {
+        await import('@/models/ProductCategoryTranslation');
+    }
+    if (!mongoose.models.IndustryCategoryTranslation) {
+        await import('@/models/IndustryCategoryTranslation');
+    }
     const { searchParams } = new URL(req.url);
     const locale = searchParams.get('locale');
     const categorySlug = searchParams.get('category');
@@ -28,8 +48,14 @@ export async function GET(req: Request) {
     }
 
     const products = await Product.find(query)
-        .populate('categoryId')
-        .populate('industryId');
+        .populate({
+            path: 'categoryId',
+            model: 'ProductCategory',
+        })
+        .populate({
+            path: 'industryId',
+            model: 'IndustryCategory',
+        });
 
     const productIds = products.map(p => p._id);
     const translations = await ProductTranslation.find({ productId: { $in: productIds } });
@@ -92,7 +118,15 @@ export async function POST(req: Request) {
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     try {
-        await connectDB();
+        const mongoose = await connectDB();
+        
+        // Ensure all models are registered (required for serverless environments)
+        if (!mongoose.models.Product) {
+            await import('@/models/Product');
+        }
+        if (!mongoose.models.ProductTranslation) {
+            await import('@/models/ProductTranslation');
+        }
         const body = await req.json();
         const { sku, categoryId, industryId, featured, images, containerPoints, translations } = body;
 

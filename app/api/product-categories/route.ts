@@ -7,7 +7,18 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
     try {
-        await connectDB();
+        const mongoose = await connectDB();
+        
+        // Ensure all models are registered (required for serverless environments)
+        if (!mongoose.models.ProductCategory) {
+            await import('@/models/ProductCategory');
+        }
+        if (!mongoose.models.ProductCategoryTranslation) {
+            await import('@/models/ProductCategoryTranslation');
+        }
+        if (!mongoose.models.Product) {
+            await import('@/models/Product');
+        }
         const { searchParams } = new URL(req.url);
         const locale = searchParams.get('locale') || 'en';
 
@@ -56,7 +67,15 @@ export async function POST(req: Request) {
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     try {
-        await connectDB();
+        const mongoose = await connectDB();
+        
+        // Ensure all models are registered (required for serverless environments)
+        if (!mongoose.models.ProductCategory) {
+            await import('@/models/ProductCategory');
+        }
+        if (!mongoose.models.ProductCategoryTranslation) {
+            await import('@/models/ProductCategoryTranslation');
+        }
         const body = await req.json();
         const { slug, icon, color, sortOrder, translations } = body;
 
