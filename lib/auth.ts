@@ -33,12 +33,48 @@ export const authConfig: NextAuthConfig = {
 
                 try {
                     console.log('[AUTH] Connecting to MongoDB...');
-                    await connectDB();
+                    const mongoose = await connectDB();
                     console.log('[AUTH] MongoDB connection OK');
+
+                    // Ensure all models are registered (required for serverless environments)
+                    // Force model registration by accessing them
+                    console.log('[AUTH] Ensuring models are registered...');
+                    const registeredModels = Object.keys(mongoose.models);
+                    console.log('[AUTH] Currently registered models:', registeredModels);
+                    
+                    // Force registration by accessing the model constructors
+                    if (!mongoose.models.Role) {
+                        console.log('[AUTH] Role model missing, forcing registration...');
+                        // Re-import to trigger registration
+                        const RoleModule = await import('@/models/Role');
+                        // Access the default export to ensure it's registered
+                        void RoleModule.default;
+                    }
+                    if (!mongoose.models.RolePermission) {
+                        console.log('[AUTH] RolePermission model missing, forcing registration...');
+                        const RolePermissionModule = await import('@/models/RolePermission');
+                        void RolePermissionModule.default;
+                    }
+                    if (!mongoose.models.Permission) {
+                        console.log('[AUTH] Permission model missing, forcing registration...');
+                        const PermissionModule = await import('@/models/Permission');
+                        void PermissionModule.default;
+                    }
+                    if (!mongoose.models.ActivityLog) {
+                        console.log('[AUTH] ActivityLog model missing, forcing registration...');
+                        const ActivityLogModule = await import('@/models/ActivityLog');
+                        void ActivityLogModule.default;
+                    }
+                    
+                    const modelsAfter = Object.keys(mongoose.models);
+                    console.log('[AUTH] Models after registration:', modelsAfter);
 
                     console.log('[AUTH] Looking up admin user by email...');
                     const user = await AdminUser.findOne({ email: credentials.email as string })
-                        .populate('roleId');
+                        .populate({
+                            path: 'roleId',
+                            model: 'Role',
+                        });
 
                     if (!user) {
                         console.error('[AUTH] No admin user found for email', {

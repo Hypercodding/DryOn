@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Lock, Mail, Eye, EyeOff, AlertCircle, ArrowRight } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, AlertCircle, ArrowRight, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
 export default function LoginPage() {
@@ -12,7 +12,17 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [pageLoading, setPageLoading] = useState(true);
     const router = useRouter();
+
+    useEffect(() => {
+        // Simulate page initialization
+        const timer = setTimeout(() => {
+            setPageLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -45,9 +55,46 @@ export default function LoginPage() {
         }
     };
 
+    // Show initial page loader
+    if (pageLoading) {
+        return (
+            <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
+                <div className="relative">
+                    {/* Logo Container */}
+                    <div className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center">
+                        {/* Shining Effect Overlay */}
+                        <div className="absolute inset-0 overflow-hidden rounded-2xl">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-shine" style={{ width: '200%', height: '200%' }}></div>
+                        </div>
+                        
+                        {/* Logo Image */}
+                        <div className="relative z-10 w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary-dark/10 rounded-2xl p-6 shadow-2xl">
+                            <Image
+                                src="/images/DryON Pakistan.png"
+                                alt="DryON Pakistan Logo"
+                                width={200}
+                                height={80}
+                                className="w-auto h-auto max-w-full max-h-full object-contain animate-pulse"
+                                priority
+                            />
+                        </div>
+                        
+                        {/* Pulsing Ring */}
+                        <div className="absolute inset-0 border-4 border-primary/30 rounded-2xl animate-ping"></div>
+                    </div>
+                    
+                    {/* Loading Text */}
+                    <p className="text-center mt-8 text-slate-600 font-medium animate-pulse">
+                        Loading...
+                    </p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen flex relative">
-            {/* Loading Overlay with Logo */}
+            {/* Loading Overlay with Logo - Shows during login submission */}
             {loading && (
                 <div className="fixed inset-0 bg-white/95 backdrop-blur-sm z-50 flex items-center justify-center">
                     <div className="relative">
@@ -185,10 +232,19 @@ export default function LoginPage() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-gradient-to-r from-primary to-primary-dark text-white py-3.5 rounded-xl hover:opacity-90 transition-all font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/30 disabled:opacity-50"
+                                className="w-full bg-gradient-to-r from-primary to-primary-dark text-white py-3.5 rounded-xl hover:opacity-90 transition-all font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                Sign In
-                                <ArrowRight className="w-5 h-5" />
+                                {loading ? (
+                                    <>
+                                        <Loader2 className="w-5 h-5 animate-spin" />
+                                        Signing in...
+                                    </>
+                                ) : (
+                                    <>
+                                        Sign In
+                                        <ArrowRight className="w-5 h-5" />
+                                    </>
+                                )}
                             </button>
                         </form>
 
