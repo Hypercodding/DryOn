@@ -9,6 +9,8 @@ import ActivityLog from '@/models/ActivityLog';
 import bcrypt from 'bcryptjs';
 
 export const authConfig: NextAuthConfig = {
+    secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
+    trustHost: true, // Required for Vercel deployments
     providers: [
         CredentialsProvider({
             name: 'Credentials',
@@ -17,10 +19,15 @@ export const authConfig: NextAuthConfig = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
-                if (!credentials?.email || !credentials?.password) return null;
+                if (!credentials?.email || !credentials?.password) {
+                    console.error('Missing credentials');
+                    return null;
+                }
 
                 try {
+                    console.log('Attempting to connect to database...');
                     await connectDB();
+                    console.log('Database connected successfully');
 
                     const user = await AdminUser.findOne({ email: credentials.email as string })
                         .populate('roleId');
@@ -50,16 +57,24 @@ export const authConfig: NextAuthConfig = {
                             .filter(Boolean);
                     }
 
-                    // Update last login
-                    await AdminUser.findByIdAndUpdate(user._id, { lastLoginAt: new Date() });
+                    // Update last login (don't fail if this fails)
+                    try {
+                        await AdminUser.findByIdAndUpdate(user._id, { lastLoginAt: new Date() });
+                    } catch (updateError) {
+                        console.error('Failed to update last login:', updateError);
+                    }
 
-                    // Log the login
-                    await ActivityLog.create({
-                        userId: user._id,
-                        action: 'login',
-                        module: 'auth',
-                        details: JSON.stringify({ email: user.email }),
-                    });
+                    // Log the login (don't fail if this fails)
+                    try {
+                        await ActivityLog.create({
+                            userId: user._id,
+                            action: 'login',
+                            module: 'auth',
+                            details: JSON.stringify({ email: user.email }),
+                        });
+                    } catch (logError) {
+                        console.error('Failed to log activity:', logError);
+                    }
 
                     return { 
                         id: user._id.toString(), 
@@ -68,7 +83,12 @@ export const authConfig: NextAuthConfig = {
                         role: role?.name || 'User',
                         permissions
                     };
-                } catch (error) {
+                } catch (error: any) {
+                    console.error('Auth error:', {
+                        message: error?.message,
+                        stack: error?.stack,
+                        name: error?.name
+                    });
                     return null;
                 }
             }

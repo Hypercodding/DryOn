@@ -27,14 +27,19 @@ export default function LoginPage() {
             });
 
             if (result?.error) {
-                setError('Invalid email or password');
+                console.error('Login error:', result.error);
+                setError('Invalid email or password. Please check your credentials and try again.');
                 setLoading(false);
-            } else {
+            } else if (result?.ok) {
                 // Use window.location for full page redirect
                 // This keeps the loader visible until the new page loads
                 window.location.href = '/admin';
+            } else {
+                setError('An unexpected error occurred. Please try again.');
+                setLoading(false);
             }
-        } catch (err) {
+        } catch (err: any) {
+            console.error('Login exception:', err);
             setError('An error occurred. Please try again.');
             setLoading(false);
         }

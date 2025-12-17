@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "@/app/globals.css";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import { auth } from "@/lib/auth";
-import { SessionProvider } from "next-auth/react";
+import AuthProvider from "@/components/admin/AuthProvider";
 
 export const metadata: Metadata = {
     title: "Admin Dashboard - DryON",
@@ -20,7 +20,7 @@ export default async function AdminLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body className="bg-slate-100 min-h-screen">
-                <SessionProvider session={session}>
+                <AuthProvider session={session}>
                     {showSidebar && <AdminSidebar />}
                     <main className={`
                         min-h-screen transition-all duration-300
@@ -50,7 +50,7 @@ export default async function AdminLayout({
                             {children}
                         </div>
                     </main>
-                </SessionProvider>
+                </AuthProvider>
             </body>
         </html>
     );
