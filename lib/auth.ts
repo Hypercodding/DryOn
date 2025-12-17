@@ -1,6 +1,11 @@
 import NextAuth, { NextAuthConfig } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { prisma } from '@/lib/prisma';
+import connectDB from '@/lib/mongodb';
+import AdminUser from '@/models/AdminUser';
+import Role from '@/models/Role';
+import RolePermission from '@/models/RolePermission';
+import Permission from '@/models/Permission';
+import ActivityLog from '@/models/ActivityLog';
 import bcrypt from 'bcryptjs';
 
 export const authConfig: NextAuthConfig = {
@@ -14,53 +19,61 @@ export const authConfig: NextAuthConfig = {
             async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) return null;
 
-                const user = await prisma.adminUser.findUnique({
-                    where: { email: credentials.email as string },
-                    include: { 
-                        role: {
-                            include: { 
-                                rolePermissions: {
-                                    include: { permission: true }
-                                }
-                            }
-                        }
+                try {
+                    await connectDB();
+
+                    const user = await AdminUser.findOne({ email: credentials.email as string })
+                        .populate('roleId');
+
+                    if (!user || !user.isActive) {
+                        console.log('User not found or inactive:', credentials.email);
+                        return null;
                     }
-                });
 
-                if (!user || !user.isActive) return null;
+                    const passwordsMatch = await bcrypt.compare(
+                        credentials.password as string,
+                        user.password
+                    );
 
-                const passwordsMatch = await bcrypt.compare(
-                    credentials.password as string,
-                    user.password
-                );
+                    if (!passwordsMatch) {
+                        console.log('Password mismatch for:', credentials.email);
+                        return null;
+                    }
 
-                if (passwordsMatch) {
+                    // Get role permissions
+                    const role = user.roleId as any;
+                    let permissions: string[] = [];
+
+                    if (role?._id) {
+                        const rolePermissions = await RolePermission.find({ roleId: role._id })
+                            .populate('permissionId');
+                        permissions = rolePermissions
+                            .map((rp: any) => rp.permissionId?.name)
+                            .filter(Boolean);
+                    }
+
                     // Update last login
-                    await prisma.adminUser.update({
-                        where: { id: user.id },
-                        data: { lastLoginAt: new Date() }
-                    });
+                    await AdminUser.findByIdAndUpdate(user._id, { lastLoginAt: new Date() });
 
                     // Log the login
-                    await prisma.activityLog.create({
-                        data: {
-                            userId: user.id,
-                            action: 'login',
-                            module: 'auth',
-                            details: JSON.stringify({ email: user.email }),
-                        }
+                    await ActivityLog.create({
+                        userId: user._id,
+                        action: 'login',
+                        module: 'auth',
+                        details: JSON.stringify({ email: user.email }),
                     });
 
                     return { 
-                        id: user.id, 
+                        id: user._id.toString(), 
                         email: user.email, 
                         name: user.name,
-                        role: user.role?.name || 'User',
-                        permissions: user.role?.rolePermissions.map(rp => rp.permission.name) || []
+                        role: role?.name || 'User',
+                        permissions
                     };
+                } catch (error) {
+                    console.error('Auth error:', error);
+                    return null;
                 }
-
-                return null;
             }
         })
     ],

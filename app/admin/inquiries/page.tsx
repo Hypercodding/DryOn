@@ -102,9 +102,9 @@ export default function InquiriesPage() {
                                 <p>No inquiries yet</p>
                             </div>
                         ) : (
-                            inquiries.map((inquiry) => (
+                            inquiries.map((inquiry, idx) => (
                                 <div
-                                    key={inquiry.id}
+                                    key={inquiry.id || `inquiry-${idx}`}
                                     onClick={() => {
                                         setSelectedInquiry(inquiry);
                                         if (inquiry.status === 'new') {

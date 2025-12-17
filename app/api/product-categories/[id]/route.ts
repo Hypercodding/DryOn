@@ -1,20 +1,26 @@
 import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import connectDB from "@/lib/mongodb";
+import ProductCategory from "@/models/ProductCategory";
+import ProductCategoryTranslation from "@/models/ProductCategoryTranslation";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+    await connectDB();
     const { id } = await params;
 
-    const category = await prisma.productCategory.findUnique({
-        where: { id },
-        include: { translations: true }
-    });
+    const category = await ProductCategory.findById(id);
 
     if (!category) {
         return NextResponse.json({ error: "Category not found" }, { status: 404 });
     }
 
-    return NextResponse.json(category);
+    const translations = await ProductCategoryTranslation.find({ productCategoryId: id });
+    const categoryObj = {
+        ...category.toObject(),
+        translations
+    };
+
+    return NextResponse.json(categoryObj);
 }
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -24,33 +30,41 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     const { id } = await params;
 
     try {
+        await connectDB();
         const body = await req.json();
         const { slug, icon, color, sortOrder, translations } = body;
 
         // Delete existing translations and recreate
-        await prisma.productCategoryTranslation.deleteMany({
-            where: { productCategoryId: id }
-        });
+        await ProductCategoryTranslation.deleteMany({ productCategoryId: id });
 
-        const category = await prisma.productCategory.update({
-            where: { id },
-            data: {
-                slug,
-                icon,
-                color,
-                sortOrder,
-                translations: {
-                    create: translations.map((t: { locale: string; name: string; description?: string }) => ({
-                        locale: t.locale,
-                        name: t.name,
-                        description: t.description || ''
-                    }))
-                }
-            },
-            include: { translations: true }
-        });
+        const category = await ProductCategory.findByIdAndUpdate(
+            id,
+            { slug, icon, color, sortOrder },
+            { new: true }
+        );
 
-        return NextResponse.json(category);
+        if (!category) {
+            return NextResponse.json({ error: "Category not found" }, { status: 404 });
+        }
+
+        if (translations && translations.length > 0) {
+            await ProductCategoryTranslation.insertMany(
+                translations.map((t: { locale: string; name: string; description?: string }) => ({
+                    productCategoryId: id,
+                    locale: t.locale,
+                    name: t.name,
+                    description: t.description || ''
+                }))
+            );
+        }
+
+        const categoryTranslations = await ProductCategoryTranslation.find({ productCategoryId: id });
+        const categoryObj = {
+            ...category.toObject(),
+            translations: categoryTranslations
+        };
+
+        return NextResponse.json(categoryObj);
     } catch (error) {
         console.error(error);
         return NextResponse.json({ error: "Error updating category" }, { status: 500 });
@@ -64,9 +78,9 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     const { id } = await params;
 
     try {
-        await prisma.productCategory.delete({
-            where: { id }
-        });
+        await connectDB();
+        await ProductCategory.findByIdAndDelete(id);
+        await ProductCategoryTranslation.deleteMany({ productCategoryId: id });
 
         return NextResponse.json({ success: true });
     } catch (error) {

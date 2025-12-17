@@ -190,7 +190,7 @@ export default function ProductsSection() {
 
                             return (
                                 <motion.div
-                                    key={category.id}
+                                    key={category.id || category.slug || `category-${catIdx}`}
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
@@ -229,7 +229,7 @@ export default function ProductsSection() {
                                     <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
                                         {displayProducts.map((product, idx) => (
                                             <motion.div
-                                                key={product.id}
+                                                key={product.id || product.sku || `${category.id}-${idx}`}
                                                 initial={{ opacity: 0, y: 20 }}
                                                 whileInView={{ opacity: 1, y: 0 }}
                                                 viewport={{ once: true }}

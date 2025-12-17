@@ -85,9 +85,9 @@ export default function ContainerVisualizer({ points, onChange, editable = false
                 />
 
                 {/* Points Overlay */}
-                {points.map((p) => (
+                {points.map((p, idx) => (
                     <div
-                        key={p.id}
+                        key={p.id || `point-${idx}`}
                         style={{ left: `${p.x}%`, top: `${p.y}%` }}
                         className="absolute -translate-x-1/2 -translate-y-1/2 z-10"
                         onMouseEnter={() => setHoveredPoint(p.id)}

@@ -1,4 +1,6 @@
-import { prisma } from "@/lib/prisma";
+import connectDB from "@/lib/mongodb";
+import Product from "@/models/Product";
+import ProductTranslation from "@/models/ProductTranslation";
 import { Link } from '@/lib/navigation';
 import { notFound } from "next/navigation";
 import ContainerVisualizer from "@/components/ContainerVisualizer";
@@ -8,6 +10,7 @@ export const dynamic = 'force-dynamic';
 export default async function ProductDetailsPage(props: {
     params: Promise<{ locale: string; sku: string }>;
 }) {
+    await connectDB();
     const params = await props.params;
 
     const {
@@ -15,21 +18,17 @@ export default async function ProductDetailsPage(props: {
         sku
     } = params;
 
-    const product = await prisma.product.findUnique({
-        where: { sku },
-        include: {
-            translations: true
-        }
-    });
+    const product = await Product.findOne({ sku });
 
     if (!product) {
         notFound();
     }
 
+    const translations = await ProductTranslation.find({ productId: product._id });
     const translation =
-        product.translations.find(tr => tr.locale === locale) ||
-        product.translations.find(tr => tr.locale === 'en') ||
-        product.translations[0];
+        translations.find(tr => tr.locale === locale) ||
+        translations.find(tr => tr.locale === 'en') ||
+        translations[0];
 
     return (
         <div className="min-h-screen bg-gray-50 py-12 px-4 shadow-inner pt-28">

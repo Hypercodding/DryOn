@@ -35,15 +35,34 @@ export default function UsersPage() {
     });
 
     const fetchData = async () => {
-        const [usersRes, rolesRes] = await Promise.all([
-            fetch('/api/admin/users'),
-            fetch('/api/admin/roles')
-        ]);
-        const usersData = await usersRes.json();
-        const rolesData = await rolesRes.json();
-        setUsers(usersData);
-        setRoles(rolesData);
-        setLoading(false);
+        try {
+            const [usersRes, rolesRes] = await Promise.all([
+                fetch('/api/admin/users'),
+                fetch('/api/admin/roles')
+            ]);
+
+            if (!usersRes.ok) {
+                console.error('Failed to fetch users:', usersRes.status);
+                setUsers([]);
+            } else {
+                const usersData = await usersRes.json();
+                setUsers(usersData);
+            }
+
+            if (!rolesRes.ok) {
+                console.error('Failed to fetch roles:', rolesRes.status);
+                setRoles([]);
+            } else {
+                const rolesData = await rolesRes.json();
+                setRoles(rolesData);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setUsers([]);
+            setRoles([]);
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -238,8 +257,8 @@ export default function UsersPage() {
                                 </td>
                             </tr>
                         ) : (
-                            users.map((user) => (
-                                <tr key={user.id} className="hover:bg-slate-50">
+                            users.map((user, idx) => (
+                                <tr key={user.id || user.email || `user-${idx}`} className="hover:bg-slate-50">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
                                             <div className="w-10 h-10 bg-gradient-to-br from-primary to-emerald-400 rounded-full flex items-center justify-center text-white font-bold">

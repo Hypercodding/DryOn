@@ -416,7 +416,7 @@ export default async function DamagePreventionPage() {
                     <div className="space-y-8">
                         {moistureProblems.map((problem, idx) => (
                             <div 
-                                key={problem.id}
+                                key={problem.id || `problem-${idx}`}
                                 id={problem.id}
                                 className={`${problem.bgColor} ${problem.borderColor} border rounded-2xl overflow-hidden scroll-mt-24 relative`}
                             >

@@ -281,8 +281,8 @@ export default function IndustriesPage() {
                                 </td>
                             </tr>
                         ) : (
-                            industries.map((ind) => (
-                                <tr key={ind.id} className="hover:bg-gray-50">
+                            industries.map((ind, idx) => (
+                                <tr key={ind.id || ind.slug || `industry-${idx}`} className="hover:bg-gray-50">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
                                             <div className={`w-10 h-10 rounded-lg ${ind.color} flex items-center justify-center shadow`}>

@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import connectDB from '@/lib/mongodb';
+import Product from '@/models/Product';
+import ProductTranslation from '@/models/ProductTranslation';
+import ProductCategory from '@/models/ProductCategory';
+import ProductCategoryTranslation from '@/models/ProductCategoryTranslation';
+import IndustryCategory from '@/models/IndustryCategory';
+import IndustryCategoryTranslation from '@/models/IndustryCategoryTranslation';
 
 export async function GET(req: Request) {
     try {
+        await connectDB();
         const { searchParams } = new URL(req.url);
         const query = searchParams.get('q')?.toLowerCase().trim();
         const locale = searchParams.get('locale') || 'en';
@@ -17,47 +24,123 @@ export async function GET(req: Request) {
             });
         }
 
-        // Search Products (SQLite uses LIKE which is case-insensitive by default)
-        const products = await prisma.product.findMany({
-            where: {
-                OR: [
-                    { sku: { contains: query } },
-                    { translations: { some: { name: { contains: query } } } },
-                    { translations: { some: { description: { contains: query } } } },
-                ]
-            },
-            include: {
-                translations: true,
-                category: {
-                    include: { translations: true }
-                }
-            },
-            take: limit
+        // Search Products - find by SKU or translations
+        const productTranslations = await ProductTranslation.find({
+            $or: [
+                { name: { $regex: query, $options: 'i' } },
+                { description: { $regex: query, $options: 'i' } }
+            ]
+        }).limit(limit);
+
+        const skuProducts = await Product.find({
+            sku: { $regex: query, $options: 'i' }
+        }).limit(limit);
+
+        const productIds = [
+            ...productTranslations.map(t => t.productId),
+            ...skuProducts.map(p => p._id)
+        ];
+
+        const uniqueProductIds = [...new Set(productIds.map(id => id.toString()))];
+        const products = await Product.find({
+            _id: { $in: uniqueProductIds }
+        })
+        .populate('categoryId')
+        .limit(limit);
+
+        // Get translations for products
+        const productIdsForTrans = products.map(p => p._id);
+        const allProductTranslations = await ProductTranslation.find({
+            productId: { $in: productIdsForTrans }
+        });
+
+        // Get category translations
+        const categoryIds = products
+            .map(p => p.categoryId)
+            .filter(Boolean)
+            .map((c: any) => c._id);
+        const categoryTranslations = await ProductCategoryTranslation.find({
+            productCategoryId: { $in: categoryIds }
+        });
+
+        // Attach translations to products
+        const productsWithTranslations = products.map(product => {
+            const translations = allProductTranslations.filter(t => t.productId.toString() === product._id.toString());
+            const category = product.categoryId as any;
+            const catTranslations = category ? categoryTranslations.filter(t => t.productCategoryId.toString() === category._id.toString()) : [];
+            return {
+                ...product.toObject(),
+                translations,
+                category: category ? {
+                    ...category.toObject(),
+                    translations: catTranslations
+                } : null
+            };
         });
 
         // Search Product Categories
-        const categories = await prisma.productCategory.findMany({
-            where: {
-                OR: [
-                    { slug: { contains: query } },
-                    { translations: { some: { name: { contains: query } } } },
-                    { translations: { some: { description: { contains: query } } } },
-                ]
-            },
-            include: { translations: true },
-            take: limit
+        const categoryTrans = await ProductCategoryTranslation.find({
+            $or: [
+                { name: { $regex: query, $options: 'i' } },
+                { description: { $regex: query, $options: 'i' } }
+            ]
+        }).limit(limit);
+
+        const slugCategories = await ProductCategory.find({
+            slug: { $regex: query, $options: 'i' }
+        }).limit(limit);
+
+        const categoryIdsForSearch = [
+            ...categoryTrans.map(t => t.productCategoryId),
+            ...slugCategories.map(c => c._id)
+        ];
+
+        const uniqueCategoryIds = [...new Set(categoryIdsForSearch.map(id => id.toString()))];
+        const categories = await ProductCategory.find({
+            _id: { $in: uniqueCategoryIds }
+        }).limit(limit);
+
+        const allCategoryTranslations = await ProductCategoryTranslation.find({
+            productCategoryId: { $in: uniqueCategoryIds }
         });
 
-        // Search Industry Categories (IndustryCategoryTranslation only has name, no description)
-        const industries = await prisma.industryCategory.findMany({
-            where: {
-                OR: [
-                    { slug: { contains: query } },
-                    { translations: { some: { name: { contains: query } } } },
-                ]
-            },
-            include: { translations: true },
-            take: limit
+        const categoriesWithTranslations = categories.map(category => {
+            const translations = allCategoryTranslations.filter(t => t.productCategoryId.toString() === category._id.toString());
+            return {
+                ...category.toObject(),
+                translations
+            };
+        });
+
+        // Search Industry Categories
+        const industryTrans = await IndustryCategoryTranslation.find({
+            name: { $regex: query, $options: 'i' }
+        }).limit(limit);
+
+        const slugIndustries = await IndustryCategory.find({
+            slug: { $regex: query, $options: 'i' }
+        }).limit(limit);
+
+        const industryIdsForSearch = [
+            ...industryTrans.map(t => t.industryCategoryId),
+            ...slugIndustries.map(i => i._id)
+        ];
+
+        const uniqueIndustryIds = [...new Set(industryIdsForSearch.map(id => id.toString()))];
+        const industries = await IndustryCategory.find({
+            _id: { $in: uniqueIndustryIds }
+        }).limit(limit);
+
+        const allIndustryTranslations = await IndustryCategoryTranslation.find({
+            industryCategoryId: { $in: uniqueIndustryIds }
+        });
+
+        const industriesWithTranslations = industries.map(industry => {
+            const translations = allIndustryTranslations.filter(t => t.industryCategoryId.toString() === industry._id.toString());
+            return {
+                ...industry.toObject(),
+                translations
+            };
         });
 
         // Static pages to search (with translations)
@@ -161,11 +244,11 @@ export async function GET(req: Request) {
         });
 
         // Format products with translations
-        const formattedProducts = products.map(product => {
-            const translation = product.translations.find(t => t.locale === locale) || product.translations[0];
-            const categoryTranslation = product.category?.translations?.find(t => t.locale === locale) || product.category?.translations?.[0];
+        const formattedProducts = productsWithTranslations.map(product => {
+            const translation = product.translations.find((t: any) => t.locale === locale) || product.translations[0];
+            const categoryTranslation = product.category?.translations?.find((t: any) => t.locale === locale) || product.category?.translations?.[0];
             return {
-                id: product.id,
+                id: product._id.toString(),
                 sku: product.sku,
                 name: translation?.name || product.sku,
                 description: translation?.description || '',
@@ -176,10 +259,10 @@ export async function GET(req: Request) {
         });
 
         // Format categories with translations
-        const formattedCategories = categories.map(cat => {
-            const translation = cat.translations.find(t => t.locale === locale) || cat.translations[0];
+        const formattedCategories = categoriesWithTranslations.map(cat => {
+            const translation = cat.translations.find((t: any) => t.locale === locale) || cat.translations[0];
             return {
-                id: cat.id,
+                id: cat._id.toString(),
                 slug: cat.slug,
                 name: translation?.name || cat.slug,
                 description: translation?.description || '',
@@ -190,10 +273,10 @@ export async function GET(req: Request) {
         });
 
         // Format industries with translations (IndustryCategoryTranslation only has name)
-        const formattedIndustries = industries.map(ind => {
-            const translation = ind.translations.find(t => t.locale === locale) || ind.translations[0];
+        const formattedIndustries = industriesWithTranslations.map(ind => {
+            const translation = ind.translations.find((t: any) => t.locale === locale) || ind.translations[0];
             return {
-                id: ind.id,
+                id: ind._id.toString(),
                 slug: ind.slug,
                 name: translation?.name || ind.slug,
                 description: '', // IndustryCategoryTranslation doesn't have description field

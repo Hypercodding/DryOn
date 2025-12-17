@@ -1,4 +1,8 @@
-import { prisma } from "@/lib/prisma";
+import connectDB from "@/lib/mongodb";
+import Product from "@/models/Product";
+import ProductTranslation from "@/models/ProductTranslation";
+import ProductCategoryTranslation from "@/models/ProductCategoryTranslation";
+import IndustryCategoryTranslation from "@/models/IndustryCategoryTranslation";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
@@ -9,19 +13,40 @@ export default async function ProductList() {
     const session = await auth();
     if (!session) redirect("/admin/login");
 
-    const products = await prisma.product.findMany({
-        include: {
-            translations: true,
-            category: {
-                include: { translations: true }
-            },
-            industry: {
-                include: { translations: true }
-            }
-        },
-        orderBy: {
-            createdAt: 'desc'
-        }
+    await connectDB();
+
+    const products = await Product.find({})
+        .populate('categoryId')
+        .populate('industryId')
+        .sort({ createdAt: -1 });
+
+    const productIds = products.map(p => p._id);
+    const translations = await ProductTranslation.find({ productId: { $in: productIds } });
+    const categoryIds = products.map(p => p.categoryId).filter(Boolean);
+    const industryIds = products.map(p => p.industryId).filter(Boolean);
+    const categoryTranslations = await ProductCategoryTranslation.find({ productCategoryId: { $in: categoryIds } });
+    const industryTranslations = await IndustryCategoryTranslation.find({ industryCategoryId: { $in: industryIds } });
+
+    const productsWithTranslations = products.map(product => {
+        const productTrans = translations.filter(t => t.productId.toString() === product._id.toString());
+        const category = product.categoryId as any;
+        const industry = product.industryId as any;
+        const catTrans = category ? categoryTranslations.filter(t => t.productCategoryId.toString() === category._id.toString()) : [];
+        const indTrans = industry ? industryTranslations.filter(t => t.industryCategoryId.toString() === industry._id.toString()) : [];
+        
+        return {
+            ...product.toObject(),
+            id: product._id.toString(),
+            translations: productTrans,
+            category: category ? {
+                ...category.toObject(),
+                translations: catTrans
+            } : null,
+            industry: industry ? {
+                ...industry.toObject(),
+                translations: indTrans
+            } : null
+        };
     });
 
     return (
@@ -57,10 +82,10 @@ export default async function ProductList() {
                                 </td>
                             </tr>
                         ) : (
-                            products.map(product => {
-                                const enTrans = product.translations.find(t => t.locale === 'en');
-                                const catTrans = product.category?.translations.find(t => t.locale === 'en');
-                                const indTrans = product.industry?.translations.find(t => t.locale === 'en');
+                            productsWithTranslations.map(product => {
+                                const enTrans = product.translations.find((t: any) => t.locale === 'en');
+                                const catTrans = product.category?.translations.find((t: any) => t.locale === 'en');
+                                const indTrans = product.industry?.translations.find((t: any) => t.locale === 'en');
                                 
                                 return (
                                     <tr key={product.id} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">

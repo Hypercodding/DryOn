@@ -309,8 +309,8 @@ export default function CategoriesPage() {
                                 </td>
                             </tr>
                         ) : (
-                            categories.map((cat) => (
-                                <tr key={cat.id} className="hover:bg-gray-50">
+                            categories.map((cat, idx) => (
+                                <tr key={cat.id || cat.slug || `category-${idx}`} className="hover:bg-gray-50">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
                                             <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${cat.color} flex items-center justify-center shadow`}>

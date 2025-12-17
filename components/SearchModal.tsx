@@ -315,7 +315,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                                     const resultIdx = (results?.pages?.length || 0) + idx;
                                                     return (
                                                         <Link
-                                                            key={product.id}
+                                                            key={product.id || product.sku || `product-${idx}`}
                                                             href={product.href}
                                                             onClick={onClose}
                                                             className={`flex items-center gap-4 px-5 py-3 hover:bg-gray-50 transition-colors group ${
@@ -356,7 +356,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                                     const resultIdx = (results?.pages?.length || 0) + (results?.products?.length || 0) + idx;
                                                     return (
                                                         <Link
-                                                            key={category.id}
+                                                            key={category.id || category.slug || `category-${idx}`}
                                                             href={category.href}
                                                             onClick={onClose}
                                                             className={`flex items-center gap-4 px-5 py-3 hover:bg-gray-50 transition-colors group ${
@@ -389,7 +389,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                                     const resultIdx = (results?.pages?.length || 0) + (results?.products?.length || 0) + (results?.categories?.length || 0) + idx;
                                                     return (
                                                         <Link
-                                                            key={industry.id}
+                                                            key={industry.id || industry.slug || `industry-${idx}`}
                                                             href={industry.href}
                                                             onClick={onClose}
                                                             className={`flex items-center gap-4 px-5 py-3 hover:bg-gray-50 transition-colors group ${

@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import connectDB from "@/lib/mongodb";
+import ContactInquiry from "@/models/ContactInquiry";
 import { NextResponse } from "next/server";
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -9,13 +10,19 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     const { id } = await params;
 
     try {
+        await connectDB();
         const body = await req.json();
         const { status, notes } = body;
 
-        const inquiry = await prisma.contactInquiry.update({
-            where: { id },
-            data: { status, notes }
-        });
+        const inquiry = await ContactInquiry.findByIdAndUpdate(
+            id,
+            { status, notes },
+            { new: true }
+        );
+
+        if (!inquiry) {
+            return NextResponse.json({ error: "Inquiry not found" }, { status: 404 });
+        }
 
         return NextResponse.json(inquiry);
     } catch (error) {
@@ -31,9 +38,8 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     const { id } = await params;
 
     try {
-        await prisma.contactInquiry.delete({
-            where: { id }
-        });
+        await connectDB();
+        await ContactInquiry.findByIdAndDelete(id);
 
         return NextResponse.json({ success: true });
     } catch (error) {

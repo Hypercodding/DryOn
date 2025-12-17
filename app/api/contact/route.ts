@@ -1,4 +1,5 @@
-import { prisma } from "@/lib/prisma";
+import connectDB from "@/lib/mongodb";
+import ContactInquiry from "@/models/ContactInquiry";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
@@ -6,6 +7,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
     try {
+        await connectDB();
         const body = await req.json();
         const { name, email, phone, subject, message } = body;
 
@@ -23,14 +25,12 @@ export async function POST(req: Request) {
             : message;
 
         // Save to database
-        const inquiry = await prisma.contactInquiry.create({
-            data: {
-                name,
-                email,
-                phone: phone || null,
-                message: fullMessage,
-                status: "new",
-            },
+        const inquiry = await ContactInquiry.create({
+            name,
+            email,
+            phone: phone || undefined,
+            message: fullMessage,
+            status: "new",
         });
 
         // Send email notifications to company emails
@@ -160,7 +160,7 @@ ${message}
             { 
                 success: true, 
                 message: "Your message has been sent successfully. We'll get back to you soon!",
-                id: inquiry.id 
+                id: inquiry._id.toString() 
             },
             { status: 201 }
         );

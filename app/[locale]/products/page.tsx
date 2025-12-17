@@ -216,11 +216,11 @@ export default function ProductsPage() {
                         </div>
                     ) : (
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                            {categories.map((cat) => {
+                            {categories.map((cat, idx) => {
                                 const IconComponent = cat.icon;
                                 return (
                                     <button
-                                        key={cat.id}
+                                        key={cat.id || cat.slug || `cat-${idx}`}
                                         onClick={() => setSelectedCategory(cat.slug)}
                                         className={`p-4 rounded-xl text-left transition-all ${
                                             selectedCategory === cat.slug 
@@ -269,7 +269,7 @@ export default function ProductsPage() {
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {filteredProducts.map((product) => {
+                            {filteredProducts.map((product, idx) => {
                                 const translation = getTranslation(product);
                                 const images = JSON.parse(product.images || '[]');
                                 const categorySlug = product.category?.slug || '';
@@ -278,7 +278,7 @@ export default function ProductsPage() {
 
                                 return (
                                     <Link
-                                        key={product.id}
+                                        key={product.id || product.sku || `product-${idx}`}
                                         href={`/products/${product.sku}`}
                                         className="group block h-full"
                                     >

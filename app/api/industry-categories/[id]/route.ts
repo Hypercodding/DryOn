@@ -1,20 +1,26 @@
 import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import connectDB from "@/lib/mongodb";
+import IndustryCategory from "@/models/IndustryCategory";
+import IndustryCategoryTranslation from "@/models/IndustryCategoryTranslation";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+    await connectDB();
     const { id } = await params;
 
-    const industry = await prisma.industryCategory.findUnique({
-        where: { id },
-        include: { translations: true }
-    });
+    const industry = await IndustryCategory.findById(id);
 
     if (!industry) {
         return NextResponse.json({ error: "Industry not found" }, { status: 404 });
     }
 
-    return NextResponse.json(industry);
+    const translations = await IndustryCategoryTranslation.find({ industryCategoryId: id });
+    const industryObj = {
+        ...industry.toObject(),
+        translations
+    };
+
+    return NextResponse.json(industryObj);
 }
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -24,32 +30,40 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     const { id } = await params;
 
     try {
+        await connectDB();
         const body = await req.json();
         const { slug, icon, color, sortOrder, translations } = body;
 
         // Delete existing translations and recreate
-        await prisma.industryCategoryTranslation.deleteMany({
-            where: { industryCategoryId: id }
-        });
+        await IndustryCategoryTranslation.deleteMany({ industryCategoryId: id });
 
-        const industry = await prisma.industryCategory.update({
-            where: { id },
-            data: {
-                slug,
-                icon,
-                color,
-                sortOrder,
-                translations: {
-                    create: translations.map((t: { locale: string; name: string }) => ({
-                        locale: t.locale,
-                        name: t.name
-                    }))
-                }
-            },
-            include: { translations: true }
-        });
+        const industry = await IndustryCategory.findByIdAndUpdate(
+            id,
+            { slug, icon, color, sortOrder },
+            { new: true }
+        );
 
-        return NextResponse.json(industry);
+        if (!industry) {
+            return NextResponse.json({ error: "Industry not found" }, { status: 404 });
+        }
+
+        if (translations && translations.length > 0) {
+            await IndustryCategoryTranslation.insertMany(
+                translations.map((t: { locale: string; name: string }) => ({
+                    industryCategoryId: id,
+                    locale: t.locale,
+                    name: t.name
+                }))
+            );
+        }
+
+        const industryTranslations = await IndustryCategoryTranslation.find({ industryCategoryId: id });
+        const industryObj = {
+            ...industry.toObject(),
+            translations: industryTranslations
+        };
+
+        return NextResponse.json(industryObj);
     } catch (error) {
         console.error(error);
         return NextResponse.json({ error: "Error updating industry" }, { status: 500 });
@@ -63,9 +77,9 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     const { id } = await params;
 
     try {
-        await prisma.industryCategory.delete({
-            where: { id }
-        });
+        await connectDB();
+        await IndustryCategory.findByIdAndDelete(id);
+        await IndustryCategoryTranslation.deleteMany({ industryCategoryId: id });
 
         return NextResponse.json({ success: true });
     } catch (error) {

@@ -251,11 +251,11 @@ export default function Navbar() {
                                         </Link>
                                         
                                         {/* Dynamic Product Categories */}
-                                        {productCategories.map((category) => {
+                                        {productCategories.map((category, idx) => {
                                             const IconComponent = iconMap[category.icon] || Package;
                                             return (
                                                 <Link
-                                                    key={category.id}
+                                                    key={category.id || category.slug || `cat-${idx}`}
                                                     href={`/products?category=${category.slug}`}
                                                     className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors group"
                                                 >
@@ -316,11 +316,11 @@ export default function Navbar() {
                                         </Link>
                                         
                                         {/* Dynamic Industries */}
-                                        {industries.map((industry) => {
+                                        {industries.map((industry, idx) => {
                                             const IconComponent = iconMap[industry.icon] || Factory;
                                             return (
                                                 <Link
-                                                    key={industry.id}
+                                                    key={industry.id || industry.slug || `ind-${idx}`}
                                                     href={`/solutions-by-industry?industry=${industry.slug}`}
                                                     className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors group"
                                                 >
@@ -480,11 +480,11 @@ export default function Navbar() {
                                                 <Package className="w-4 h-4" />
                                                 <span className="normal-case">All Products</span>
                                             </Link>
-                                            {productCategories.map((category) => {
+                                            {productCategories.map((category, idx) => {
                                                 const IconComponent = iconMap[category.icon] || Package;
                                                 return (
                                                     <Link
-                                                        key={category.id}
+                                                        key={category.id || category.slug || `cat-${idx}`}
                                                         href={`/products?category=${category.slug}`}
                                                         onClick={() => {
                                                             setShowMobileMenu(false);
@@ -530,11 +530,11 @@ export default function Navbar() {
                                                 <Factory className="w-4 h-4" />
                                                 <span className="normal-case">All Industries</span>
                                             </Link>
-                                            {industries.map((industry) => {
+                                            {industries.map((industry, idx) => {
                                                 const IconComponent = iconMap[industry.icon] || Factory;
                                                 return (
                                                     <Link
-                                                        key={industry.id}
+                                                        key={industry.id || industry.slug || `ind-${idx}`}
                                                         href={`/solutions-by-industry?industry=${industry.slug}`}
                                                         onClick={() => {
                                                             setShowMobileMenu(false);

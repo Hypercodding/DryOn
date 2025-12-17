@@ -128,7 +128,7 @@ export default function LogsPage() {
                                 </td>
                             </tr>
                         ) : (
-                            logs.map((log) => {
+                            logs.map((log, idx) => {
                                 const Icon = MODULE_ICONS[log.module] || Activity;
                                 let details = {};
                                 try {
@@ -136,7 +136,7 @@ export default function LogsPage() {
                                 } catch {}
 
                                 return (
-                                    <tr key={log.id} className="hover:bg-slate-50">
+                                    <tr key={log.id || `log-${idx}`} className="hover:bg-slate-50">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center text-slate-600 font-medium text-sm">
@@ -158,7 +158,14 @@ export default function LogsPage() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className="text-sm text-slate-500 truncate max-w-xs block">
-                                                {Object.entries(details).map(([k, v]) => `${k}: ${v}`).join(', ') || '-'}
+                                                {Object.entries(details).length > 0 
+                                                    ? Object.entries(details).map(([k, v], detailIdx) => (
+                                                        <span key={`${k}-${detailIdx}`}>
+                                                            {k}: {String(v)}{detailIdx < Object.entries(details).length - 1 ? ', ' : ''}
+                                                        </span>
+                                                    ))
+                                                    : '-'
+                                                }
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-sm text-slate-500">

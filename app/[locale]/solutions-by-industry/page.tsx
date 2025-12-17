@@ -200,11 +200,11 @@ export default function SolutionsByIndustryPage() {
                             >
                                 {t('allIndustries')}
                             </button>
-                            {industries.map((industry) => {
+                            {industries.map((industry, idx) => {
                                 const IconComponent = iconMap[industry.icon] || Factory;
                                 return (
                                     <button
-                                        key={industry.id}
+                                        key={industry.id || industry.slug || `industry-${idx}`}
                                         onClick={() => handleIndustrySelect(industry.slug)}
                                         className={`px-5 py-2.5 rounded-full font-semibold text-sm transition-all flex items-center gap-2 ${
                                             selectedIndustry === industry.slug 
@@ -287,14 +287,14 @@ export default function SolutionsByIndustryPage() {
                                     </div>
                                 ) : (
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        {products.map((product) => {
+                                        {products.map((product, idx) => {
                                             const translation = getTranslation(product);
                                             const images = JSON.parse(product.images || '[]');
                                             const categoryName = getCategoryName(product);
 
                                             return (
                                                 <motion.div
-                                                    key={product.id}
+                                                    key={product.id || product.sku || `product-${idx}`}
                                                     initial={{ opacity: 0, y: 20 }}
                                                     animate={{ opacity: 1, y: 0 }}
                                                 >
@@ -375,7 +375,7 @@ export default function SolutionsByIndustryPage() {
                                 
                                 return (
                                     <motion.div
-                                        key={industry.id}
+                                        key={industry.id || industry.slug || `industry-${idx}`}
                                         initial={{ opacity: 0, y: 30 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: idx * 0.1 }}

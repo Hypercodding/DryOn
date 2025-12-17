@@ -1,6 +1,14 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import connectDB from "@/lib/mongodb";
+import Product from "@/models/Product";
+import ProductCategory from "@/models/ProductCategory";
+import IndustryCategory from "@/models/IndustryCategory";
+import AdminUser from "@/models/AdminUser";
+import ContactInquiry from "@/models/ContactInquiry";
+import ActivityLog from "@/models/ActivityLog";
+import ProductTranslation from "@/models/ProductTranslation";
+import ProductCategoryTranslation from "@/models/ProductCategoryTranslation";
 import { 
     Package, Tags, Factory, Users, MessageSquare, 
     TrendingUp, ArrowUpRight, ArrowDownRight, Activity,
@@ -9,6 +17,8 @@ import {
 import Link from 'next/link';
 
 async function getDashboardStats() {
+    await connectDB();
+    
     const [
         productsCount,
         categoriesCount,
@@ -16,26 +26,51 @@ async function getDashboardStats() {
         usersCount,
         inquiriesCount,
         newInquiriesCount,
-        recentProducts,
-        recentLogs,
+        recentProductsData,
+        recentLogsData,
     ] = await Promise.all([
-        prisma.product.count(),
-        prisma.productCategory.count(),
-        prisma.industryCategory.count(),
-        prisma.adminUser.count(),
-        prisma.contactInquiry.count(),
-        prisma.contactInquiry.count({ where: { status: 'new' } }),
-        prisma.product.findMany({
-            take: 5,
-            orderBy: { createdAt: 'desc' },
-            include: { translations: true, category: { include: { translations: true } } }
-        }),
-        prisma.activityLog.findMany({
-            take: 10,
-            orderBy: { createdAt: 'desc' },
-            include: { user: true }
-        }),
+        Product.countDocuments(),
+        ProductCategory.countDocuments(),
+        IndustryCategory.countDocuments(),
+        AdminUser.countDocuments(),
+        ContactInquiry.countDocuments(),
+        ContactInquiry.countDocuments({ status: 'new' }),
+        Product.find({})
+            .sort({ createdAt: -1 })
+            .limit(5)
+            .populate('categoryId'),
+        ActivityLog.find({})
+            .sort({ createdAt: -1 })
+            .limit(10)
+            .populate('userId', 'email name'),
     ]);
+
+    const recentProductIds = recentProductsData.map(p => p._id);
+    const productTranslations = await ProductTranslation.find({ productId: { $in: recentProductIds } });
+    const categoryIds = recentProductsData.map(p => p.categoryId).filter(Boolean);
+    const categoryTranslations = await ProductCategoryTranslation.find({ productCategoryId: { $in: categoryIds } });
+
+    const recentProducts = recentProductsData.map(product => {
+        const translations = productTranslations.filter(t => t.productId.toString() === product._id.toString());
+        const category = product.categoryId as any;
+        const catTranslations = category ? categoryTranslations.filter(t => t.productCategoryId.toString() === category._id.toString()) : [];
+        
+        return {
+            ...product.toObject(),
+            id: product._id.toString(),
+            translations,
+            category: category ? {
+                ...category.toObject(),
+                translations: catTranslations
+            } : null
+        };
+    });
+
+    const recentLogs = recentLogsData.map(log => ({
+        ...log.toObject(),
+        id: log._id.toString(),
+        user: log.userId
+    }));
 
     return {
         productsCount,
@@ -164,14 +199,14 @@ export default async function AdminDashboard() {
                                 </Link>
                             </div>
                         ) : (
-                            stats.recentProducts.map((product) => {
-                                const translation = product.translations.find(t => t.locale === 'en');
-                                const catTranslation = product.category?.translations.find(t => t.locale === 'en');
+                            stats.recentProducts.map((product, idx) => {
+                                const translation = product.translations.find((t: any) => t.locale === 'en');
+                                const catTranslation = product.category?.translations.find((t: any) => t.locale === 'en');
                                 const images = JSON.parse(product.images || '[]');
                                 
                                 return (
                                     <Link
-                                        key={product.id}
+                                        key={product.id || product.sku || `product-${idx}`}
                                         href={`/admin/products/${product.id}`}
                                         className="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors"
                                     >
@@ -263,15 +298,15 @@ export default async function AdminDashboard() {
                                     <p className="text-sm">No activity yet</p>
                                 </div>
                             ) : (
-                                stats.recentLogs.map((log) => (
-                                    <div key={log.id} className="p-4 hover:bg-slate-50 transition-colors">
+                                stats.recentLogs.map((log, idx) => (
+                                    <div key={log.id || `log-${idx}`} className="p-4 hover:bg-slate-50 transition-colors">
                                         <div className="flex items-start gap-3">
                                             <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
                                                 <Activity className="w-4 h-4 text-slate-500" />
                                             </div>
                                             <div className="flex-1 min-w-0">
                                                 <p className="text-sm text-slate-800">
-                                                    <span className="font-medium">{log.user?.email}</span>
+                                                    <span className="font-medium">{(log.user as any)?.email || 'Unknown'}</span>
                                                     <span className="text-slate-500"> {log.action} </span>
                                                     <span className="font-medium">{log.module}</span>
                                                 </p>

@@ -16,7 +16,11 @@ interface Role {
     name: string;
     description: string;
     color: string;
-    rolePermissions: Array<{ permission: Permission }>;
+    rolePermissions: Array<{ 
+        id?: string;
+        permission?: Permission | null;
+        permissionId?: string | Permission | null;
+    }>;
     _count: { users: number };
 }
 
@@ -71,7 +75,10 @@ export default function RolesPage() {
             name: role.name,
             description: role.description,
             color: role.color,
-            permissionIds: role.rolePermissions.map(rp => rp.permission.id),
+            permissionIds: role.rolePermissions
+                .filter(rp => rp && rp.permission && rp.permission.id)
+                .map(rp => rp.permission?.id)
+                .filter((id): id is string => Boolean(id)),
         });
         setEditingId(role.id);
         setShowForm(true);
@@ -258,8 +265,8 @@ export default function RolesPage() {
             )}
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {roles.map((role) => (
-                    <div key={role.id} className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                {roles.map((role, idx) => (
+                    <div key={role.id || role.name || `role-${idx}`} className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
                         <div className={`${role.color} p-6 text-white`}>
                             <div className="flex items-start justify-between">
                                 <div>
@@ -274,18 +281,35 @@ export default function RolesPage() {
                                 <Users className="w-4 h-4" />
                                 <span>{role._count.users} users</span>
                                 <span className="mx-2">•</span>
-                                <span>{role.rolePermissions.length} permissions</span>
+                                <span>{role.rolePermissions?.length || 0} permissions</span>
                             </div>
                             <div className="flex flex-wrap gap-1 mb-4">
-                                {role.rolePermissions.slice(0, 5).map(rp => (
-                                    <span key={rp.permission.id} className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">
-                                        {rp.permission.name}
-                                    </span>
-                                ))}
-                                {role.rolePermissions.length > 5 && (
-                                    <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">
-                                        +{role.rolePermissions.length - 5} more
-                                    </span>
+                                {role.rolePermissions && role.rolePermissions.length > 0 ? (
+                                    <>
+                                        {role.rolePermissions
+                                            .filter(rp => rp && rp.permission && rp.permission.name)
+                                            .slice(0, 5)
+                                            .map((rp, idx) => {
+                                                const permission = rp.permission;
+                                                if (!permission || !permission.name) return null;
+                                                return (
+                                                    <span 
+                                                        key={permission.id || `perm-${idx}`} 
+                                                        className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded"
+                                                    >
+                                                        {permission.name}
+                                                    </span>
+                                                );
+                                            })
+                                            .filter(Boolean)}
+                                        {role.rolePermissions.filter(rp => rp && rp.permission && rp.permission.name).length > 5 && (
+                                            <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">
+                                                +{role.rolePermissions.filter(rp => rp && rp.permission && rp.permission.name).length - 5} more
+                                            </span>
+                                        )}
+                                    </>
+                                ) : (
+                                    <span className="text-xs text-slate-400 italic">No permissions assigned</span>
                                 )}
                             </div>
                             <div className="flex justify-end gap-2">
