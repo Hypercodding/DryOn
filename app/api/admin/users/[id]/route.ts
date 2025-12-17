@@ -7,6 +7,7 @@ import Permission from "@/models/Permission";
 import ActivityLog from "@/models/ActivityLog";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
     const session = await auth();
@@ -48,10 +49,18 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         const body = await req.json();
         const { email, password, name, roleId, isActive } = body;
 
+        // Validate roleId - only set if it's a valid ObjectId string
+        const validRoleId = roleId && 
+            typeof roleId === 'string' && 
+            roleId.trim() !== '' && 
+            mongoose.Types.ObjectId.isValid(roleId)
+            ? roleId 
+            : undefined;
+
         const updateData: Record<string, unknown> = {
             email,
             name,
-            roleId: roleId || undefined,
+            roleId: validRoleId,
             isActive,
         };
 
@@ -79,9 +88,12 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 
         const { password: _, ...userObj } = user.toObject();
         return NextResponse.json(userObj);
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ error: "Error updating user" }, { status: 500 });
+    } catch (error: any) {
+        console.error('Error updating user:', error);
+        const errorMessage = error?.message?.includes('Cast to ObjectId') 
+            ? 'Invalid role selected. Please select a valid role.'
+            : 'Error updating user';
+        return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
 }
 

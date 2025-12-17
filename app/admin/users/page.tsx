@@ -198,8 +198,8 @@ export default function UsersPage() {
                                     className="w-full border border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-primary focus:border-primary bg-white"
                                 >
                                     <option value="">-- Select Role --</option>
-                                    {roles.map(role => (
-                                        <option key={role.id} value={role.id}>{role.name}</option>
+                                    {roles.map((role, index) => (
+                                        <option key={role.id || `role-${index}`} value={role.id}>{role.name}</option>
                                     ))}
                                 </select>
                             </div>

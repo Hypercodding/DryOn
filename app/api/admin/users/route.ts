@@ -4,6 +4,7 @@ import AdminUser from "@/models/AdminUser";
 import ActivityLog from "@/models/ActivityLog";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 
 export async function GET() {
     const session = await auth();
@@ -30,11 +31,19 @@ export async function POST(req: Request) {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // Validate roleId - only set if it's a valid ObjectId string
+        const validRoleId = roleId && 
+            typeof roleId === 'string' && 
+            roleId.trim() !== '' && 
+            mongoose.Types.ObjectId.isValid(roleId)
+            ? roleId 
+            : undefined;
+
         const user = await AdminUser.create({
             email,
             password: hashedPassword,
             name: name || '',
-            roleId: roleId || undefined,
+            roleId: validRoleId,
             isActive: isActive ?? true,
         });
 
@@ -50,9 +59,12 @@ export async function POST(req: Request) {
 
         const { password: _, ...userObj } = user.toObject();
         return NextResponse.json(userObj);
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ error: "Error creating user" }, { status: 500 });
+    } catch (error: any) {
+        console.error('Error creating user:', error);
+        const errorMessage = error?.message?.includes('Cast to ObjectId') 
+            ? 'Invalid role selected. Please select a valid role.'
+            : 'Error creating user';
+        return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
 }
 
