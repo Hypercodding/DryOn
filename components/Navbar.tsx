@@ -582,13 +582,13 @@ export default function Navbar() {
                             </Link>
 
                             {/* Admin Link */}
-                            <Link
+                            <a
                                 href="/admin/login"
-                                onClick={() => setShowMobileMenu(false)}
+                                onClick={() => setShowMobileMenu(false)}    
                                 className="block py-3 text-center font-semibold text-xs border-2 border-secondary text-secondary hover:bg-secondary hover:text-white rounded-md uppercase tracking-wide transition-all"
                             >
                                 {t('admin')}
-                            </Link>
+                            </a>
 
                             {/* Mobile Icons */}
                             <div className="flex items-center justify-center gap-4 pt-4 border-t border-gray-100">
