@@ -19,29 +19,51 @@ export const authConfig: NextAuthConfig = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
+                console.log('[AUTH] CredentialsProvider.authorize called', {
+                    email: credentials?.email,
+                });
+
                 if (!credentials?.email || !credentials?.password) {
-                    console.error('Missing credentials');
+                    console.error('[AUTH] Missing credentials', {
+                        hasEmail: !!credentials?.email,
+                        hasPassword: !!credentials?.password,
+                    });
                     return null;
                 }
 
                 try {
-                    console.log('Attempting to connect to database...');
+                    console.log('[AUTH] Connecting to MongoDB...');
                     await connectDB();
-                    console.log('Database connected successfully');
+                    console.log('[AUTH] MongoDB connection OK');
 
+                    console.log('[AUTH] Looking up admin user by email...');
                     const user = await AdminUser.findOne({ email: credentials.email as string })
                         .populate('roleId');
 
-                    if (!user || !user.isActive) {
+                    if (!user) {
+                        console.error('[AUTH] No admin user found for email', {
+                            email: credentials.email,
+                        });
                         return null;
                     }
 
+                    if (!user.isActive) {
+                        console.error('[AUTH] Admin user is not active', {
+                            email: user.email,
+                        });
+                        return null;
+                    }
+
+                    console.log('[AUTH] Comparing password hash...');
                     const passwordsMatch = await bcrypt.compare(
                         credentials.password as string,
                         user.password
                     );
 
                     if (!passwordsMatch) {
+                        console.error('[AUTH] Password mismatch for user', {
+                            email: user.email,
+                        });
                         return null;
                     }
 
@@ -50,22 +72,42 @@ export const authConfig: NextAuthConfig = {
                     let permissions: string[] = [];
 
                     if (role?._id) {
+                        console.log('[AUTH] Loading role permissions', {
+                            roleId: String(role._id),
+                            roleName: role.name,
+                        });
                         const rolePermissions = await RolePermission.find({ roleId: role._id })
                             .populate('permissionId');
                         permissions = rolePermissions
                             .map((rp: any) => rp.permissionId?.name)
                             .filter(Boolean);
+                        console.log('[AUTH] Loaded permissions count', {
+                            count: permissions.length,
+                        });
+                    } else {
+                        console.warn('[AUTH] User has no roleId populated', {
+                            email: user.email,
+                            roleId: role?._id,
+                        });
                     }
 
                     // Update last login (don't fail if this fails)
                     try {
+                        console.log('[AUTH] Updating lastLoginAt for user', {
+                            userId: String(user._id),
+                        });
                         await AdminUser.findByIdAndUpdate(user._id, { lastLoginAt: new Date() });
                     } catch (updateError) {
-                        console.error('Failed to update last login:', updateError);
+                        console.error('[AUTH] Failed to update last login', {
+                            error: updateError,
+                        });
                     }
 
                     // Log the login (don't fail if this fails)
                     try {
+                        console.log('[AUTH] Creating ActivityLog entry for login', {
+                            userId: String(user._id),
+                        });
                         await ActivityLog.create({
                             userId: user._id,
                             action: 'login',
@@ -73,8 +115,17 @@ export const authConfig: NextAuthConfig = {
                             details: JSON.stringify({ email: user.email }),
                         });
                     } catch (logError) {
-                        console.error('Failed to log activity:', logError);
+                        console.error('[AUTH] Failed to log activity', {
+                            error: logError,
+                        });
                     }
+
+                    console.log('[AUTH] Login successful, returning session user', {
+                        id: String(user._id),
+                        email: user.email,
+                        role: role?.name || 'User',
+                        permissionsCount: permissions.length,
+                    });
 
                     return { 
                         id: user._id.toString(), 
@@ -84,10 +135,10 @@ export const authConfig: NextAuthConfig = {
                         permissions
                     };
                 } catch (error: any) {
-                    console.error('Auth error:', {
+                    console.error('[AUTH] Unexpected error in authorize', {
                         message: error?.message,
                         stack: error?.stack,
-                        name: error?.name
+                        name: error?.name,
                     });
                     return null;
                 }
