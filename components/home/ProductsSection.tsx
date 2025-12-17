@@ -46,7 +46,11 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     Truck: Package,
 };
 
-export default function ProductsSection() {
+interface ProductsSectionProps {
+    onLoadComplete?: () => void;
+}
+
+export default function ProductsSection({ onLoadComplete }: ProductsSectionProps) {
     const [categoriesWithProducts, setCategoriesWithProducts] = useState<CategoryWithProducts[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const t = useTranslations('ProductsSection');
@@ -88,10 +92,14 @@ export default function ProductsSection() {
                 // Failed to fetch data
             } finally {
                 setIsLoading(false);
+                // Notify parent that loading is complete
+                if (onLoadComplete) {
+                    onLoadComplete();
+                }
             }
         };
         fetchData();
-    }, []);
+    }, [onLoadComplete]);
 
     const getProductName = (product: Product) => {
         const translation = product.translations?.find(t => t.locale === 'en') || product.translations?.[0];
