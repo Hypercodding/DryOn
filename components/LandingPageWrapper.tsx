@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import LandingPageLoader from './LandingPageLoader';
 import Hero from './Hero';
 import Footer from './Footer';
@@ -15,23 +15,32 @@ import HowItWorks from './home/HowItWorks';
 import PartnersSection from './home/PartnersSection';
 import SustainabilityBanner from './home/SustainabilityBanner';
 import FAQSection from './home/FAQSection';
+import type { CategoryWithProducts } from '@/lib/fetchProducts';
 
-export default function LandingPageWrapper() {
-    const [isProductsLoading, setIsProductsLoading] = useState(true);
+interface LandingPageWrapperProps {
+    initialData?: CategoryWithProducts[];
+}
 
-    const handleProductsLoaded = useCallback(() => {
-        setIsProductsLoading(false);
+export default function LandingPageWrapper({ initialData }: LandingPageWrapperProps) {
+    const [isPageReady, setIsPageReady] = useState(false);
+
+    useEffect(() => {
+        // Small delay to ensure smooth transition
+        const timer = setTimeout(() => {
+            setIsPageReady(true);
+        }, 100);
+        return () => clearTimeout(timer);
     }, []);
 
     return (
         <>
-            <LandingPageLoader isLoading={isProductsLoading} />
+            {!isPageReady && <LandingPageLoader isLoading={true} />}
             <main className="min-h-screen font-sans">
                 <Hero />
                 <StatsSection />
                 <AboutSection />
                 <HowItWorks />
-                <ProductsSection onLoadComplete={handleProductsLoaded} />
+                <ProductsSection initialData={initialData} />
                 <WhyChooseUs />
                 <IndustriesSection />
                 <SustainabilityBanner />

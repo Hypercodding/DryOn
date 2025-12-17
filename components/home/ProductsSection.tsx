@@ -46,16 +46,50 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     Truck: Package,
 };
 
+import type { CategoryWithProducts as ServerCategoryWithProducts } from '@/lib/fetchProducts';
+
 interface ProductsSectionProps {
-    onLoadComplete?: () => void;
+    initialData?: ServerCategoryWithProducts[];
 }
 
-export default function ProductsSection({ onLoadComplete }: ProductsSectionProps) {
+export default function ProductsSection({ initialData }: ProductsSectionProps) {
     const [categoriesWithProducts, setCategoriesWithProducts] = useState<CategoryWithProducts[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(!initialData || initialData.length === 0);
     const t = useTranslations('ProductsSection');
 
     useEffect(() => {
+        // If we have initial data from server, use it immediately
+        if (initialData && initialData.length > 0) {
+            // Transform server data to match client-side format
+            const transformed = initialData.map(({ category, products }) => ({
+                category: {
+                    id: category.id,
+                    slug: category.slug,
+                    icon: category.icon,
+                    color: category.color,
+                    translations: category.translations || []
+                },
+                products: products.map(p => ({
+                    id: p.id,
+                    sku: p.sku,
+                    images: p.images,
+                    featured: p.featured,
+                    category: p.category ? {
+                        id: p.category.id,
+                        slug: p.category.slug,
+                        icon: p.category.icon,
+                        color: p.category.color,
+                        translations: p.category.translations || []
+                    } : undefined,
+                    translations: p.translations || []
+                }))
+            }));
+            setCategoriesWithProducts(transformed);
+            setIsLoading(false);
+            return;
+        }
+
+        // Fallback: fetch from API if no initial data (shouldn't happen in production)
         const fetchData = async () => {
             try {
                 // Fetch all categories
@@ -92,14 +126,10 @@ export default function ProductsSection({ onLoadComplete }: ProductsSectionProps
                 // Failed to fetch data
             } finally {
                 setIsLoading(false);
-                // Notify parent that loading is complete
-                if (onLoadComplete) {
-                    onLoadComplete();
-                }
             }
         };
         fetchData();
-    }, [onLoadComplete]);
+    }, [initialData]);
 
     const getProductName = (product: Product) => {
         const translation = product.translations?.find(t => t.locale === 'en') || product.translations?.[0];
