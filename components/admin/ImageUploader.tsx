@@ -32,7 +32,6 @@ export default function ImageUploader({ images, onChange }: ImageUploaderProps) 
                     setProgress(p);
                 },
                 (error) => {
-                    console.error(error);
                     alert('Upload failed');
                     setUploading(false);
                 },
@@ -43,7 +42,6 @@ export default function ImageUploader({ images, onChange }: ImageUploaderProps) 
                 }
             );
         } catch (err) {
-            console.error(err);
             setUploading(false);
         }
     };

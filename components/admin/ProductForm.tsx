@@ -106,7 +106,6 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             router.push('/admin/products');
             router.refresh();
         } catch (err) {
-            console.error(err);
             alert('Error saving product');
         } finally {
             setLoading(false);

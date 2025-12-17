@@ -17,7 +17,28 @@ export async function GET() {
         .sort({ createdAt: -1 })
         .select('-password');
 
-    return NextResponse.json(users);
+    // Transform MongoDB _id to id for frontend compatibility
+    const transformedUsers = users.map(user => {
+        const userObj = user.toObject();
+        const roleIdValue = userObj.roleId 
+            ? (typeof userObj.roleId === 'object' && userObj.roleId !== null && '_id' in userObj.roleId
+                ? (userObj.roleId as any)._id?.toString()
+                : String(userObj.roleId))
+            : null;
+        
+        return {
+            ...userObj,
+            id: userObj._id.toString(),
+            roleId: roleIdValue,
+            role: userObj.roleId && typeof userObj.roleId === 'object' && userObj.roleId !== null && '_id' in userObj.roleId ? {
+                id: (userObj.roleId as any)._id?.toString(),
+                name: (userObj.roleId as any).name,
+                color: (userObj.roleId as any).color
+            } : null
+        };
+    });
+
+    return NextResponse.json(transformedUsers);
 }
 
 export async function POST(req: Request) {
@@ -58,9 +79,25 @@ export async function POST(req: Request) {
         });
 
         const { password: _, ...userObj } = user.toObject();
-        return NextResponse.json(userObj);
+        // Transform MongoDB _id to id for frontend compatibility
+        const roleIdValue = userObj.roleId 
+            ? (typeof userObj.roleId === 'object' && userObj.roleId !== null && '_id' in userObj.roleId
+                ? (userObj.roleId as any)._id?.toString()
+                : String(userObj.roleId))
+            : null;
+        
+        const transformedUser = {
+            ...userObj,
+            id: userObj._id.toString(),
+            roleId: roleIdValue,
+            role: userObj.roleId && typeof userObj.roleId === 'object' && userObj.roleId !== null && '_id' in userObj.roleId ? {
+                id: (userObj.roleId as any)._id?.toString(),
+                name: (userObj.roleId as any).name,
+                color: (userObj.roleId as any).color
+            } : null
+        };
+        return NextResponse.json(transformedUser);
     } catch (error: any) {
-        console.error('Error creating user:', error);
         const errorMessage = error?.message?.includes('Cast to ObjectId') 
             ? 'Invalid role selected. Please select a valid role.'
             : 'Error creating user';

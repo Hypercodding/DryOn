@@ -26,7 +26,6 @@ export const authConfig: NextAuthConfig = {
                         .populate('roleId');
 
                     if (!user || !user.isActive) {
-                        console.log('User not found or inactive:', credentials.email);
                         return null;
                     }
 
@@ -36,7 +35,6 @@ export const authConfig: NextAuthConfig = {
                     );
 
                     if (!passwordsMatch) {
-                        console.log('Password mismatch for:', credentials.email);
                         return null;
                     }
 
@@ -71,7 +69,6 @@ export const authConfig: NextAuthConfig = {
                         permissions
                     };
                 } catch (error) {
-                    console.error('Auth error:', error);
                     return null;
                 }
             }

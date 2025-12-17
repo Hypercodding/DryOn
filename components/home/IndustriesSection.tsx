@@ -71,7 +71,7 @@ export default function IndustriesSection() {
                     if (data.length > 0) setIndustries(data);
                 }
             } catch (error) {
-                console.error('Failed to fetch industries:', error);
+                // Failed to fetch industries
             }
         };
         fetchIndustries();

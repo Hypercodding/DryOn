@@ -81,7 +81,7 @@ export default function SolutionsByIndustryPage() {
                     setIndustries(data);
                 }
             } catch (error) {
-                console.error('Failed to fetch industries:', error);
+                // Failed to fetch industries
             } finally {
                 setLoading(false);
             }
@@ -108,7 +108,7 @@ export default function SolutionsByIndustryPage() {
                         setProducts(data);
                     }
                 } catch (error) {
-                    console.error('Failed to fetch products:', error);
+                    // Failed to fetch products
                 } finally {
                     setProductsLoading(false);
                 }

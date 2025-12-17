@@ -293,7 +293,6 @@ export async function GET(req: Request) {
             pages: matchingPages
         });
     } catch (error) {
-        console.error('Search error:', error);
         return NextResponse.json({ error: 'Search failed' }, { status: 500 });
     }
 }

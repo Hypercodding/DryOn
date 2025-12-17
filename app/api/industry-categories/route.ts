@@ -46,7 +46,6 @@ export async function GET(req: Request) {
 
         return NextResponse.json(formatted);
     } catch (error) {
-        console.error('Error fetching industry categories:', error);
         return NextResponse.json({ error: 'Failed to fetch industries' }, { status: 500 });
     }
 }
@@ -85,7 +84,6 @@ export async function POST(req: Request) {
 
         return NextResponse.json(industryObj);
     } catch (error) {
-        console.error(error);
         return NextResponse.json({ error: "Error creating industry" }, { status: 500 });
     }
 }

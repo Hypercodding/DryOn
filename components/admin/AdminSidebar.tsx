@@ -16,26 +16,29 @@ interface NavItem {
     label: string;
     href: string;
     children?: { label: string; href: string }[];
+    requiredPermission?: string | null;
 }
 
 const navItems: NavItem[] = [
-    { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
+    // Dashboard is visible to all authenticated users
+    { icon: LayoutDashboard, label: 'Dashboard', href: '/admin', requiredPermission: null },
     { 
         icon: Package, 
         label: 'Products', 
         href: '/admin/products',
+        requiredPermission: 'products.read',
         children: [
             { label: 'All Products', href: '/admin/products' },
             { label: 'Add New', href: '/admin/products/new' },
         ]
     },
-    { icon: Tags, label: 'Categories', href: '/admin/categories' },
-    { icon: Factory, label: 'Industries', href: '/admin/industries' },
-    { icon: MessageSquare, label: 'Inquiries', href: '/admin/inquiries' },
-    { icon: Users, label: 'Users', href: '/admin/users' },
-    { icon: Shield, label: 'Roles & Permissions', href: '/admin/roles' },
-    { icon: Activity, label: 'Activity Logs', href: '/admin/logs' },
-    { icon: Settings, label: 'Settings', href: '/admin/settings' },
+    { icon: Tags, label: 'Categories', href: '/admin/categories', requiredPermission: 'categories.read' },
+    { icon: Factory, label: 'Industries', href: '/admin/industries', requiredPermission: 'industries.read' },
+    { icon: MessageSquare, label: 'Inquiries', href: '/admin/inquiries', requiredPermission: 'inquiries.read' },
+    { icon: Users, label: 'Users', href: '/admin/users', requiredPermission: 'users.read' },
+    { icon: Shield, label: 'Roles & Permissions', href: '/admin/roles', requiredPermission: 'roles.read' },
+    { icon: Activity, label: 'Activity Logs', href: '/admin/logs', requiredPermission: 'logs.read' },
+    { icon: Settings, label: 'Settings', href: '/admin/settings', requiredPermission: 'settings.read' },
 ];
 
 export default function AdminSidebar() {
@@ -61,6 +64,17 @@ export default function AdminSidebar() {
     };
 
     const userRole = (session?.user as any)?.role || 'Admin';
+    const userPermissions = ((session?.user as any)?.permissions || []) as string[];
+
+    const hasPermissionForItem = (item: NavItem) => {
+        if (!item.requiredPermission) {
+            return true;
+        }
+        if (!Array.isArray(userPermissions) || userPermissions.length === 0) {
+            return false;
+        }
+        return userPermissions.includes(item.requiredPermission);
+    };
 
     return (
         <>
@@ -104,7 +118,7 @@ export default function AdminSidebar() {
 
                 {/* Navigation */}
                 <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
-                    {navItems.map((item) => {
+                    {navItems.filter(hasPermissionForItem).map((item) => {
                         const active = isActive(item.href, item.children);
                         const expanded = expandedItems.includes(item.label);
 

@@ -28,19 +28,55 @@ export default function LoginPage() {
 
             if (result?.error) {
                 setError('Invalid email or password');
+                setLoading(false);
             } else {
-                router.push('/admin');
-                router.refresh();
+                // Use window.location for full page redirect
+                // This keeps the loader visible until the new page loads
+                window.location.href = '/admin';
             }
         } catch (err) {
             setError('An error occurred. Please try again.');
-        } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen flex">
+        <div className="min-h-screen flex relative">
+            {/* Loading Overlay with Logo */}
+            {loading && (
+                <div className="fixed inset-0 bg-white/95 backdrop-blur-sm z-50 flex items-center justify-center">
+                    <div className="relative">
+                        {/* Logo Container */}
+                        <div className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center">
+                            {/* Shining Effect Overlay */}
+                            <div className="absolute inset-0 overflow-hidden rounded-2xl">
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent animate-shine" style={{ width: '200%', height: '200%' }}></div>
+                            </div>
+                            
+                            {/* Logo Image */}
+                            <div className="relative z-10 w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary-dark/10 rounded-2xl p-6 shadow-2xl">
+                                <Image
+                                    src="/images/DryON Pakistan.png"
+                                    alt="DryON Pakistan Logo"
+                                    width={200}
+                                    height={80}
+                                    className="w-auto h-auto max-w-full max-h-full object-contain animate-pulse"
+                                    priority
+                                />
+                            </div>
+                            
+                            {/* Pulsing Ring */}
+                            <div className="absolute inset-0 border-4 border-primary/30 rounded-2xl animate-ping"></div>
+                        </div>
+                        
+                        {/* Loading Text */}
+                        <p className="text-center mt-8 text-slate-600 font-medium animate-pulse">
+                            Signing you in...
+                        </p>
+                    </div>
+                </div>
+            )}
+
             {/* Left Side - Branding */}
             <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-900 via-slate-800 to-primary/30 flex-col justify-between p-12">
                 <div>
@@ -146,14 +182,8 @@ export default function LoginPage() {
                                 disabled={loading}
                                 className="w-full bg-gradient-to-r from-primary to-primary-dark text-white py-3.5 rounded-xl hover:opacity-90 transition-all font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/30 disabled:opacity-50"
                             >
-                                {loading ? (
-                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                ) : (
-                                    <>
-                                        Sign In
-                                        <ArrowRight className="w-5 h-5" />
-                                    </>
-                                )}
+                                Sign In
+                                <ArrowRight className="w-5 h-5" />
                             </button>
                         </form>
 

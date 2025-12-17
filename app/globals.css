@@ -185,6 +185,20 @@ html {
   100% { transform: scale(1.5); opacity: 0; }
 }
 
+@keyframes shine {
+  0% { 
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(200%) translateY(200%) rotate(45deg);
+    opacity: 0;
+  }
+}
+
 .animate-wave {
   animation: wave 15s linear infinite;
 }
@@ -199,6 +213,10 @@ html {
 
 .animate-ripple {
   animation: ripple 2s ease-out infinite;
+}
+
+.animate-shine {
+  animation: shine 2s ease-in-out infinite;
 }
 
 /* Ocean gradient backgrounds */

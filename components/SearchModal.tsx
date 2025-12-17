@@ -98,7 +98,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 setResults(data);
             }
         } catch (error) {
-            console.error('Search failed:', error);
+            // Search failed
         } finally {
             setIsLoading(false);
         }

@@ -42,22 +42,24 @@ export default function UsersPage() {
             ]);
 
             if (!usersRes.ok) {
-                console.error('Failed to fetch users:', usersRes.status);
                 setUsers([]);
             } else {
                 const usersData = await usersRes.json();
-                setUsers(usersData);
+                // Ensure all users have an id field (fallback to _id if needed)
+                const normalizedUsers = usersData.map((user: any) => ({
+                    ...user,
+                    id: user.id || user._id?.toString() || user._id
+                }));
+                setUsers(normalizedUsers);
             }
 
             if (!rolesRes.ok) {
-                console.error('Failed to fetch roles:', rolesRes.status);
                 setRoles([]);
             } else {
                 const rolesData = await rolesRes.json();
                 setRoles(rolesData);
             }
         } catch (error) {
-            console.error('Error fetching data:', error);
             setUsers([]);
             setRoles([]);
         } finally {
@@ -104,19 +106,41 @@ export default function UsersPage() {
             body: JSON.stringify(payload)
         });
 
-        if (res.ok) {
-            fetchData();
-            resetForm();
+        if (!res.ok) {
+            try {
+                const data = await res.json();
+                if (data?.error) {
+                    alert(data.error);
+                }
+            } catch {
+                alert('Failed to save user. Please try again.');
+            }
+            return;
         }
+
+        fetchData();
+        resetForm();
     };
 
     const handleDelete = async (id: string) => {
         if (!confirm('Are you sure you want to delete this user?')) return;
         
         const res = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' });
-        if (res.ok) {
-            fetchData();
+        if (!res.ok) {
+            try {
+                const data = await res.json();
+                if (data?.error) {
+                    alert(data.error);
+                } else {
+                    alert('Failed to delete user. Please try again.');
+                }
+            } catch {
+                alert('Failed to delete user. Please try again.');
+            }
+            return;
         }
+
+        fetchData();
     };
 
     if (loading) {
@@ -309,7 +333,7 @@ export default function UsersPage() {
                                                 <Edit2 className="w-4 h-4" />
                                             </button>
                                             <button
-                                                onClick={() => handleDelete(user.id)}
+                                                onClick={() => handleDelete(user.id || (user as any)._id?.toString() || (user as any)._id)}
                                                 className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                             >
                                                 <Trash2 className="w-4 h-4" />

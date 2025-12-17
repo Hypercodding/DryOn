@@ -75,7 +75,7 @@ export default function ProductsSection() {
                             }
                         }
                     } catch (error) {
-                        console.error(`Failed to fetch products for category ${category.slug}:`, error);
+                        // Failed to fetch products for category
                     }
                     return null;
                 });
@@ -85,7 +85,7 @@ export default function ProductsSection() {
                 
                 setCategoriesWithProducts(validCategories);
             } catch (error) {
-                console.error('Failed to fetch data:', error);
+                // Failed to fetch data
             } finally {
                 setIsLoading(false);
             }

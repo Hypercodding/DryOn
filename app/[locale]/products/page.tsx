@@ -113,7 +113,6 @@ export default function ProductsPage() {
                     setCategories(displayCategories);
                 }
             } catch (error) {
-                console.error('Error fetching categories:', error);
                 // Fallback to just "All Products"
                 setCategories([{
                     id: 'all',
@@ -144,7 +143,7 @@ export default function ProductsPage() {
                 const data = await res.json();
                 setProducts(data);
             } catch (error) {
-                console.error('Error fetching products:', error);
+                // Error fetching products
             } finally {
                 setLoading(false);
             }

@@ -63,6 +63,8 @@ export async function GET() {
                 const roleObj = role.toObject();
                 return {
                     ...roleObj,
+                    // Ensure consistent id field for frontend (string version of _id)
+                    id: role._id.toString(),
                     rolePermissions,
                     _count: { users: userCount }
                 };
@@ -71,7 +73,6 @@ export async function GET() {
 
         return NextResponse.json(rolesWithCount);
     } catch (error) {
-        console.error('Error fetching roles:', error);
         return NextResponse.json({ error: "Failed to fetch roles" }, { status: 500 });
     }
 }
@@ -143,7 +144,6 @@ export async function POST(req: Request) {
 
         return NextResponse.json(roleObj);
     } catch (error) {
-        console.error(error);
         return NextResponse.json({ error: "Error creating role" }, { status: 500 });
     }
 }

@@ -112,8 +112,7 @@ ${message}
                 text: emailText,
             });
         } catch (emailError) {
-            console.error("Failed to send notification email:", emailError);
-            // Don't fail the request if email fails, just log it
+            // Don't fail the request if email fails
         }
 
         // Send confirmation email to the user
@@ -152,8 +151,7 @@ ${message}
                 text: `Dear ${name},\n\nThank you for reaching out to DryON Pakistan. We have received your message and will get back to you within 24 hours.\n\nYour inquiry is important to us, and we appreciate your interest in our moisture control solutions.\n\nBest regards,\nThe DryON Pakistan Team`,
             });
         } catch (emailError) {
-            console.error("Failed to send confirmation email:", emailError);
-            // Don't fail the request if email fails, just log it
+            // Don't fail the request if email fails
         }
 
         return NextResponse.json(
@@ -165,7 +163,6 @@ ${message}
             { status: 201 }
         );
     } catch (error) {
-        console.error("Contact form error:", error);
         return NextResponse.json(
             { error: "Failed to send message. Please try again later." },
             { status: 500 }

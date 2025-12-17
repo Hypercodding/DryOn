@@ -85,7 +85,6 @@ export async function PUT(req: Request, props: { params: Promise<{ id: string }>
 
         return NextResponse.json(product);
     } catch (error) {
-        console.error(error);
         return NextResponse.json({ error: "Error updating product" }, { status: 500 });
     }
 }

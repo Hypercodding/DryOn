@@ -21,6 +21,44 @@ export default auth((req) => {
             return NextResponse.redirect(new URL("/admin", req.url));
         }
 
+        // Role & permission based access control for admin routes
+        if (isLoggedIn) {
+            const user: any = req.auth?.user || {};
+            const role: string = user.role || '';
+            const permissions: string[] = Array.isArray(user.permissions) ? user.permissions : [];
+
+            // Super Admin and Admin can access all admin pages
+            const isFullAdmin = role === 'Super Admin' || role === 'Admin';
+
+            if (!isFullAdmin) {
+                // Map admin routes to permission modules
+                const routeModuleMap: { prefix: string; module: string }[] = [
+                    { prefix: '/admin/users', module: 'users' },
+                    { prefix: '/admin/roles', module: 'roles' },
+                    { prefix: '/admin/settings', module: 'settings' },
+                    { prefix: '/admin/inquiries', module: 'inquiries' },
+                    { prefix: '/admin/logs', module: 'logs' },
+                    { prefix: '/admin/products', module: 'products' },
+                    { prefix: '/admin/categories', module: 'categories' },
+                    { prefix: '/admin/industries', module: 'industries' },
+                ];
+
+                const matched = routeModuleMap.find(({ prefix }) =>
+                    pathname === prefix || pathname.startsWith(prefix + '/')
+                );
+
+                if (matched) {
+                    const requiredPermission = `${matched.module}.read`;
+                    const hasPermission = permissions.includes(requiredPermission);
+
+                    if (!hasPermission) {
+                        // If user doesn't have access to this module, send them to the dashboard
+                        return NextResponse.redirect(new URL("/admin", req.url));
+                    }
+                }
+            }
+        }
+
         return NextResponse.next();
     }
 

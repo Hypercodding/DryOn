@@ -26,7 +26,6 @@ export default function DeleteProductButton({ productId, productName }: DeletePr
             router.refresh();
             setShowConfirm(false);
         } catch (error) {
-            console.error(error);
             alert('Error deleting product');
         } finally {
             setDeleting(false);

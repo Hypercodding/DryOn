@@ -97,7 +97,7 @@ export default function Navbar() {
                     setIndustries(data);
                 }
             } catch (error) {
-                console.error('Failed to fetch industries:', error);
+                // Failed to fetch industries
             }
         };
         fetchIndustries();
@@ -113,7 +113,7 @@ export default function Navbar() {
                     setProductCategories(data);
                 }
             } catch (error) {
-                console.error('Failed to fetch product categories:', error);
+                // Failed to fetch product categories
             }
         };
         fetchProductCategories();

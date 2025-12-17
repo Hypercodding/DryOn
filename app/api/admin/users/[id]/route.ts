@@ -87,9 +87,25 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         });
 
         const { password: _, ...userObj } = user.toObject();
-        return NextResponse.json(userObj);
+        // Transform MongoDB _id to id for frontend compatibility
+        const roleIdValue = userObj.roleId 
+            ? (typeof userObj.roleId === 'object' && userObj.roleId !== null && '_id' in userObj.roleId
+                ? (userObj.roleId as any)._id?.toString()
+                : String(userObj.roleId))
+            : null;
+        
+        const transformedUser = {
+            ...userObj,
+            id: userObj._id.toString(),
+            roleId: roleIdValue,
+            role: userObj.roleId && typeof userObj.roleId === 'object' && userObj.roleId !== null && '_id' in userObj.roleId ? {
+                id: (userObj.roleId as any)._id?.toString(),
+                name: (userObj.roleId as any).name,
+                color: (userObj.roleId as any).color
+            } : null
+        };
+        return NextResponse.json(transformedUser);
     } catch (error: any) {
-        console.error('Error updating user:', error);
         const errorMessage = error?.message?.includes('Cast to ObjectId') 
             ? 'Invalid role selected. Please select a valid role.'
             : 'Error updating user';
@@ -123,7 +139,6 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
 
         return NextResponse.json({ success: true });
     } catch (error) {
-        console.error(error);
         return NextResponse.json({ error: "Error deleting user" }, { status: 500 });
     }
 }

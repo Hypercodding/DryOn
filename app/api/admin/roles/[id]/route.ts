@@ -82,7 +82,6 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 
         return NextResponse.json(roleObj);
     } catch (error) {
-        console.error(error);
         return NextResponse.json({ error: "Error updating role" }, { status: 500 });
     }
 }
@@ -99,7 +98,6 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
 
         return NextResponse.json({ success: true });
     } catch (error) {
-        console.error(error);
         return NextResponse.json({ error: "Error deleting role" }, { status: 500 });
     }
 }
