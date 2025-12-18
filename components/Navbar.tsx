@@ -157,7 +157,7 @@ export default function Navbar() {
                         alt="DryOn Pakistan Logo"
                         width={200}
                         height={80}
-                        className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                        className="h-12 md:h-14 w-auto object-contain scale-[1.3] transition-transform duration-300 group-hover:scale-[1.4] brightness-110 contrast-110"
                         priority
                     />
                 </Link>

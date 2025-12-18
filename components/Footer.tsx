@@ -41,13 +41,13 @@ export default function Footer() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                         {/* Company Info */}
                         <div>
-                            <div className="mb-6 bg-white rounded-lg p-3 inline-block shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div className="mb-6 bg-white rounded-lg p-4 inline-block shadow-lg hover:shadow-xl transition-shadow duration-300">
                                 <Image
                                     src="/images/DryON Pakistan.png"
                                     alt="DryOn Pakistan Logo"
-                                    width={140}
-                                    height={45}
-                                    className="h-10 w-auto object-contain"
+                                    width={200}
+                                    height={80}
+                                    className="h-16 md:h-20 w-auto object-contain"
                                 />
                             </div>
                             <p className="text-white/70 mb-6 text-sm leading-relaxed">
@@ -113,6 +113,76 @@ export default function Footer() {
                                 </div>
                                 <div className="w-px h-8 bg-white/20" />
                                 <span className="text-xs text-white/80 font-medium">Certified</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Compliance Badges Section */}
+                    <div className="border-t border-white/10 pt-8 mt-8">
+                        <h3 className="font-bold mb-4 uppercase text-sm tracking-wide text-primary text-center">Compliance & Certifications</h3>
+                        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
+                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <Image
+                                    src="/RoHS.png"
+                                    alt="RoHS Compliance"
+                                    width={60}
+                                    height={60}
+                                    className="object-contain max-h-12 max-w-full"
+                                />
+                            </div>
+                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <Image
+                                    src="/REACH.png"
+                                    alt="REACH Compliance"
+                                    width={60}
+                                    height={60}
+                                    className="object-contain max-h-12 max-w-full"
+                                />
+                            </div>
+                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <Image
+                                    src="/RECYCLE.png"
+                                    alt="Recyclable"
+                                    width={60}
+                                    height={60}
+                                    className="object-contain max-h-12 max-w-full"
+                                />
+                            </div>
+                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <Image
+                                    src="/DMF-FREE.png"
+                                    alt="DMF-Free Certified"
+                                    width={60}
+                                    height={60}
+                                    className="object-contain max-h-12 max-w-full"
+                                />
+                            </div>
+                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <Image
+                                    src="/SGS.png"
+                                    alt="SGS Certified"
+                                    width={60}
+                                    height={60}
+                                    className="object-contain max-h-12 max-w-full"
+                                />
+                            </div>
+                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <Image
+                                    src="/ECO-FRIENDLY.png"
+                                    alt="Eco-Friendly"
+                                    width={60}
+                                    height={60}
+                                    className="object-contain max-h-12 max-w-full"
+                                />
+                            </div>
+                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <Image
+                                    src="/DUNS.png"
+                                    alt="DUNS Registered"
+                                    width={60}
+                                    height={60}
+                                    className="object-contain max-h-12 max-w-full"
+                                />
                             </div>
                         </div>
                     </div>

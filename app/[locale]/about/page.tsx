@@ -23,7 +23,7 @@ export default async function AboutPage() {
         },
         {
             icon: Factory,
-            title: 'EU-Grade Testing Facility',
+            title: 'In-House Testing Facility',
             description: 'Environmental-chamber testing facility enabling real-time shipping challenges simulation under extreme conditions.'
         },
     ];
@@ -318,6 +318,119 @@ export default async function AboutPage() {
                                     <div className="text-sm text-white/80">Recycled Materials</div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Compliance & Certifications */}
+            <section className="py-20 bg-white">
+                <div className="container mx-auto px-6 max-w-6xl">
+                    <div className="text-center mb-16">
+                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Quality Assurance</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">Compliance & Certifications</h2>
+                        <p className="text-slate max-w-2xl mx-auto">
+                            Our products meet and exceed international standards, ensuring safety, quality, and environmental responsibility.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
+                        <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
+                            <div className="relative w-full h-32 mb-4 flex items-center justify-center">
+                                <Image
+                                    src="/RoHS.png"
+                                    alt="RoHS Compliance"
+                                    width={120}
+                                    height={120}
+                                    className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
+                                />
+                            </div>
+                            <h3 className="font-bold text-secondary text-sm">RoHS</h3>
+                            <p className="text-xs text-slate mt-1">Compliant</p>
+                        </div>
+
+                        <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
+                            <div className="relative w-full h-32 mb-4 flex items-center justify-center">
+                                <Image
+                                    src="/REACH.png"
+                                    alt="REACH Compliance"
+                                    width={120}
+                                    height={120}
+                                    className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
+                                />
+                            </div>
+                            <h3 className="font-bold text-secondary text-sm">REACH</h3>
+                            <p className="text-xs text-slate mt-1">Compliant</p>
+                        </div>
+
+                        <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
+                            <div className="relative w-full h-32 mb-4 flex items-center justify-center">
+                                <Image
+                                    src="/RECYCLE.png"
+                                    alt="Recyclable"
+                                    width={120}
+                                    height={120}
+                                    className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
+                                />
+                            </div>
+                            <h3 className="font-bold text-secondary text-sm">Recyclable</h3>
+                            <p className="text-xs text-slate mt-1">Certified</p>
+                        </div>
+
+                        <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
+                            <div className="relative w-full h-32 mb-4 flex items-center justify-center">
+                                <Image
+                                    src="/DMF-FREE.png"
+                                    alt="DMF-Free Certified"
+                                    width={120}
+                                    height={120}
+                                    className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
+                                />
+                            </div>
+                            <h3 className="font-bold text-secondary text-sm">DMF-Free</h3>
+                            <p className="text-xs text-slate mt-1">Certified</p>
+                        </div>
+
+                        <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
+                            <div className="relative w-full h-32 mb-4 flex items-center justify-center">
+                                <Image
+                                    src="/SGS.png"
+                                    alt="SGS Certified"
+                                    width={120}
+                                    height={120}
+                                    className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
+                                />
+                            </div>
+                            <h3 className="font-bold text-secondary text-sm">SGS</h3>
+                            <p className="text-xs text-slate mt-1">Certified</p>
+                        </div>
+
+                        <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
+                            <div className="relative w-full h-32 mb-4 flex items-center justify-center">
+                                <Image
+                                    src="/ECO-FRIENDLY.png"
+                                    alt="Eco-Friendly"
+                                    width={120}
+                                    height={120}
+                                    className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
+                                />
+                            </div>
+                            <h3 className="font-bold text-secondary text-sm">Eco-Friendly</h3>
+                            <p className="text-xs text-slate mt-1">Certified</p>
+                        </div>
+
+                        <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
+                            <div className="relative w-full h-32 mb-4 flex items-center justify-center">
+                                <Image
+                                    src="/DUNS.png"
+                                    alt="DUNS Registered"
+                                    width={120}
+                                    height={120}
+                                    className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
+                                />
+                            </div>
+                            <h3 className="font-bold text-secondary text-sm">DUNS</h3>
+                            <p className="text-xs text-slate mt-1">Registered</p>
                         </div>
                     </div>
                 </div>

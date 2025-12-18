@@ -21,7 +21,7 @@ const features = [
     },
     {
         icon: TestTube,
-        title: 'EU-Grade Testing',
+        title: 'In-House Testing Facility',
         description: 'Real-time environmental chamber testing for quality assurance',
     },
     {

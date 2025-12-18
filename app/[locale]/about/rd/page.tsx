@@ -271,7 +271,7 @@ export default async function RDPage() {
                             <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
                                 <CheckCircle className="w-7 h-7 text-primary" />
                             </div>
-                            <h3 className="text-xl font-bold text-secondary mb-3">EU-Grade Testing</h3>
+                            <h3 className="text-xl font-bold text-secondary mb-3">In-House Testing Facility</h3>
                             <p className="text-slate leading-relaxed">
                                 Our environmental chamber enables real-time simulation of extreme shipping conditions, ensuring product reliability.
                             </p>

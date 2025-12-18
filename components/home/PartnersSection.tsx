@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Award, BadgeCheck, Shield, Globe, Building2, FileCheck } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 const certIcons = [Award, BadgeCheck, Shield, Globe, Building2, FileCheck];
 const certColors = ['bg-blue-500', 'bg-primary', 'bg-purple-500', 'bg-cyan-500', 'bg-amber-500', 'bg-secondary'];
@@ -17,6 +18,16 @@ export default function PartnersSection() {
         { titleKey: 'isoStandards', subtitleKey: 'compliant' },
         { titleKey: 'chamberOfCommerce', subtitleKey: 'member' },
         { titleKey: 'euGradeTesting', subtitleKey: 'certified' },
+    ];
+
+    const complianceBadges = [
+        { image: '/RoHS.png', name: 'RoHS', alt: 'RoHS Compliance' },
+        { image: '/REACH.png', name: 'REACH', alt: 'REACH Compliance' },
+        { image: '/RECYCLE.png', name: 'RECYCLE', alt: 'Recyclable' },
+        { image: '/DMF-FREE.png', name: 'DMF-Free', alt: 'DMF-Free Certified' },
+        { image: '/SGS.png', name: 'SGS', alt: 'SGS Certified' },
+        { image: '/ECO-FRIENDLY.png', name: 'Eco-Friendly', alt: 'Eco-Friendly' },
+        { image: '/DUNS.png', name: 'DUNS', alt: 'DUNS Registered' },
     ];
 
     const partners = [
@@ -91,6 +102,42 @@ export default function PartnersSection() {
                         );
                     })}
                 </div>
+
+                {/* Compliance Badges */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-16"
+                >
+                    <div className="text-center mb-8">
+                        <h3 className="text-2xl md:text-3xl font-bold text-secondary mb-2">Compliance & Certifications</h3>
+                        <p className="text-slate">Our products meet international standards and regulations</p>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                        {complianceBadges.map((badge, idx) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: idx * 0.05 }}
+                                className="bg-white rounded-xl p-4 text-center hover:shadow-lg transition-all border border-gray-100 group"
+                            >
+                                <div className="relative w-full h-24 mb-3 flex items-center justify-center">
+                                    <Image
+                                        src={badge.image}
+                                        alt={badge.alt}
+                                        width={120}
+                                        height={120}
+                                        className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
+                                    />
+                                </div>
+                                <p className="text-xs font-medium text-secondary">{badge.name}</p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
 
                 {/* Partners Stats */}
                 <motion.div
