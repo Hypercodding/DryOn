@@ -7,8 +7,28 @@ import IndustryCategoryTranslation from "@/models/IndustryCategoryTranslation";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request, props: { params: Promise<{ id: string }> }) {
-    await connectDB();
+    const mongoose = await connectDB();
     const params = await props.params;
+
+    // Ensure all models are registered (required for serverless environments)
+    if (!mongoose.models.Product) {
+        await import('@/models/Product');
+    }
+    if (!mongoose.models.ProductTranslation) {
+        await import('@/models/ProductTranslation');
+    }
+    if (!mongoose.models.ProductCategory) {
+        await import('@/models/ProductCategory');
+    }
+    if (!mongoose.models.ProductCategoryTranslation) {
+        await import('@/models/ProductCategoryTranslation');
+    }
+    if (!mongoose.models.IndustryCategory) {
+        await import('@/models/IndustryCategory');
+    }
+    if (!mongoose.models.IndustryCategoryTranslation) {
+        await import('@/models/IndustryCategoryTranslation');
+    }
 
     const product = await Product.findById(params.id)
         .populate('categoryId')
@@ -46,7 +66,16 @@ export async function PUT(req: Request, props: { params: Promise<{ id: string }>
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     try {
-        await connectDB();
+        const mongoose = await connectDB();
+        
+        // Ensure all models are registered (required for serverless environments)
+        if (!mongoose.models.Product) {
+            await import('@/models/Product');
+        }
+        if (!mongoose.models.ProductTranslation) {
+            await import('@/models/ProductTranslation');
+        }
+        
         const body = await req.json();
         const { sku, categoryId, industryId, featured, images, containerPoints, translations } = body;
 
@@ -95,7 +124,16 @@ export async function DELETE(req: Request, props: { params: Promise<{ id: string
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     try {
-        await connectDB();
+        const mongoose = await connectDB();
+        
+        // Ensure all models are registered (required for serverless environments)
+        if (!mongoose.models.Product) {
+            await import('@/models/Product');
+        }
+        if (!mongoose.models.ProductTranslation) {
+            await import('@/models/ProductTranslation');
+        }
+        
         await Product.findByIdAndDelete(params.id);
         await ProductTranslation.deleteMany({ productId: params.id });
         return NextResponse.json({ success: true });

@@ -5,8 +5,16 @@ import ProductCategoryTranslation from "@/models/ProductCategoryTranslation";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
-    await connectDB();
+    const mongoose = await connectDB();
     const { id } = await params;
+
+    // Ensure all models are registered (required for serverless environments)
+    if (!mongoose.models.ProductCategory) {
+        await import('@/models/ProductCategory');
+    }
+    if (!mongoose.models.ProductCategoryTranslation) {
+        await import('@/models/ProductCategoryTranslation');
+    }
 
     const category = await ProductCategory.findById(id);
 
@@ -30,7 +38,16 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     const { id } = await params;
 
     try {
-        await connectDB();
+        const mongoose = await connectDB();
+        
+        // Ensure all models are registered (required for serverless environments)
+        if (!mongoose.models.ProductCategory) {
+            await import('@/models/ProductCategory');
+        }
+        if (!mongoose.models.ProductCategoryTranslation) {
+            await import('@/models/ProductCategoryTranslation');
+        }
+        
         const body = await req.json();
         const { slug, icon, color, sortOrder, translations } = body;
 
@@ -77,7 +94,16 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     const { id } = await params;
 
     try {
-        await connectDB();
+        const mongoose = await connectDB();
+        
+        // Ensure all models are registered (required for serverless environments)
+        if (!mongoose.models.ProductCategory) {
+            await import('@/models/ProductCategory');
+        }
+        if (!mongoose.models.ProductCategoryTranslation) {
+            await import('@/models/ProductCategoryTranslation');
+        }
+        
         await ProductCategory.findByIdAndDelete(id);
         await ProductCategoryTranslation.deleteMany({ productCategoryId: id });
 

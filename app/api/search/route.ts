@@ -9,7 +9,28 @@ import IndustryCategoryTranslation from '@/models/IndustryCategoryTranslation';
 
 export async function GET(req: Request) {
     try {
-        await connectDB();
+        const mongoose = await connectDB();
+        
+        // Ensure all models are registered (required for serverless environments)
+        if (!mongoose.models.Product) {
+            await import('@/models/Product');
+        }
+        if (!mongoose.models.ProductTranslation) {
+            await import('@/models/ProductTranslation');
+        }
+        if (!mongoose.models.ProductCategory) {
+            await import('@/models/ProductCategory');
+        }
+        if (!mongoose.models.ProductCategoryTranslation) {
+            await import('@/models/ProductCategoryTranslation');
+        }
+        if (!mongoose.models.IndustryCategory) {
+            await import('@/models/IndustryCategory');
+        }
+        if (!mongoose.models.IndustryCategoryTranslation) {
+            await import('@/models/IndustryCategoryTranslation');
+        }
+        
         const { searchParams } = new URL(req.url);
         const query = searchParams.get('q')?.toLowerCase().trim();
         const locale = searchParams.get('locale') || 'en';

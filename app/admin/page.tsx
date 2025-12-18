@@ -17,7 +17,33 @@ import {
 import Link from 'next/link';
 
 async function getDashboardStats() {
-    await connectDB();
+    const mongoose = await connectDB();
+    
+    // Ensure all models are registered (required for serverless environments)
+    if (!mongoose.models.Product) {
+        await import('@/models/Product');
+    }
+    if (!mongoose.models.ProductCategory) {
+        await import('@/models/ProductCategory');
+    }
+    if (!mongoose.models.IndustryCategory) {
+        await import('@/models/IndustryCategory');
+    }
+    if (!mongoose.models.AdminUser) {
+        await import('@/models/AdminUser');
+    }
+    if (!mongoose.models.ContactInquiry) {
+        await import('@/models/ContactInquiry');
+    }
+    if (!mongoose.models.ActivityLog) {
+        await import('@/models/ActivityLog');
+    }
+    if (!mongoose.models.ProductTranslation) {
+        await import('@/models/ProductTranslation');
+    }
+    if (!mongoose.models.ProductCategoryTranslation) {
+        await import('@/models/ProductCategoryTranslation');
+    }
     
     const [
         productsCount,

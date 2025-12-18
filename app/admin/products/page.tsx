@@ -13,7 +13,27 @@ export default async function ProductList() {
     const session = await auth();
     if (!session) redirect("/admin/login");
 
-    await connectDB();
+    const mongoose = await connectDB();
+
+    // Ensure all models are registered (required for serverless environments)
+    if (!mongoose.models.Product) {
+        await import('@/models/Product');
+    }
+    if (!mongoose.models.ProductTranslation) {
+        await import('@/models/ProductTranslation');
+    }
+    if (!mongoose.models.ProductCategory) {
+        await import('@/models/ProductCategory');
+    }
+    if (!mongoose.models.ProductCategoryTranslation) {
+        await import('@/models/ProductCategoryTranslation');
+    }
+    if (!mongoose.models.IndustryCategory) {
+        await import('@/models/IndustryCategory');
+    }
+    if (!mongoose.models.IndustryCategoryTranslation) {
+        await import('@/models/IndustryCategoryTranslation');
+    }
 
     const products = await Product.find({})
         .populate('categoryId')
