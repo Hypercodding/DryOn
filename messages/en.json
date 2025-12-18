@@ -29,8 +29,8 @@
         },
         "Prevention": {
             "title": "Prevention backed by data, not guesswork",
-            "description": "We use Absortech to measure your cargo's actual moisture risk. Then we recommend the most efficient solution — including which product and how much to use.",
-            "cta": "AbsorTest"
+            "description": "We use Dryon to measure your cargo's actual moisture risk. Then we recommend the most efficient solution — including which product and how much to use.",
+            "cta": "DryON"
         },
         "Sustainability": {
             "title": "Less damage. Less waste. Lower impact.",
@@ -41,7 +41,7 @@
             "newsletter": {
                 "title": "Subscribe to our newsletter",
                 "description": "Sign up for our newsletter to receive the latest updates and insights in moisture damage prevention.",
-                "disclaimer": "By subscribing, you agree to receive email from Absortech and to our Privacy Policy. You can unsubscribe at any time. Terms and conditions apply."
+                "disclaimer": "By subscribing, you agree to receive email from DryON and to our Privacy Policy. You can unsubscribe at any time. Terms and conditions apply."
             },
             "form": {
                 "name": "NAME*",
@@ -75,7 +75,7 @@
                 "settings": "Cookie Settings",
                 "terms": "Terms of Use",
                 "impressum": "Impressum",
-                "copyright": "Copyright © 2024 Absortech"
+                "copyright": "Copyright © 2024 DryON"
             }
         }
     },

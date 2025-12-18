@@ -29,8 +29,8 @@
         },
         "Prevention": {
             "title": "Une prévention appuyée par des données, pas des suppositions",
-            "description": "Nous utilisons Absortech pour mesurer le risque réel d'humidité de votre cargaison. Ensuite, nous recommandons la solution la plus efficace — y compris quel produit et quelle quantité utiliser.",
-            "cta": "AbsorTest"
+            "description": "Nous utilisons DryON pour mesurer le risque réel d'humidité de votre cargaison. Ensuite, nous recommandons la solution la plus efficace — y compris quel produit et quelle quantité utiliser.",
+            "cta": "DryON"
         },
         "Sustainability": {
             "title": "Moins de dégâts. Moins de déchets. Impact réduit.",
@@ -41,7 +41,7 @@
             "newsletter": {
                 "title": "Abonnez-vous à notre newsletter",
                 "description": "Inscrivez-vous pour recevoir les dernières mises à jour et des informations sur la prévention des dégâts d'humidité.",
-                "disclaimer": "En vous abonnant, vous acceptez de recevoir des e-mails d'Absortech et notre politique de confidentialité."
+                "disclaimer": "En vous abonnant, vous acceptez de recevoir des e-mails d'DryON et notre politique de confidentialité."
             },
             "form": {
                 "name": "NOM*",
@@ -75,7 +75,7 @@
                 "settings": "Paramètres des cookies",
                 "terms": "Conditions d'utilisation",
                 "impressum": "Mentions légales",
-                "copyright": "Copyright © 2024 Absortech"
+                "copyright": "Copyright © 2024 DryON"
             }
         }
     },
