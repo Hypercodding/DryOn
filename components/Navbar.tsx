@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Search, Globe, ChevronDown, Building2, Award, History, MapPin, Droplets, Package, Shield, Apple, Leaf, Factory, Shirt, Wrench, Car, Ship, Coffee, Box, Building, Truck, TreePine, Menu, X, Heart, FlaskConical } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, usePathname, useRouter } from '@/lib/navigation';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import Image from 'next/image';
 import SearchModal from './SearchModal';
 
@@ -58,6 +58,7 @@ export default function Navbar() {
     const pathname = usePathname();
     const router = useRouter();
     const t = useTranslations('Navbar');
+    const locale = useLocale();
 
     // Keyboard shortcut to open search (Cmd/Ctrl + K)
     useEffect(() => {
@@ -91,7 +92,7 @@ export default function Navbar() {
     useEffect(() => {
         const fetchIndustries = async () => {
             try {
-                const res = await fetch('/api/industry-categories');
+                const res = await fetch(`/api/industry-categories?locale=${locale}`);
                 if (res.ok) {
                     const data = await res.json();
                     setIndustries(data);
@@ -101,13 +102,13 @@ export default function Navbar() {
             }
         };
         fetchIndustries();
-    }, []);
+    }, [locale]);
 
     // Fetch product categories from backend
     useEffect(() => {
         const fetchProductCategories = async () => {
             try {
-                const res = await fetch('/api/product-categories');
+                const res = await fetch(`/api/product-categories?locale=${locale}`);
                 if (res.ok) {
                     const data = await res.json();
                     setProductCategories(data);
@@ -117,7 +118,7 @@ export default function Navbar() {
             }
         };
         fetchProductCategories();
-    }, []);
+    }, [locale]);
 
     const changeParam = (lang: string) => {
         router.replace(pathname, { locale: lang });
@@ -125,18 +126,19 @@ export default function Navbar() {
     };
 
     const aboutDropdownItems = [
-        { href: '/about', label: 'Company Overview', icon: Building2 },
-        { href: '/about#achievements', label: 'Achievements', icon: Award },
-        { href: '/about#history', label: 'Our History', icon: History },
-        // { href: '/about#branches', label: 'Branches', icon: MapPin },
-        { href: '/about#sustainability', label: 'Sustainability', icon: TreePine },
-        { href: '/about/csr', label: 'CSR', icon: Heart },
-        { href: '/about/rd', label: 'R&D', icon: FlaskConical },
+        { href: '/about', labelKey: 'dropdownAbout.companyOverview', icon: Building2 },
+        { href: '/about#achievements', labelKey: 'dropdownAbout.achievements', icon: Award },
+        { href: '/about#history', labelKey: 'dropdownAbout.ourHistory', icon: History },
+        // { href: '/about#branches', labelKey: 'dropdownAbout.branches', icon: MapPin },
+        { href: '/about#sustainability', labelKey: 'dropdownAbout.sustainability', icon: TreePine },
+        { href: '/about/csr', labelKey: 'dropdownAbout.csr', icon: Heart },
+        { href: '/about/rd', labelKey: 'dropdownAbout.rd', icon: FlaskConical },
     ];
 
     // Helper to get category name from translations
     const getCategoryName = (category: ProductCategory) => {
-        const translation = category.translations?.find(t => t.locale === 'en');
+        const translation = category.translations?.find(t => t.locale === locale) ||
+                          category.translations?.find(t => t.locale === 'en');
         return translation?.name || category.name || category.slug;
     };
 
@@ -153,11 +155,11 @@ export default function Navbar() {
                 {/* Logo */}
                 <Link href="/" className="flex items-center group" onClick={() => setShowMobileMenu(false)}>
                     <Image
-                        src="/images/DryON Pakistan.png"
+                        src="/images/DryON Pakistan.svg"
                         alt="DryOn Pakistan Logo"
                         width={200}
                         height={80}
-                        className="h-12 md:h-14 w-auto object-contain scale-[1.3] transition-transform duration-300 group-hover:scale-[1.4] brightness-110 contrast-110"
+                        className="h-14 md:h-16 w-auto object-contain scale-[1.25] transition-transform duration-300 group-hover:scale-[1.3] brightness-110 contrast-110"
                         priority
                     />
                 </Link>
@@ -199,7 +201,7 @@ export default function Navbar() {
                                                     <item.icon className="w-4 h-4 text-primary group-hover:text-white transition-colors" />
                                                 </div>
                                                 <span className="text-secondary group-hover:text-primary transition-colors normal-case font-medium">
-                                                    {item.label}
+                                                    {t(item.labelKey)}
                                                 </span>
                                             </Link>
                                         ))}
@@ -244,9 +246,9 @@ export default function Navbar() {
                                             </div>
                                             <div>
                                                 <span className="block font-semibold text-primary normal-case">
-                                                    All Products
+                                                    {t('dropdownProducts.allProducts')}
                                                 </span>
-                                                <span className="text-xs text-slate normal-case">View complete range</span>
+                                                <span className="text-xs text-slate normal-case">{t('dropdownProducts.viewCompleteRange')}</span>
                                             </div>
                                         </Link>
                                         
@@ -309,9 +311,9 @@ export default function Navbar() {
                                             </div>
                                             <div>
                                                 <span className="block font-semibold text-primary normal-case">
-                                                    All Industries
+                                                    {t('dropdownIndustries.allIndustries')}
                                                 </span>
-                                                <span className="text-xs text-slate normal-case">View all industry solutions</span>
+                                                <span className="text-xs text-slate normal-case">{t('dropdownIndustries.viewAllSolutions')}</span>
                                             </div>
                                         </Link>
                                         
@@ -444,7 +446,7 @@ export default function Navbar() {
                                                     className="flex items-center gap-3 py-2 text-slate hover:text-primary transition-colors"
                                                 >
                                                     <item.icon className="w-4 h-4" />
-                                                    <span className="normal-case">{item.label}</span>
+                                                    <span className="normal-case">{t(item.labelKey)}</span>
                                                 </Link>
                                             ))}
                                         </motion.div>
@@ -478,7 +480,7 @@ export default function Navbar() {
                                                 className="flex items-center gap-3 py-2 text-slate hover:text-primary transition-colors font-semibold"
                                             >
                                                 <Package className="w-4 h-4" />
-                                                <span className="normal-case">All Products</span>
+                                                <span className="normal-case">{t('dropdownProducts.allProducts')}</span>
                                             </Link>
                                             {productCategories.map((category, idx) => {
                                                 const IconComponent = iconMap[category.icon] || Package;
@@ -528,7 +530,7 @@ export default function Navbar() {
                                                 className="flex items-center gap-3 py-2 text-slate hover:text-primary transition-colors font-semibold"
                                             >
                                                 <Factory className="w-4 h-4" />
-                                                <span className="normal-case">All Industries</span>
+                                                <span className="normal-case">{t('dropdownIndustries.allIndustries')}</span>
                                             </Link>
                                             {industries.map((industry, idx) => {
                                                 const IconComponent = iconMap[industry.icon] || Factory;

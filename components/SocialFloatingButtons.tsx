@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 // LinkedIn Icon Component
 const LinkedInIcon = ({ className = '' }: { className?: string }) => (
@@ -27,6 +28,7 @@ const WhatsAppIcon = ({ className = '' }: { className?: string }) => (
 );
 
 export default function SocialFloatingButtons() {
+    const t = useTranslations('SocialButtons');
     // WhatsApp number - replace with actual number
     const whatsappNumber = '923111775999'; // Format: country code + number without +
     const whatsappMessage = encodeURIComponent('Hello! I am interested in DryON products. Can you please provide more information?');
@@ -45,11 +47,11 @@ export default function SocialFloatingButtons() {
                 initial={{ x: 60 }}
                 animate={{ x: 0 }}
                 transition={{ delay: 1, duration: 0.5 }}
-                aria-label="Contact us on WhatsApp"
+                aria-label={t('contactUsWhatsApp')}
             >
                 <div className="bg-[#25D366] hover:bg-[#20BD5A] p-3 rounded-l-xl shadow-lg transition-all duration-300 group-hover:pl-4 flex items-center gap-2">
                     <span className="text-white text-sm font-medium max-w-0 overflow-hidden group-hover:max-w-[100px] transition-all duration-300 whitespace-nowrap">
-                        WhatsApp
+                        {t('whatsappLabel')}
                     </span>
                     <WhatsAppIcon className="w-6 h-6 text-white" />
                 </div>
@@ -64,11 +66,11 @@ export default function SocialFloatingButtons() {
                 initial={{ x: 60 }}
                 animate={{ x: 0 }}
                 transition={{ delay: 1.1, duration: 0.5 }}
-                aria-label="Follow us on LinkedIn"
+                aria-label={t('followLinkedIn')}
             >
                 <div className="bg-[#0A66C2] hover:bg-[#004182] p-3 rounded-l-xl shadow-lg transition-all duration-300 group-hover:pl-4 flex items-center gap-2">
                     <span className="text-white text-sm font-medium max-w-0 overflow-hidden group-hover:max-w-[100px] transition-all duration-300 whitespace-nowrap">
-                        LinkedIn
+                        {t('linkedinLabel')}
                     </span>
                     <LinkedInIcon className="w-6 h-6 text-white" />
                 </div>

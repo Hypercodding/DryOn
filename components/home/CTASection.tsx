@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Phone, Mail, MapPin, Ship, Anchor } from 'lucide-react';
 import { Link } from '@/lib/navigation';
+import { useTranslations } from 'next-intl';
 
 // Container Ship Silhouette
 const ContainerShipSVG = ({ className = '' }: { className?: string }) => (
@@ -24,6 +25,8 @@ const ContainerShipSVG = ({ className = '' }: { className?: string }) => (
 );
 
 export default function CTASection() {
+    const t = useTranslations('CTASection');
+    
     return (
         <section className="py-24 bg-gradient-to-br from-primary via-primary-dark to-secondary relative overflow-hidden">
             {/* Wave Pattern Top */}
@@ -104,14 +107,14 @@ export default function CTASection() {
                     >
                         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-white/20">
                             <Ship className="w-4 h-4" />
-                            <span>Maritime Cargo Protection</span>
+                            <span>{t('badge')}</span>
                         </div>
 
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-                            Ready to Protect Your Cargo?
+                            {t('title')}
                         </h2>
                         <p className="text-white/80 text-lg leading-relaxed mb-8">
-                            Contact our experts today for a free consultation. We&apos;ll help you find the perfect moisture protection solution for your specific needs.
+                            {t('description')}
                         </p>
 
                         <div className="space-y-4 mb-8">
@@ -120,8 +123,8 @@ export default function CTASection() {
                                     <Phone className="w-5 h-5 text-white" />
                                 </div>
                                 <div>
-                                    <div className="text-white/60 text-sm">Call Us</div>
-                                    <div className="font-semibold">+92 300 1234567</div>
+                                    <div className="text-white/60 text-sm">{t('callUs')}</div>
+                                    <div className="font-semibold">{t('phoneNumber')}</div>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
@@ -129,8 +132,8 @@ export default function CTASection() {
                                     <Mail className="w-5 h-5 text-white" />
                                 </div>
                                 <div>
-                                    <div className="text-white/60 text-sm">Email Us</div>
-                                    <div className="font-semibold">info@dryon.pk</div>
+                                    <div className="text-white/60 text-sm">{t('emailUs')}</div>
+                                    <div className="font-semibold">{t('email')}</div>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
@@ -138,8 +141,8 @@ export default function CTASection() {
                                     <MapPin className="w-5 h-5 text-white" />
                                 </div>
                                 <div>
-                                    <div className="text-white/60 text-sm">Head Office</div>
-                                    <div className="font-semibold">Lahore, Pakistan</div>
+                                    <div className="text-white/60 text-sm">{t('headOffice')}</div>
+                                    <div className="font-semibold">{t('location')}</div>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +151,7 @@ export default function CTASection() {
                             href="/contact"
                             className="inline-flex items-center gap-2 bg-white text-primary hover:bg-gray-100 font-bold py-4 px-8 rounded-lg transition-all shadow-lg hover:shadow-xl group"
                         >
-                            Get Free Consultation
+                            {t('ctaButton')}
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </motion.div>
@@ -168,47 +171,47 @@ export default function CTASection() {
                             </svg>
                         </div>
 
-                        <h3 className="text-2xl font-bold text-secondary mb-6">Send a Quick Message</h3>
+                        <h3 className="text-2xl font-bold text-secondary mb-6">{t('formTitle')}</h3>
                         <form className="space-y-4 relative z-10">
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-slate mb-2">Name</label>
+                                    <label className="block text-sm font-medium text-slate mb-2">{t('nameLabel')}</label>
                                     <input 
                                         type="text" 
                                         className="w-full border border-gray-200 rounded-lg p-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
-                                        placeholder="Your name"
+                                        placeholder={t('namePlaceholder')}
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate mb-2">Email</label>
+                                    <label className="block text-sm font-medium text-slate mb-2">{t('emailLabel')}</label>
                                     <input 
                                         type="email" 
                                         className="w-full border border-gray-200 rounded-lg p-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
-                                        placeholder="your@email.com"
+                                        placeholder={t('emailPlaceholder')}
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate mb-2">Company</label>
+                                <label className="block text-sm font-medium text-slate mb-2">{t('companyLabel')}</label>
                                 <input 
                                     type="text" 
                                     className="w-full border border-gray-200 rounded-lg p-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
-                                    placeholder="Your company name"
+                                    placeholder={t('companyPlaceholder')}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate mb-2">Message</label>
+                                <label className="block text-sm font-medium text-slate mb-2">{t('messageLabel')}</label>
                                 <textarea 
                                     rows={4}
                                     className="w-full border border-gray-200 rounded-lg p-3 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all resize-none"
-                                    placeholder="How can we help you?"
+                                    placeholder={t('messagePlaceholder')}
                                 />
                             </div>
                             <button 
                                 type="submit"
                                 className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                             >
-                                Send Message
+                                {t('submitButton')}
                                 <ArrowRight className="w-5 h-5" />
                             </button>
                         </form>

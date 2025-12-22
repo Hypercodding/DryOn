@@ -222,10 +222,11 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
             {/* Images */}
             <div className="bg-white p-6 rounded shadow-sm border border-gray-200">
-                <h3 className="text-lg font-bold text-navy mb-4">Product Images</h3>
+                <h3 className="text-lg font-bold text-navy mb-2">Product Images</h3>
+                <p className="text-sm text-gray-500 mb-4">You can upload up to 2 images for each product.</p>
                 <ImageUploader
                     images={JSON.parse(imagesJson || '[]')}
-                    onChange={(imgs) => setImagesJson(JSON.stringify(imgs))}
+                    onChange={(imgs) => setImagesJson(JSON.stringify(imgs.slice(0, 2)))}
                 />
             </div>
 

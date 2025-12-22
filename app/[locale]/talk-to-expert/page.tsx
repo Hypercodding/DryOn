@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { Mail, Phone, Calendar } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 export default async function TalkToExpertPage() {
     const t = await getTranslations('TalkToExpertPage');
@@ -91,6 +92,7 @@ export default async function TalkToExpertPage() {
                     </form>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

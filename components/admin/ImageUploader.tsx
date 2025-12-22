@@ -17,6 +17,13 @@ export default function ImageUploader({ images, onChange }: ImageUploaderProps) 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files?.length) return;
 
+        // Check if we already have 2 images
+        if (images.length >= 2) {
+            alert('Maximum 2 images allowed per product');
+            e.target.value = ''; // Reset input
+            return;
+        }
+
         setUploading(true);
         setProgress(0);
         const file = e.target.files[0];
@@ -37,7 +44,8 @@ export default function ImageUploader({ images, onChange }: ImageUploaderProps) 
                 },
                 async () => {
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    onChange([...images, downloadURL]);
+                    const newImages = [...images, downloadURL].slice(0, 2); // Ensure max 2
+                    onChange(newImages);
                     setUploading(false);
                 }
             );
@@ -69,17 +77,22 @@ export default function ImageUploader({ images, onChange }: ImageUploaderProps) 
                 ))}
             </div>
 
-            <label className={`cursor-pointer bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-4 py-2 inline-flex items-center gap-2 ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
+            <label className={`cursor-pointer bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded px-4 py-2 inline-flex items-center gap-2 ${uploading || images.length >= 2 ? 'opacity-50 pointer-events-none' : ''}`}>
                 {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
-                {uploading ? `Uploading ${Math.round(progress)}%` : 'Upload Image'}
+                {uploading ? `Uploading ${Math.round(progress)}%` : images.length >= 2 ? 'Maximum 2 images reached' : 'Upload Image'}
                 <input
                     type="file"
                     accept="image/*"
                     className="hidden"
                     onChange={handleUpload}
-                    disabled={uploading}
+                    disabled={uploading || images.length >= 2}
                 />
             </label>
+            {images.length < 2 && (
+                <p className="text-sm text-gray-500 mt-2">
+                    {images.length === 0 ? 'Upload up to 2 images (0/2)' : `Upload up to 2 images (${images.length}/2)`}
+                </p>
+            )}
         </div>
     );
 }

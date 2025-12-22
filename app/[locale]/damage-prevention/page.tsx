@@ -6,6 +6,7 @@ import {
     CircleDot, TrendingDown, DollarSign, XCircle, BadgeCheck, Anchor
 } from 'lucide-react';
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 // Wave SVG Component - Top Wave
 const WaveTop = ({ className = '', fill = '#f9fafb' }: { className?: string; fill?: string }) => (
@@ -111,22 +112,22 @@ export default async function DamagePreventionPage() {
         {
             id: 'container-rain',
             icon: CloudRain,
-            title: 'Container Rain (Container Sweat)',
-            description: 'When warm, moist air inside a shipping container meets the cold steel walls, condensation forms and drips onto cargo like rain.',
+            title: t('containerRainTitle'),
+            description: t('containerRainDesc'),
             causes: [
-                'Temperature fluctuations during transit',
-                'High humidity cargo or packaging',
-                'Inadequate ventilation',
-                'Long voyage durations'
+                t('containerRainCause1'),
+                t('containerRainCause2'),
+                t('containerRainCause3'),
+                t('containerRainCause4')
             ],
             effects: [
-                'Water damage to packaging',
-                'Product contamination',
-                'Mold and mildew growth',
-                'Complete cargo rejection'
+                t('containerRainEffect1'),
+                t('containerRainEffect2'),
+                t('containerRainEffect3'),
+                t('containerRainEffect4')
             ],
-            solution: 'DryON Container Desiccants',
-            solutionDesc: 'Our calcium chloride-based container desiccants absorb up to 300% of their weight in moisture, preventing condensation before it forms.',
+            solution: t('containerRainSolution'),
+            solutionDesc: t('containerRainSolutionDesc'),
             color: 'from-blue-500 to-cyan-500',
             bgColor: 'bg-blue-50',
             borderColor: 'border-blue-100'
@@ -134,22 +135,22 @@ export default async function DamagePreventionPage() {
         {
             id: 'mold-mildew',
             icon: Leaf,
-            title: 'Mold & Mildew Growth',
-            description: 'Fungal growth thrives in humid environments, spreading rapidly across organic materials and contaminating entire shipments.',
+            title: t('moldMildewTitle'),
+            description: t('moldMildewDesc'),
             causes: [
-                'Relative humidity above 65%',
-                'Organic material presence',
-                'Poor air circulation',
-                'Extended storage periods'
+                t('moldMildewCause1'),
+                t('moldMildewCause2'),
+                t('moldMildewCause3'),
+                t('moldMildewCause4')
             ],
             effects: [
-                'Health hazards',
-                'Permanent product damage',
-                'Unpleasant odors',
-                'Regulatory rejection'
+                t('moldMildewEffect1'),
+                t('moldMildewEffect2'),
+                t('moldMildewEffect3'),
+                t('moldMildewEffect4')
             ],
-            solution: 'Super DryON In-Box Desiccants',
-            solutionDesc: 'Placed directly with products, Super DryON maintains safe humidity levels within cartons and prevents fungal growth at the source.',
+            solution: t('moldMildewSolution'),
+            solutionDesc: t('moldMildewSolutionDesc'),
             color: 'from-green-500 to-emerald-500',
             bgColor: 'bg-green-50',
             borderColor: 'border-green-100'
@@ -157,22 +158,22 @@ export default async function DamagePreventionPage() {
         {
             id: 'rust-corrosion',
             icon: Factory,
-            title: 'Rust & Corrosion',
-            description: 'Metal components and machinery suffer irreversible damage when exposed to moisture, leading to costly replacements and repairs.',
+            title: t('rustCorrosionTitle'),
+            description: t('rustCorrosionDesc'),
             causes: [
-                'Salt-laden sea air',
-                'Condensation on metal surfaces',
-                'Electrolytic corrosion',
-                'Prolonged moisture exposure'
+                t('rustCorrosionCause1'),
+                t('rustCorrosionCause2'),
+                t('rustCorrosionCause3'),
+                t('rustCorrosionCause4')
             ],
             effects: [
-                'Equipment malfunction',
-                'Structural weakness',
-                'Safety hazards',
-                'Warranty claims'
+                t('rustCorrosionEffect1'),
+                t('rustCorrosionEffect2'),
+                t('rustCorrosionEffect3'),
+                t('rustCorrosionEffect4')
             ],
-            solution: 'DryON + VCI Technology',
-            solutionDesc: 'Combining our desiccants with Vapor Corrosion Inhibitor packaging provides comprehensive metal protection during transit.',
+            solution: t('rustCorrosionSolution'),
+            solutionDesc: t('rustCorrosionSolutionDesc'),
             color: 'from-orange-500 to-red-500',
             bgColor: 'bg-orange-50',
             borderColor: 'border-orange-100'
@@ -180,22 +181,22 @@ export default async function DamagePreventionPage() {
         {
             id: 'cargo-sweat',
             icon: Thermometer,
-            title: 'Cargo Sweat',
-            description: 'When cargo temperature is lower than the dew point of surrounding air, moisture condenses directly on product surfaces.',
+            title: t('cargoSweatTitle'),
+            description: t('cargoSweatDesc'),
             causes: [
-                'Cold cargo loaded in warm environments',
-                'Hygroscopic products',
-                'Inadequate pre-conditioning',
-                'Climate transitions during voyage'
+                t('cargoSweatCause1'),
+                t('cargoSweatCause2'),
+                t('cargoSweatCause3'),
+                t('cargoSweatCause4')
             ],
             effects: [
-                'Surface moisture damage',
-                'Label and packaging deterioration',
-                'Product clumping and caking',
-                'Quality degradation'
+                t('cargoSweatEffect1'),
+                t('cargoSweatEffect2'),
+                t('cargoSweatEffect3'),
+                t('cargoSweatEffect4')
             ],
-            solution: 'GreenPro Transafeliners',
-            solutionDesc: 'Our hermetic liners create a protective barrier around cargo, controlling the micro-environment and preventing moisture exchange.',
+            solution: t('cargoSweatSolution'),
+            solutionDesc: t('cargoSweatSolutionDesc'),
             color: 'from-purple-500 to-violet-500',
             bgColor: 'bg-purple-50',
             borderColor: 'border-purple-100'
@@ -203,22 +204,22 @@ export default async function DamagePreventionPage() {
         {
             id: 'odor-contamination',
             icon: Wind,
-            title: 'Odor & Contamination',
-            description: 'Musty odors develop from moisture-related bacterial and fungal activity, permanently affecting product appeal and saleability.',
+            title: t('odorContaminationTitle'),
+            description: t('odorContaminationDesc'),
             causes: [
-                'Microbial growth',
-                'Chemical reactions with moisture',
-                'Cross-contamination',
-                'Decomposition of organic matter'
+                t('odorContaminationCause1'),
+                t('odorContaminationCause2'),
+                t('odorContaminationCause3'),
+                t('odorContaminationCause4')
             ],
             effects: [
-                'Consumer complaints',
-                'Brand reputation damage',
-                'Product returns',
-                'Loss of repeat business'
+                t('odorContaminationEffect1'),
+                t('odorContaminationEffect2'),
+                t('odorContaminationEffect3'),
+                t('odorContaminationEffect4')
             ],
-            solution: 'FreshON Absorbers',
-            solutionDesc: 'Beyond moisture control, FreshON absorbs ethylene and odors, keeping products fresh and market-ready upon arrival.',
+            solution: t('odorContaminationSolution'),
+            solutionDesc: t('odorContaminationSolutionDesc'),
             color: 'from-teal-500 to-cyan-500',
             bgColor: 'bg-teal-50',
             borderColor: 'border-teal-100'
@@ -226,22 +227,22 @@ export default async function DamagePreventionPage() {
         {
             id: 'clumping-caking',
             icon: Box,
-            title: 'Clumping & Caking',
-            description: 'Powdered and granular products absorb moisture and bind together, making them unusable and impossible to sell.',
+            title: t('clumpingCakingTitle'),
+            description: t('clumpingCakingDesc'),
             causes: [
-                'Hygroscopic nature of products',
-                'High ambient humidity',
-                'Packaging permeability',
-                'Temperature cycling'
+                t('clumpingCakingCause1'),
+                t('clumpingCakingCause2'),
+                t('clumpingCakingCause3'),
+                t('clumpingCakingCause4')
             ],
             effects: [
-                'Product unusability',
-                'Processing difficulties',
-                'Complete batch rejection',
-                'Customer dissatisfaction'
+                t('clumpingCakingEffect1'),
+                t('clumpingCakingEffect2'),
+                t('clumpingCakingEffect3'),
+                t('clumpingCakingEffect4')
             ],
-            solution: 'DryPak ECO Sachets',
-            solutionDesc: 'Our eco-friendly desiccant sachets placed within product packaging maintain optimal moisture levels throughout the supply chain.',
+            solution: t('clumpingCakingSolution'),
+            solutionDesc: t('clumpingCakingSolutionDesc'),
             color: 'from-amber-500 to-yellow-500',
             bgColor: 'bg-amber-50',
             borderColor: 'border-amber-100'
@@ -251,39 +252,39 @@ export default async function DamagePreventionPage() {
     const processSteps = [
         { 
             icon: Search, 
-            number: '01', 
-            title: 'Risk Assessment',
-            description: 'We analyze your cargo type, route, transit duration, and seasonal conditions to identify specific moisture risks.',
-            details: ['Cargo moisture content analysis', 'Route climate mapping', 'Historical damage review', 'Container condition assessment']
+            number: t('step1Number'), 
+            title: t('step1Title'),
+            description: t('step1Desc'),
+            details: [t('step1Detail1'), t('step1Detail2'), t('step1Detail3'), t('step1Detail4')]
         },
         { 
             icon: Palette, 
-            number: '02', 
-            title: 'Solution Design',
-            description: 'Our experts design a customized protection strategy combining the right products in optimal quantities.',
-            details: ['Product selection', 'Quantity calculation', 'Placement planning', 'Cost optimization']
+            number: t('step2Number'), 
+            title: t('step2Title'),
+            description: t('step2Desc'),
+            details: [t('step2Detail1'), t('step2Detail2'), t('step2Detail3'), t('step2Detail4')]
         },
         { 
             icon: Rocket, 
-            number: '03', 
-            title: 'Implementation',
-            description: 'We guide proper installation and provide training to ensure consistent, effective protection.',
-            details: ['Installation guidance', 'Staff training', 'Quality monitoring', 'Continuous support']
+            number: t('step3Number'), 
+            title: t('step3Title'),
+            description: t('step3Desc'),
+            details: [t('step3Detail1'), t('step3Detail2'), t('step3Detail3'), t('step3Detail4')]
         },
     ];
 
     const statistics = [
-        { value: '$25B+', label: 'Annual Global Cargo Loss', icon: DollarSign, color: 'text-red-500' },
-        { value: '10%', label: 'Shipments Affected by Moisture', icon: Droplets, color: 'text-blue-500' },
-        { value: '90%', label: 'Preventable with Desiccants', icon: ShieldCheck, color: 'text-green-500' },
-        { value: '300%', label: 'DryON Absorption Capacity', icon: Zap, color: 'text-primary' },
+        { value: '$25B+', label: t('statAnnualLoss'), icon: DollarSign, color: 'text-red-500' },
+        { value: '10%', label: t('statAffected'), icon: Droplets, color: 'text-blue-500' },
+        { value: '90%', label: t('statPreventable'), icon: ShieldCheck, color: 'text-green-500' },
+        { value: '300%', label: t('statAbsorption'), icon: Zap, color: 'text-primary' },
     ];
 
     const benefits = [
-        { icon: ShieldCheck, title: 'Complete Protection', desc: 'Safeguard cargo from all moisture-related damage' },
-        { icon: DollarSign, title: 'Cost-Effective', desc: 'Prevent losses that far exceed protection costs' },
-        { icon: BadgeCheck, title: 'Quality Assurance', desc: 'Maintain product quality throughout transit' },
-        { icon: TrendingDown, title: 'Risk Reduction', desc: 'Minimize claims, rejections, and reputation damage' },
+        { icon: ShieldCheck, title: t('benefit1Title'), desc: t('benefit1Desc') },
+        { icon: DollarSign, title: t('benefit2Title'), desc: t('benefit2Desc') },
+        { icon: BadgeCheck, title: t('benefit3Title'), desc: t('benefit3Desc') },
+        { icon: TrendingDown, title: t('benefit4Title'), desc: t('benefit4Desc') },
     ];
 
     return (
@@ -309,22 +310,22 @@ export default async function DamagePreventionPage() {
                 <div className="container mx-auto max-w-5xl text-center relative z-10">
                     <div className="inline-flex items-center gap-2 bg-white/10 text-white/90 px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wider mb-6">
                         <Ship className="w-4 h-4" />
-                        Protecting Cargo Across the Seas
+                        {t('heroBadge')}
                     </div>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-shadow-lg">
-                        Moisture & Damage Prevention
+                        {t('heroTitle')}
                     </h1>
                     <p className="text-xl text-white/90 font-light max-w-3xl mx-auto leading-relaxed mb-8">
-                        Understanding moisture damage is the first step to prevention. Explore the common challenges faced during ocean cargo transportation and discover our proven solutions.
+                        {t('heroSubtitle')}
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <a href="#problems" className="btn-3d bg-white text-secondary hover:bg-gray-100 font-bold py-4 px-8 rounded-lg shadow-lg inline-flex items-center gap-2">
                             <Droplets className="w-5 h-5" />
-                            Explore Problems
+                            {t('exploreProblems')}
                         </a>
                         <a href="#solutions" className="btn-3d bg-primary hover:bg-primary-dark text-white font-bold py-4 px-8 rounded-lg shadow-lg inline-flex items-center gap-2">
                             <ShieldCheck className="w-5 h-5" />
-                            View Solutions
+                            {t('viewSolutions')}
                         </a>
                     </div>
                 </div>
@@ -375,13 +376,13 @@ export default async function DamagePreventionPage() {
                                 </div>
                             </div>
                             <div>
-                                <span className="text-red-500 font-semibold text-sm uppercase tracking-wider">The Global Maritime Challenge</span>
-                                <h2 className="text-3xl md:text-4xl font-bold text-secondary mt-2 mb-4">Understanding Moisture Damage at Sea</h2>
+                                <span className="text-red-500 font-semibold text-sm uppercase tracking-wider">{t('problemBadge')}</span>
+                                <h2 className="text-3xl md:text-4xl font-bold text-secondary mt-2 mb-4">{t('problemTitle')}</h2>
                                 <p className="text-slate text-lg leading-relaxed mb-4">
-                                    Every year, billions of dollars worth of cargo is damaged or destroyed due to moisture-related issues during ocean shipping. From container rain to mold growth, these preventable problems affect industries worldwide.
+                                    {t('problemP1')}
                                 </p>
                                 <p className="text-slate text-lg leading-relaxed">
-                                    The good news? <strong className="text-secondary">Over 90% of moisture damage is preventable</strong> with proper understanding and the right protection solutions. Below, we break down the most common moisture challenges and how DryON products address each one.
+                                    {t('problemP2')}
                                 </p>
                             </div>
                         </div>
@@ -405,11 +406,11 @@ export default async function DamagePreventionPage() {
                     <div className="text-center mb-16">
                         <div className="inline-flex items-center gap-2 text-primary font-semibold text-sm uppercase tracking-wider mb-4">
                             <CloudRain className="w-4 h-4" />
-                            Common Challenges During Sea Voyages
+                            {t('challengesBadge')}
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">Types of Moisture Damage</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">{t('challengesTitle')}</h2>
                         <p className="text-slate max-w-2xl mx-auto">
-                            Explore each problem to understand its causes, effects, and our recommended maritime cargo protection solution.
+                            {t('challengesSubtitle')}
                         </p>
                     </div>
 
@@ -441,7 +442,7 @@ export default async function DamagePreventionPage() {
                                         <div className="flex-1">
                                             <div className="flex items-center gap-3 mb-2">
                                                 <span className="text-xs font-bold uppercase tracking-wider text-slate bg-white/80 px-3 py-1 rounded-full">
-                                                    Problem #{idx + 1}
+                                                    {t('problemNumber')}{idx + 1}
                                                 </span>
                                             </div>
                                             <h3 className="text-2xl md:text-3xl font-bold text-secondary mb-3">{problem.title}</h3>
@@ -455,7 +456,7 @@ export default async function DamagePreventionPage() {
                                         <div className="bg-white rounded-xl p-6 shadow-sm">
                                             <h4 className="font-bold text-secondary mb-4 flex items-center gap-2">
                                                 <CircleDot className="w-5 h-5 text-orange-500" />
-                                                Common Causes
+                                                {t('commonCauses')}
                                             </h4>
                                             <ul className="space-y-3">
                                                 {problem.causes.map((cause, i) => (
@@ -471,7 +472,7 @@ export default async function DamagePreventionPage() {
                                         <div className="bg-white rounded-xl p-6 shadow-sm">
                                             <h4 className="font-bold text-secondary mb-4 flex items-center gap-2">
                                                 <XCircle className="w-5 h-5 text-red-500" />
-                                                Negative Effects
+                                                {t('negativeEffects')}
                                             </h4>
                                             <ul className="space-y-3">
                                                 {problem.effects.map((effect, i) => (
@@ -497,7 +498,7 @@ export default async function DamagePreventionPage() {
                                             <div>
                                                 <span className="text-white/80 text-sm font-medium uppercase tracking-wider flex items-center gap-2">
                                                     <ShieldCheck className="w-4 h-4" />
-                                                    Recommended Solution
+                                                    {t('recommendedSolution')}
                                                 </span>
                                                 <h4 className="text-xl font-bold mt-1">{problem.solution}</h4>
                                                 <p className="text-white/90 mt-2 max-w-xl">{problem.solutionDesc}</p>
@@ -506,7 +507,7 @@ export default async function DamagePreventionPage() {
                                                 href="/products"
                                                 className="inline-flex items-center gap-2 bg-white text-secondary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg transition-all shadow-lg flex-shrink-0"
                                             >
-                                                View Product
+                                                {t('viewProduct')}
                                                 <ArrowRight className="w-5 h-5" />
                                             </Link>
                                         </div>
@@ -532,11 +533,11 @@ export default async function DamagePreventionPage() {
                     <div className="text-center mb-16">
                         <div className="inline-flex items-center gap-2 text-primary font-semibold text-sm uppercase tracking-wider mb-4">
                             <Ship className="w-4 h-4" />
-                            How We Protect Your Maritime Cargo
+                            {t('processBadge')}
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">Our Protection Process</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">{t('processTitle')}</h2>
                         <p className="text-slate max-w-2xl mx-auto">
-                            A systematic approach to identify, address, and prevent moisture damage in your ocean supply chain.
+                            {t('processSubtitle')}
                         </p>
                     </div>
 
@@ -590,9 +591,9 @@ export default async function DamagePreventionPage() {
                     <div className="text-center mb-16">
                         <div className="inline-flex items-center gap-2 text-primary font-semibold text-sm uppercase tracking-wider mb-4">
                             <Anchor className="w-4 h-4" />
-                            Why Choose DryON
+                            {t('benefitsBadge')}
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">Benefits of Maritime Cargo Protection</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">{t('benefitsTitle')}</h2>
                     </div>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -633,24 +634,24 @@ export default async function DamagePreventionPage() {
                         <div className="text-center mb-10 relative z-10">
                             <div className="inline-flex items-center gap-2 text-primary font-semibold text-sm uppercase tracking-wider mb-4">
                                 <Ship className="w-4 h-4" />
-                                Maritime Shipping Industries
+                                {t('industriesBadge')}
                             </div>
-                            <h2 className="text-3xl md:text-4xl font-bold mb-4">Industries Most Affected</h2>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('industriesTitle')}</h2>
                             <p className="text-white/80 max-w-2xl mx-auto">
-                                Moisture damage impacts virtually every industry involved in ocean shipping and storage. Here are the sectors where protection is most critical.
+                                {t('industriesSubtitle')}
                             </p>
                         </div>
 
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
                             {[
-                                { icon: Leaf, name: 'Agriculture' },
-                                { icon: Package, name: 'Textiles' },
-                                { icon: Factory, name: 'Manufacturing' },
-                                { icon: Ship, name: 'Logistics' },
-                                { icon: Box, name: 'Food & Beverage' },
-                                { icon: Warehouse, name: 'Warehousing' },
-                                { icon: Factory, name: 'Automotive' },
-                                { icon: Package, name: 'Electronics' },
+                                { icon: Leaf, name: t('industryAgriculture') },
+                                { icon: Package, name: t('industryTextiles') },
+                                { icon: Factory, name: t('industryManufacturing') },
+                                { icon: Ship, name: t('industryLogistics') },
+                                { icon: Box, name: t('industryFoodBeverage') },
+                                { icon: Warehouse, name: t('industryWarehousing') },
+                                { icon: Factory, name: t('industryAutomotive') },
+                                { icon: Package, name: t('industryElectronics') },
                             ].map((industry, idx) => (
                                 <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center hover:bg-white/20 transition-colors border border-white/10">
                                     <industry.icon className="w-8 h-8 text-primary mx-auto mb-2" />
@@ -664,7 +665,7 @@ export default async function DamagePreventionPage() {
                                 href="/solutions-by-industry"
                                 className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
                             >
-                                View Solutions by Industry
+                                {t('viewSolutionsByIndustry')}
                                 <ArrowRight className="w-5 h-5" />
                             </Link>
                         </div>
@@ -692,11 +693,11 @@ export default async function DamagePreventionPage() {
                 <div className="container mx-auto px-6 text-center relative z-10">
                     <div className="inline-flex items-center gap-2 text-white/80 text-sm font-semibold uppercase tracking-wider mb-4">
                         <Ship className="w-4 h-4" />
-                        Start Your Protection Journey
+                        {t('ctaBadge')}
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Protect Your Maritime Cargo?</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{t('ctaTitle')}</h2>
                     <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-                        Let our experts analyze your specific ocean shipping needs and create a customized protection plan that eliminates moisture damage from your supply chain.
+                        {t('ctaDescription')}
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link 
@@ -704,18 +705,19 @@ export default async function DamagePreventionPage() {
                             className="btn-3d inline-flex items-center gap-2 bg-white text-primary hover:bg-gray-100 font-bold py-4 px-8 rounded-lg shadow-lg"
                         >
                             <Anchor className="w-5 h-5" />
-                            Get Free Consultation
+                            {t('ctaGetConsultation')}
                         </Link>
                         <Link 
                             href="/products" 
                             className="btn-3d inline-flex items-center gap-2 bg-secondary hover:bg-secondary-dark text-white font-bold py-4 px-8 rounded-lg shadow-lg"
                         >
-                            Browse Products
+                            {t('ctaBrowseProducts')}
                             <ArrowRight className="w-5 h-5" />
                         </Link>
                 </div>
             </div>
             </section>
+            <Footer />
         </div>
     );
 }

@@ -5,6 +5,7 @@ import { Factory, Ship, Package, Leaf, Shirt, Apple, Wrench, Car, Coffee, Box, B
 import { useTranslations } from 'next-intl';
 import { Link } from '@/lib/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import Footer from '@/components/Footer';
 
 interface IndustryCategory {
     id: string;
@@ -305,12 +306,27 @@ export default function SolutionsByIndustryPage() {
                                                         <div className="bg-white rounded-xl overflow-hidden shadow-float hover:shadow-xl transition-all duration-300 h-full border border-gray-100 card-3d flex flex-col">
                                                             {/* Image Area */}
                                                             <div className="h-56 bg-gradient-to-br from-gray-50 to-gray-100 relative flex items-center justify-center overflow-hidden">
-                                                                {images[0] ? (
-                                                                    <img 
-                                                                        src={images[0]} 
-                                                                        alt={translation?.name || 'Product'} 
-                                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                                                    />
+                                                                {images.length > 0 ? (
+                                                                    <div className="w-full h-full flex">
+                                                                        {/* First Image */}
+                                                                        <div className="flex-1 relative overflow-hidden">
+                                                                            <img 
+                                                                                src={images[0]} 
+                                                                                alt={translation?.name || 'Product'} 
+                                                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                                            />
+                                                                        </div>
+                                                                        {/* Second Image (if available) */}
+                                                                        {images[1] && (
+                                                                            <div className="flex-1 relative overflow-hidden border-l-2 border-white/50">
+                                                                                <img 
+                                                                                    src={images[1]} 
+                                                                                    alt={translation?.name || 'Product'} 
+                                                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                                                />
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
                                                                 ) : (
                                                                     <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                                                                         <Package className="w-10 h-10 text-primary" />
@@ -431,6 +447,7 @@ export default function SolutionsByIndustryPage() {
                     </Link>
                 </motion.div>
             </div>
+            <Footer />
         </div>
     );
 }

@@ -2,15 +2,17 @@
 
 import { motion } from 'framer-motion';
 import { Package, Globe, Users, Award, Anchor } from 'lucide-react';
-
-const stats = [
-    { icon: Package, value: '300%', label: 'Absorption Capacity', suffix: '' },
-    { icon: Globe, value: '9+', label: 'Industries Served', suffix: '' },
-    { icon: Users, value: '500+', label: 'Happy Clients', suffix: '' },
-    { icon: Award, value: '100%', label: 'Made in Pakistan', suffix: '' },
-];
+import { useTranslations } from 'next-intl';
 
 export default function StatsSection() {
+    const t = useTranslations('StatsSection');
+    
+    const stats = [
+        { icon: Package, value: '300%', label: t('absorptionCapacity'), suffix: '' },
+        { icon: Globe, value: '9+', label: t('industriesServed'), suffix: '' },
+        { icon: Users, value: '500+', label: t('happyClients'), suffix: '' },
+        { icon: Award, value: '100%', label: t('madeInPakistan'), suffix: '' },
+    ];
     return (
         <section className="py-16 bg-secondary relative overflow-hidden">
             {/* Wave Pattern Top */}

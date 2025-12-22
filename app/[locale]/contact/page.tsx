@@ -1,6 +1,7 @@
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import ContactForm from '@/components/ContactForm';
+import Footer from '@/components/Footer';
 
 export default async function ContactPage() {
     const t = await getTranslations('ContactPage');
@@ -25,10 +26,10 @@ export default async function ContactPage() {
                 {/* Locations Section */}
                 <div className="mb-20">
                     <div className="text-center mb-12">
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Our Locations</span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">Visit Our Offices</h2>
+                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">{t('ourLocations')}</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">{t('visitOffices')}</h2>
                         <p className="text-slate max-w-2xl mx-auto">
-                            We have offices in Lahore and Karachi to serve you better. Reach out to us at any of our locations.
+                            {t('locationsDesc')}
                         </p>
                     </div>
 
@@ -54,7 +55,7 @@ export default async function ContactPage() {
                                         <MapPin className="w-6 h-6 text-primary" />
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-secondary mb-2 text-xl">Lahore Office</h3>
+                                        <h3 className="font-bold text-secondary mb-2 text-xl">{t('lahoreOffice')}</h3>
                                         <p className="text-slate leading-relaxed">
                                             G-29, Moon Heights, Block F, Johar Town<br />
                                             Lahore, Pakistan
@@ -66,7 +67,7 @@ export default async function ContactPage() {
                                     <div className="flex items-start gap-3">
                                         <Phone className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                                         <div>
-                                            <p className="text-sm text-slate/70 mb-1">Phone</p>
+                                            <p className="text-sm text-slate/70 mb-1">{t('phone')}</p>
                                             <a href="tel:+923008415079" className="text-slate hover:text-primary transition-colors font-medium">
                                                 +92-300-8415079
                                             </a>
@@ -76,7 +77,7 @@ export default async function ContactPage() {
                                     <div className="flex items-start gap-3">
                                         <Phone className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                                         <div>
-                                            <p className="text-sm text-slate/70 mb-1">UAN</p>
+                                            <p className="text-sm text-slate/70 mb-1">{t('uan')}</p>
                                             <a href="tel:+923111775999" className="text-slate hover:text-primary transition-colors font-medium">
                                                 +92-3-111-775-999
                                             </a>
@@ -86,7 +87,7 @@ export default async function ContactPage() {
                                     <div className="flex items-start gap-3">
                                         <Mail className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                                         <div>
-                                            <p className="text-sm text-slate/70 mb-1">Email</p>
+                                            <p className="text-sm text-slate/70 mb-1">{t('email')}</p>
                                             <a href="mailto:sales.dryon@gmail.com" className="text-slate hover:text-primary transition-colors font-medium break-all">
                                                 sales.dryon@gmail.com
                                             </a>
@@ -117,7 +118,7 @@ export default async function ContactPage() {
                                         <MapPin className="w-6 h-6 text-primary" />
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-secondary mb-2 text-xl">Karachi Office</h3>
+                                        <h3 className="font-bold text-secondary mb-2 text-xl">{t('karachiOffice')}</h3>
                                         <p className="text-slate leading-relaxed">
                                             Suite 1009, 10th Floor, Saima Trade Tower<br />
                                             Tower &quot;A&quot;, I.I Chundrigar Road<br />
@@ -130,7 +131,7 @@ export default async function ContactPage() {
                                     <div className="flex items-start gap-3">
                                         <Phone className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                                         <div>
-                                            <p className="text-sm text-slate/70 mb-1">Phone</p>
+                                            <p className="text-sm text-slate/70 mb-1">{t('phone')}</p>
                                             <a href="tel:+923204305013" className="text-slate hover:text-primary transition-colors font-medium">
                                                 +92-320-4305013
                                             </a>
@@ -140,7 +141,7 @@ export default async function ContactPage() {
                                     <div className="flex items-start gap-3">
                                         <Phone className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                                         <div>
-                                            <p className="text-sm text-slate/70 mb-1">UAN</p>
+                                            <p className="text-sm text-slate/70 mb-1">{t('uan')}</p>
                                             <a href="tel:+923111775999" className="text-slate hover:text-primary transition-colors font-medium">
                                                 +92-3-111-775-999
                                             </a>
@@ -150,7 +151,7 @@ export default async function ContactPage() {
                                     <div className="flex items-start gap-3">
                                         <Mail className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                                         <div>
-                                            <p className="text-sm text-slate/70 mb-1">Email</p>
+                                            <p className="text-sm text-slate/70 mb-1">{t('email')}</p>
                                             <a href="mailto:sales@dryon.pk" className="text-slate hover:text-primary transition-colors font-medium">
                                                 sales@dryon.pk
                                             </a>
@@ -165,7 +166,7 @@ export default async function ContactPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     {/* Contact Info */}
                     <div>
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Contact Information</span>
+                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">{t('contactInformation')}</span>
                         <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-10">{t('getInTouch')}</h2>
 
                         <div className="space-y-8">
@@ -185,6 +186,7 @@ export default async function ContactPage() {
                     <ContactForm />
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

@@ -2,32 +2,34 @@
 
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
-
-const testimonials = [
-    {
-        name: 'Ahmed Hassan',
-        role: 'Export Manager',
-        company: 'Textile Exports Ltd.',
-        content: 'DryON desiccants have significantly reduced our moisture damage claims. Their products consistently perform even during the longest sea voyages.',
-        rating: 5,
-    },
-    {
-        name: 'Fatima Khan',
-        role: 'Quality Director',
-        company: 'Fresh Fruits Pakistan',
-        content: 'The FreshON ethylene absorbers have extended our fruit shelf-life remarkably. Our export rejection rates have dropped by 40%.',
-        rating: 5,
-    },
-    {
-        name: 'Muhammad Ali',
-        role: 'Logistics Head',
-        company: 'Auto Parts Industries',
-        content: 'We switched to DryON two years ago and haven\'t looked back. Their customer support and product quality are exceptional.',
-        rating: 5,
-    },
-];
+import { useTranslations } from 'next-intl';
 
 export default function TestimonialsSection() {
+    const t = useTranslations('TestimonialsSection');
+    
+    const testimonials = [
+        {
+            name: t('testimonial1.name'),
+            role: t('testimonial1.role'),
+            company: t('testimonial1.company'),
+            content: t('testimonial1.content'),
+            rating: 5,
+        },
+        {
+            name: t('testimonial2.name'),
+            role: t('testimonial2.role'),
+            company: t('testimonial2.company'),
+            content: t('testimonial2.content'),
+            rating: 5,
+        },
+        {
+            name: t('testimonial3.name'),
+            role: t('testimonial3.role'),
+            company: t('testimonial3.company'),
+            content: t('testimonial3.content'),
+            rating: 5,
+        },
+    ];
     return (
         <section className="py-24 bg-gray-50">
             <div className="container mx-auto px-6">
@@ -39,7 +41,7 @@ export default function TestimonialsSection() {
                         viewport={{ once: true }}
                         className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block"
                     >
-                        Testimonials
+                        {t('badge')}
                     </motion.span>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
@@ -48,7 +50,7 @@ export default function TestimonialsSection() {
                         transition={{ delay: 0.1 }}
                         className="text-3xl md:text-4xl lg:text-5xl font-bold text-secondary mb-6"
                     >
-                        What Our Clients Say
+                        {t('title')}
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -57,7 +59,7 @@ export default function TestimonialsSection() {
                         transition={{ delay: 0.2 }}
                         className="text-slate text-lg max-w-2xl mx-auto"
                     >
-                        Trusted by leading exporters and manufacturers across Pakistan
+                        {t('subtitle')}
                     </motion.p>
                 </div>
 

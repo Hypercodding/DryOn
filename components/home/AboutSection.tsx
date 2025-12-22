@@ -3,15 +3,17 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Link } from '@/lib/navigation';
-
-const highlights = [
-    'Leading manufacturer in Pakistan',
-    'EU-Grade environmental testing',
-    'Global technology partnerships',
-    'USAID Grant Recipient',
-];
+import { useTranslations } from 'next-intl';
 
 export default function AboutSection() {
+    const t = useTranslations('AboutSection');
+    
+    const highlights = [
+        t('highlight1'),
+        t('highlight2'),
+        t('highlight3'),
+        t('highlight4'),
+    ];
     return (
         <section className="py-24 bg-white overflow-hidden">
             <div className="container mx-auto px-6">
@@ -23,12 +25,12 @@ export default function AboutSection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">About DryON</span>
+                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">{t('badge')}</span>
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-secondary mb-6 leading-tight">
-                            Pakistan&apos;s Leading Moisture Control Solutions
+                            {t('title')}
                         </h2>
                         <p className="text-slate text-lg leading-relaxed mb-8">
-                            DryON is a leading manufacturer and exporter of moisture-control and cargo-protection solutions in Pakistan. We specialize in high-performance calcium chloride–based desiccants designed to safeguard valuable cargo from moisture damage during long sea voyages.
+                            {t('description')}
                         </p>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
@@ -44,7 +46,7 @@ export default function AboutSection() {
                             href="/about"
                             className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-lg group"
                         >
-                            Learn More About Us
+                            {t('cta')}
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </motion.div>
@@ -72,7 +74,7 @@ export default function AboutSection() {
                                 </div>
                                 <div className="h-48 bg-gradient-to-br from-secondary to-secondary-dark rounded-2xl p-6 flex flex-col justify-center text-white shadow-lg">
                                     <div className="text-4xl font-bold mb-2">5+</div>
-                                    <div className="text-white/80">Cities Across Pakistan</div>
+                                    <div className="text-white/80">{t('citiesAcross')}</div>
                                 </div>
                             </div>
                         </div>
@@ -85,7 +87,7 @@ export default function AboutSection() {
                                 </div>
                                 <div>
                                     <div className="font-bold text-secondary">USAID</div>
-                                    <div className="text-xs text-slate">Grant Recipient</div>
+                                    <div className="text-xs text-slate">{t('grantRecipient')}</div>
                                 </div>
                             </div>
                         </div>

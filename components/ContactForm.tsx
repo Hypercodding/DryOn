@@ -5,7 +5,7 @@ import { Send, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 export default function ContactForm() {
-    const t = useTranslations('ContactPage');
+    const tForm = useTranslations('ContactForm');
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -35,7 +35,7 @@ export default function ContactForm() {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || 'Failed to send message');
+                throw new Error(data.error || tForm('errorFailed'));
             }
 
             setSuccess(true);
@@ -50,7 +50,7 @@ export default function ContactForm() {
             // Reset success message after 5 seconds
             setTimeout(() => setSuccess(false), 5000);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred. Please try again.');
+            setError(err instanceof Error ? err.message : tForm('errorGeneric'));
         } finally {
             setLoading(false);
         }
@@ -60,16 +60,16 @@ export default function ContactForm() {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-
+    
     return (
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10">
-            <h2 className="text-2xl font-bold text-secondary mb-2">Send a Message</h2>
-            <p className="text-slate mb-8">We&apos;ll get back to you within 24 hours.</p>
+            <h2 className="text-2xl font-bold text-secondary mb-2">{tForm('title')}</h2>
+            <p className="text-slate mb-8">{tForm('subtitle')}</p>
 
             {success && (
                 <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
-                    <p className="text-green-800 text-sm">Your message has been sent successfully! We&apos;ll get back to you soon.</p>
+                    <p className="text-green-800 text-sm">{tForm('successMessage')}</p>
                 </div>
             )}
 
@@ -83,7 +83,7 @@ export default function ContactForm() {
             <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                     <label className="block text-sm font-semibold text-secondary mb-2">
-                        {t('fullName')} <span className="text-primary">{t('required')}</span>
+                        {tForm('fullName')} <span className="text-primary">{tForm('required')}</span>
                     </label>
                     <input
                         type="text"
@@ -91,14 +91,14 @@ export default function ContactForm() {
                         value={formData.name}
                         onChange={handleChange}
                         className="w-full border border-gray-200 rounded-lg p-4 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all bg-gray-50 focus:bg-white"
-                        placeholder="John Doe"
+                        placeholder={tForm('namePlaceholder')}
                         required
                         disabled={loading}
                     />
                 </div>
                 <div>
                     <label className="block text-sm font-semibold text-secondary mb-2">
-                        Email <span className="text-primary">{t('required')}</span>
+                        {tForm('email')} <span className="text-primary">{tForm('required')}</span>
                     </label>
                     <input
                         type="email"
@@ -106,26 +106,26 @@ export default function ContactForm() {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full border border-gray-200 rounded-lg p-4 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all bg-gray-50 focus:bg-white"
-                        placeholder="john@company.com"
+                        placeholder={tForm('emailPlaceholder')}
                         required
                         disabled={loading}
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-semibold text-secondary mb-2">Phone</label>
+                    <label className="block text-sm font-semibold text-secondary mb-2">{tForm('phone')}</label>
                     <input
                         type="tel"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full border border-gray-200 rounded-lg p-4 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all bg-gray-50 focus:bg-white"
-                        placeholder="+92 300 1234567"
+                        placeholder={tForm('phonePlaceholder')}
                         disabled={loading}
                     />
                 </div>
                 <div>
                     <label className="block text-sm font-semibold text-secondary mb-2">
-                        Subject <span className="text-primary">{t('required')}</span>
+                        {tForm('subject')} <span className="text-primary">{tForm('required')}</span>
                     </label>
                     <input
                         type="text"
@@ -133,14 +133,14 @@ export default function ContactForm() {
                         value={formData.subject}
                         onChange={handleChange}
                         className="w-full border border-gray-200 rounded-lg p-4 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all bg-gray-50 focus:bg-white"
-                        placeholder="How can we help?"
+                        placeholder={tForm('subjectPlaceholder')}
                         required
                         disabled={loading}
                     />
                 </div>
                 <div>
                     <label className="block text-sm font-semibold text-secondary mb-2">
-                        Message <span className="text-primary">{t('required')}</span>
+                        {tForm('message')} <span className="text-primary">{tForm('required')}</span>
                     </label>
                     <textarea
                         rows={5}
@@ -148,7 +148,7 @@ export default function ContactForm() {
                         value={formData.message}
                         onChange={handleChange}
                         className="w-full border border-gray-200 rounded-lg p-4 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all bg-gray-50 focus:bg-white resize-none"
-                        placeholder="Tell us about your project..."
+                        placeholder={tForm('messagePlaceholder')}
                         required
                         disabled={loading}
                     ></textarea>
@@ -161,11 +161,11 @@ export default function ContactForm() {
                     {loading ? (
                         <>
                             <Loader2 className="w-5 h-5 animate-spin" />
-                            Sending...
+                            {tForm('sending')}
                         </>
                     ) : (
                         <>
-                            Send Message
+                            {tForm('sendButton')}
                             <Send className="w-5 h-5" />
                         </>
                     )}

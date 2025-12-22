@@ -1,5 +1,6 @@
 import { Newspaper, TrendingUp, Lightbulb, ArrowRight } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
+import Footer from '@/components/Footer';
 
 export default async function InsightsPage() {
     const t = await getTranslations('InsightsPage');
@@ -95,6 +96,7 @@ export default async function InsightsPage() {
                     ))}
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

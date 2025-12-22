@@ -1,6 +1,7 @@
 import { Target, Users, Globe2, Award, MapPin, History, CheckCircle, Building2, Ship, Leaf, Package, Factory, Car, Shirt, Apple, Wrench, Sun, TreePine, Recycle, RefreshCw } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
+import Footer from '@/components/Footer';
 
 export default async function AboutPage() {
     const t = await getTranslations('AboutPage');
@@ -8,36 +9,36 @@ export default async function AboutPage() {
     const achievements = [
         {
             icon: Award,
-            title: 'Renowned Manufacturer & Exporter',
-            description: 'Leading manufacturer and exporter in Pakistan for sustainable and high-performance moisture-control solutions for long sea voyages.'
+            title: t('achievement1Title'),
+            description: t('achievement1Desc')
         },
         {
             icon: Globe2,
-            title: 'USAID Grant Recipient',
-            description: 'Recognized for our contribution to moisture damage prevention solutions and supply-chain improvement.'
+            title: t('achievement2Title'),
+            description: t('achievement2Desc')
         },
         {
             icon: CheckCircle,
-            title: 'DUNS Registered',
-            description: 'Recognized by leading exporters and manufacturers worldwide for our reliability and quality standards.'
+            title: t('achievement3Title'),
+            description: t('achievement3Desc')
         },
         {
             icon: Factory,
-            title: 'In-House Testing Facility',
-            description: 'Environmental-chamber testing facility enabling real-time shipping challenges simulation under extreme conditions.'
+            title: t('achievement4Title'),
+            description: t('achievement4Desc')
         },
     ];
 
     const industries = [
-        { icon: Leaf, name: 'Agriculture' },
-        { icon: Apple, name: 'Dry Fruits' },
-        { icon: Shirt, name: 'Textile Apparels' },
-        { icon: Package, name: 'Leather Goods' },
-        { icon: Apple, name: 'Processed Food' },
-        { icon: Package, name: 'Canned Items' },
-        { icon: Wrench, name: 'Engineering Goods' },
-        { icon: Car, name: 'Auto-motives' },
-        { icon: Ship, name: 'Transportation & Logistics' },
+        { icon: Leaf, name: t('industryAgriculture') },
+        { icon: Apple, name: t('industryDryFruits') },
+        { icon: Shirt, name: t('industryTextile') },
+        { icon: Package, name: t('industryLeather') },
+        { icon: Apple, name: t('industryFood') },
+        { icon: Package, name: t('industryCanned') },
+        { icon: Wrench, name: t('industryEngineering') },
+        { icon: Car, name: t('industryAutomotive') },
+        { icon: Ship, name: t('industryLogistics') },
     ];
 
     // const branches = [
@@ -80,11 +81,11 @@ export default async function AboutPage() {
                 <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
                 <div className="container mx-auto max-w-4xl text-center relative z-10">
                     <span className="inline-block bg-white/10 text-white/90 px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wider mb-6">
-                        Who We Are
+                        {t('heroBadge')}
                     </span>
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-shadow-lg">About DryON</h1>
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-shadow-lg">{t('heroTitle')}</h1>
                     <p className="text-xl text-white/90 font-light max-w-2xl mx-auto leading-relaxed">
-                        Pakistan&apos;s leading manufacturer and exporter of moisture-control and cargo-protection solutions
+                        {t('heroSubtitle')}
                     </p>
                 </div>
             </div>
@@ -94,18 +95,18 @@ export default async function AboutPage() {
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div>
-                            <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Company Overview</span>
-                            <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-8">DryON at a Glance</h2>
+                            <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">{t('companyOverview')}</span>
+                            <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-8">{t('atAGlance')}</h2>
                             
                             <div className="space-y-6 text-slate leading-relaxed">
                                 <p>
-                                    DryON is a leading manufacturer and exporter of moisture-control and cargo-protection solutions in Pakistan. We specialize in high-performance calcium chloride–based desiccants, and TransafeLiners using Hermetic Technology used across warehousing, export, and logistics industries to safeguard the valuable cargo from moisture damage during long sea voyages.
+                                    {t('overviewP1')}
                                 </p>
                                 <p>
-                                    We collaborated with global technology partners from China and Europe and invested in advanced testing capabilities, including an EU-grade environmental chamber. This allows us to simulate real-time extreme humidity and temperature conditions and ensure every DryON product performs reliably throughout the transit.
+                                    {t('overviewP2')}
                                 </p>
                                 <p className="font-medium text-secondary">
-                                    All our products are proudly manufactured in Pakistan, supporting the domestic-led industrialization while maintaining international-standard quality.
+                                    {t('overviewP3')}
                                 </p>
                             </div>
                         </div>
@@ -115,19 +116,19 @@ export default async function AboutPage() {
                                 <div className="grid grid-cols-2 gap-6">
                                     <div className="bg-white rounded-xl p-6 shadow-md text-center card-3d">
                                         <div className="text-4xl font-bold text-primary mb-2">100%</div>
-                                        <div className="text-sm text-slate">Made in Pakistan</div>
+                                        <div className="text-sm text-slate">{t('madeInPakistan')}</div>
                                     </div>
                                     <div className="bg-white rounded-xl p-6 shadow-md text-center card-3d">
                                         <div className="text-4xl font-bold text-secondary mb-2">EU</div>
-                                        <div className="text-sm text-slate">Grade Testing</div>
+                                        <div className="text-sm text-slate">{t('euGradeTesting')}</div>
                                     </div>
                                     <div className="bg-white rounded-xl p-6 shadow-md text-center card-3d">
                                         <div className="text-4xl font-bold text-primary mb-2">9+</div>
-                                        <div className="text-sm text-slate">Industries Served</div>
+                                        <div className="text-sm text-slate">{t('industriesServed')}</div>
                                     </div>
                                     <div className="bg-white rounded-xl p-6 shadow-md text-center card-3d">
                                         <div className="text-4xl font-bold text-secondary mb-2">5+</div>
-                                        <div className="text-sm text-slate">Cities Covered</div>
+                                        <div className="text-sm text-slate">{t('citiesCovered')}</div>
                                     </div>
                                 </div>
                             </div>
@@ -140,8 +141,8 @@ export default async function AboutPage() {
             <section id="achievements" className="py-20 bg-gray-50 scroll-mt-24">
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="text-center mb-16">
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Recognition</span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary">Our Achievements</h2>
+                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">{t('recognition')}</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary">{t('ourAchievements')}</h2>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-8">
@@ -162,7 +163,7 @@ export default async function AboutPage() {
 
                     {/* Industries Section */}
                     <div className="mt-16 bg-white rounded-2xl p-10 shadow-float border border-gray-100">
-                        <h3 className="text-xl font-bold text-secondary mb-6 text-center">Strong Industry Footmark Across</h3>
+                        <h3 className="text-xl font-bold text-secondary mb-6 text-center">{t('strongIndustryFootmark')}</h3>
                         <div className="flex flex-wrap justify-center gap-4">
                             {industries.map((industry, idx) => (
                                 <div key={idx} className="flex items-center gap-2 bg-gray-50 px-4 py-2.5 rounded-full border border-gray-200 hover:border-primary hover:bg-primary/5 transition-all">
@@ -181,8 +182,8 @@ export default async function AboutPage() {
             <section id="history" className="py-20 bg-gray-50 scroll-mt-24">
                 <div className="container mx-auto px-6 max-w-5xl">
                     <div className="text-center mb-16">
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Our Journey</span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary">Our History</h2>
+                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">{t('ourJourney')}</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary">{t('ourHistory')}</h2>
                     </div>
 
                     <div className="bg-white rounded-2xl shadow-float-lg p-10 md:p-14 border border-gray-100">
@@ -191,27 +192,27 @@ export default async function AboutPage() {
                                 <History className="w-8 h-8 text-primary" />
                             </div>
                             <div>
-                                <h3 className="text-2xl font-bold text-secondary">The DryON Story</h3>
-                                <p className="text-slate">From vision to industry leader</p>
+                                <h3 className="text-2xl font-bold text-secondary">{t('theDryONStory')}</h3>
+                                <p className="text-slate">{t('storySubtitle')}</p>
                             </div>
                         </div>
 
                         <div className="space-y-6 text-slate leading-relaxed">
                             <p>
-                                DryON was founded with an objective to solve one of the most common yet costly problems in global trade: <strong className="text-secondary">moisture damage in shipping containers during long sea voyages</strong>. We want to offer a cost-effective yet reliable way to exporters, manufacturers and supply chain professionals to protect their valuable cargo from moisture damage that causes product refusal, financial loss, and quality worsening.
+                                {t('storyP1')}
                             </p>
                             <p>
-                                With increasing demand for the reliable and sustainable moisture control solutions in Pakistan&apos;s export sector, DryON introduced globally trusted calcium chloride-based desiccants to the local market and committed in eliminating container rain, condensation, mould, musty odour, contamination and decay in shipping containers during transit.
+                                {t('storyP2')}
                             </p>
                             <p>
-                                Over the years, DryON has grown into a well-known brand for product performance, strict quality control, and consistent support to exporters and logistics industry. Our journey continues as we expand our product line and strengthen our role in protecting global cargo shipments through innovative active packaging solutions.
+                                {t('storyP3')}
                             </p>
                             
                             <div className="bg-primary/5 rounded-xl p-6 border border-primary/10 mt-8">
                                 <div className="flex items-start gap-4">
                                     <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                                     <p className="text-secondary font-medium">
-                                        We are officially registered with the Government of Pakistan and an active member of the Chamber of Commerce, which further ensures transparency, compliance, and trust in all our business practices.
+                                        {t('officialRegistered')}
                                     </p>
                                 </div>
                             </div>
@@ -224,10 +225,10 @@ export default async function AboutPage() {
             <section id="sustainability" className="py-20 bg-white scroll-mt-24">
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="text-center mb-16">
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Our Commitment</span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">Sustainability at DryON</h2>
+                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">{t('ourCommitment')}</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">{t('sustainabilityAtDryON')}</h2>
                         <p className="text-slate max-w-2xl mx-auto">
-                            We are committed to sustainable business practices, minimizing our environmental footprint while delivering world-class moisture protection solutions.
+                            {t('sustainabilityDesc')}
                         </p>
                     </div>
 
@@ -237,9 +238,9 @@ export default async function AboutPage() {
                             <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
                                 <Sun className="w-8 h-8 text-white" />
                             </div>
-                            <h3 className="text-xl font-bold text-secondary mb-2">100% Solar Powered</h3>
+                            <h3 className="text-xl font-bold text-secondary mb-2">{t('solarPowered')}</h3>
                             <p className="text-slate text-sm leading-relaxed">
-                                Our entire manufacturing facility runs on renewable solar energy, significantly reducing our carbon footprint.
+                                {t('solarPoweredDesc')}
                             </p>
                             <div className="mt-4 flex items-center gap-2">
                                 <div className="w-full bg-amber-100 rounded-full h-2">
@@ -254,12 +255,12 @@ export default async function AboutPage() {
                             <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
                                 <TreePine className="w-8 h-8 text-white" />
                             </div>
-                            <h3 className="text-xl font-bold text-secondary mb-2">Tree Plantation</h3>
+                            <h3 className="text-xl font-bold text-secondary mb-2">{t('treePlantation')}</h3>
                             <p className="text-slate text-sm leading-relaxed">
-                                Active participation in tree plantation drives to offset carbon emissions and contribute to a greener Pakistan.
+                                {t('treePlantationDesc')}
                             </p>
                             <div className="mt-4 inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1.5 rounded-full text-sm font-semibold">
-                                <Leaf className="w-4 h-4" /> Eco-Friendly
+                                <Leaf className="w-4 h-4" /> {t('ecoFriendlyLabel')}
                             </div>
                         </div>
 
@@ -268,9 +269,9 @@ export default async function AboutPage() {
                             <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
                                 <Recycle className="w-8 h-8 text-white" />
                             </div>
-                            <h3 className="text-xl font-bold text-secondary mb-2">30% Recycled Plastic</h3>
+                            <h3 className="text-xl font-bold text-secondary mb-2">{t('recycledPlastic')}</h3>
                             <p className="text-slate text-sm leading-relaxed">
-                                Our packaging incorporates 30% recycled plastic materials, reducing virgin plastic consumption.
+                                {t('recycledPlasticDesc')}
                             </p>
                             <div className="mt-4 flex items-center gap-2">
                                 <div className="w-full bg-blue-100 rounded-full h-2">
@@ -285,12 +286,12 @@ export default async function AboutPage() {
                             <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
                                 <RefreshCw className="w-8 h-8 text-white" />
                             </div>
-                            <h3 className="text-xl font-bold text-secondary mb-2">Circular Economy</h3>
+                            <h3 className="text-xl font-bold text-secondary mb-2">{t('circularEconomy')}</h3>
                             <p className="text-slate text-sm leading-relaxed">
-                                Committed to circular economy principles with waste reduction, recycling, and sustainable resource management.
+                                {t('circularEconomyDesc')}
                             </p>
                             <div className="mt-4 inline-flex items-center gap-2 bg-purple-100 text-purple-700 px-3 py-1.5 rounded-full text-sm font-semibold">
-                                <RefreshCw className="w-4 h-4" /> Sustainable
+                                <RefreshCw className="w-4 h-4" /> {t('sustainableLabel')}
                             </div>
                         </div>
                     </div>
@@ -302,20 +303,20 @@ export default async function AboutPage() {
                         </div>
                         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                             <div>
-                                <h3 className="text-2xl md:text-3xl font-bold mb-4">Committed to a Greener Future</h3>
+                                <h3 className="text-2xl md:text-3xl font-bold mb-4">{t('committedGreener')}</h3>
                                 <p className="text-white/90 max-w-xl leading-relaxed">
-                                    At DryON, sustainability isn&apos;t just a buzzword – it&apos;s embedded in our operations. From solar-powered manufacturing to recycled materials, we&apos;re actively working towards reducing our environmental impact while delivering premium quality products.
+                                    {t('greenerDesc')}
                                 </p>
                             </div>
                             <div className="flex items-center gap-6">
                                 <div className="text-center">
                                     <div className="text-4xl md:text-5xl font-bold">100%</div>
-                                    <div className="text-sm text-white/80">Renewable Energy</div>
+                                    <div className="text-sm text-white/80">{t('renewableEnergy')}</div>
                                 </div>
                                 <div className="w-px h-16 bg-white/30"></div>
                                 <div className="text-center">
                                     <div className="text-4xl md:text-5xl font-bold">30%</div>
-                                    <div className="text-sm text-white/80">Recycled Materials</div>
+                                    <div className="text-sm text-white/80">{t('recycledMaterials')}</div>
                                 </div>
                             </div>
                         </div>
@@ -327,10 +328,10 @@ export default async function AboutPage() {
             <section className="py-20 bg-white">
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="text-center mb-16">
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Quality Assurance</span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">Compliance & Certifications</h2>
+                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">{t('qualityAssurance')}</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">{t('complianceCertifications')}</h2>
                         <p className="text-slate max-w-2xl mx-auto">
-                            Our products meet and exceed international standards, ensuring safety, quality, and environmental responsibility.
+                            {t('complianceDesc')}
                         </p>
                     </div>
 
@@ -359,8 +360,8 @@ export default async function AboutPage() {
                                     className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
                                 />
                             </div>
-                            <h3 className="font-bold text-secondary text-sm">REACH</h3>
-                            <p className="text-xs text-slate mt-1">Compliant</p>
+                            <h3 className="font-bold text-secondary text-sm">{t('reach')}</h3>
+                            <p className="text-xs text-slate mt-1">{t('compliant')}</p>
                         </div>
 
                         <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
@@ -373,8 +374,8 @@ export default async function AboutPage() {
                                     className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
                                 />
                             </div>
-                            <h3 className="font-bold text-secondary text-sm">Recyclable</h3>
-                            <p className="text-xs text-slate mt-1">Certified</p>
+                            <h3 className="font-bold text-secondary text-sm">{t('recyclable')}</h3>
+                            <p className="text-xs text-slate mt-1">{t('certified')}</p>
                         </div>
 
                         <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
@@ -387,8 +388,8 @@ export default async function AboutPage() {
                                     className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
                                 />
                             </div>
-                            <h3 className="font-bold text-secondary text-sm">DMF-Free</h3>
-                            <p className="text-xs text-slate mt-1">Certified</p>
+                            <h3 className="font-bold text-secondary text-sm">{t('dmfFree')}</h3>
+                            <p className="text-xs text-slate mt-1">{t('certified')}</p>
                         </div>
 
                         <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
@@ -401,8 +402,8 @@ export default async function AboutPage() {
                                     className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
                                 />
                             </div>
-                            <h3 className="font-bold text-secondary text-sm">SGS</h3>
-                            <p className="text-xs text-slate mt-1">Certified</p>
+                            <h3 className="font-bold text-secondary text-sm">{t('sgs')}</h3>
+                            <p className="text-xs text-slate mt-1">{t('certified')}</p>
                         </div>
 
                         <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
@@ -415,8 +416,8 @@ export default async function AboutPage() {
                                     className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
                                 />
                             </div>
-                            <h3 className="font-bold text-secondary text-sm">Eco-Friendly</h3>
-                            <p className="text-xs text-slate mt-1">Certified</p>
+                            <h3 className="font-bold text-secondary text-sm">{t('ecoFriendlyCert')}</h3>
+                            <p className="text-xs text-slate mt-1">{t('certified')}</p>
                         </div>
 
                         <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
@@ -429,8 +430,8 @@ export default async function AboutPage() {
                                     className="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform"
                                 />
                             </div>
-                            <h3 className="font-bold text-secondary text-sm">DUNS</h3>
-                            <p className="text-xs text-slate mt-1">Registered</p>
+                            <h3 className="font-bold text-secondary text-sm">{t('duns')}</h3>
+                            <p className="text-xs text-slate mt-1">{t('registered')}</p>
                         </div>
                     </div>
                 </div>
@@ -446,7 +447,7 @@ export default async function AboutPage() {
                             </div>
                             <h3 className="text-2xl font-bold mb-4">{t('ourMission')}</h3>
                             <p className="text-white/90 leading-relaxed">
-                                To provide reliable, sustainable, and cost-effective moisture protection solutions that safeguard valuable cargo during transit, enabling Pakistani exporters to compete confidently in global markets while eliminating moisture-related losses.
+                                {t('missionDesc')}
                             </p>
                         </div>
                         
@@ -456,7 +457,7 @@ export default async function AboutPage() {
                             </div>
                             <h3 className="text-2xl font-bold mb-4">{t('ourVision')}</h3>
                             <p className="text-white/90 leading-relaxed">
-                                To become the most trusted name in cargo protection across South Asia, pioneering innovation in moisture control technology while supporting Pakistan&apos;s export growth and sustainable industrial development.
+                                {t('visionDesc')}
                             </p>
                         </div>
                     </div>
@@ -466,18 +467,19 @@ export default async function AboutPage() {
             {/* CTA */}
             <section className="py-16 bg-gradient-to-r from-primary to-primary-dark">
                 <div className="container mx-auto px-6 text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Protect Your Cargo?</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{t('readyProtectCargo')}</h2>
                     <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-                        Partner with DryON for reliable moisture protection solutions trusted by exporters across Pakistan.
+                        {t('partnerDryON')}
                     </p>
                     <a 
                         href="/contact" 
                         className="btn-3d inline-flex items-center gap-2 bg-white text-primary hover:bg-gray-100 font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all"
                     >
-                        Contact Us Today
+                        {t('contactUsToday')}
                     </a>
                 </div>
             </section>
+            <Footer />
         </div>
     );
 }

@@ -79,6 +79,11 @@ export async function PUT(req: Request, props: { params: Promise<{ id: string }>
         const body = await req.json();
         const { sku, categoryId, industryId, featured, images, containerPoints, translations } = body;
 
+        // Validate images - max 2 images allowed
+        if (images && Array.isArray(images) && images.length > 2) {
+            return NextResponse.json({ error: "Maximum 2 images allowed per product" }, { status: 400 });
+        }
+
         const product = await Product.findByIdAndUpdate(
             params.id,
             {
@@ -86,7 +91,7 @@ export async function PUT(req: Request, props: { params: Promise<{ id: string }>
                 categoryId: categoryId || undefined,
                 industryId: industryId || undefined,
                 featured: featured || false,
-                images: JSON.stringify(images),
+                images: JSON.stringify(Array.isArray(images) ? images.slice(0, 2) : []),
                 containerPoints: typeof containerPoints === 'string' ? containerPoints : JSON.stringify(containerPoints),
             },
             { new: true }

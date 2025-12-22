@@ -136,12 +136,12 @@ export default function ProductsSection({ initialData }: ProductsSectionProps) {
         return translation?.name || product.sku;
     };
 
-    const getProductImage = (product: Product) => {
+    const getProductImages = (product: Product): string[] => {
         try {
-            const images = JSON.parse(product.images || '[]');
-            return images[0] || '/images/product-placeholder.jpg';
+            const images = JSON.parse(product.images || '[]') as string[];
+            return images.length > 0 ? images : ['/images/product-placeholder.jpg'];
         } catch {
-            return '/images/product-placeholder.jpg';
+            return ['/images/product-placeholder.jpg'];
         }
     };
 
@@ -277,14 +277,18 @@ export default function ProductsSection({ initialData }: ProductsSectionProps) {
                                                     href={`/products/${product.sku}`}
                                                     className="block bg-white rounded-2xl overflow-hidden shadow-float hover:shadow-xl transition-all card-3d border border-gray-100 h-full group"
                                                 >
-                                                    {/* Product Image */}
-                                                    <div className="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
-                                                        <Image
-                                                            src={getProductImage(product)}
-                                                            alt={getProductName(product)}
-                                                            fill
-                                                            className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
-                                                        />
+                                                    {/* Product Images */}
+                                                    <div className="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden flex">
+                                                        {getProductImages(product).map((imgUrl: string, imgIdx: number) => (
+                                                            <div key={imgIdx} className={`relative ${getProductImages(product).length > 1 ? 'flex-1' : 'w-full'} ${imgIdx > 0 ? 'border-l-2 border-white/50' : ''}`}>
+                                                                <Image
+                                                                    src={imgUrl}
+                                                                    alt={getProductName(product)}
+                                                                    fill
+                                                                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                                                                />
+                                                            </div>
+                                                        ))}
                                                         {/* Featured Badge */}
                                                         {product.featured && (
                                                             <div className="absolute top-2 left-2 bg-primary text-white text-xs font-bold px-2 py-1 rounded-full">

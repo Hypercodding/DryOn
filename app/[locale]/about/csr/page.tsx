@@ -1,54 +1,55 @@
 import { Heart, Users, GraduationCap, HandHeart, Briefcase, Lightbulb, Target, CheckCircle } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
+import Footer from '@/components/Footer';
 
 export default async function CSRPage() {
-    const t = await getTranslations('AboutPage');
+    const t = await getTranslations('CSRPage');
 
     const csrInitiatives = [
         {
             icon: Heart,
-            title: 'Supporting Orphans',
-            description: 'Providing care, education, and support to orphaned children, ensuring they have access to essential resources and opportunities for a brighter future.',
+            title: t('initiative1Title'),
+            description: t('initiative1Desc'),
             color: 'from-red-500 to-pink-500',
             bgColor: 'from-red-50 to-pink-50',
             borderColor: 'border-red-100'
         },
         {
             icon: Users,
-            title: 'Community Welfare',
-            description: 'Engaging in various community development initiatives that uplift local communities and improve quality of life for families across Pakistan.',
+            title: t('initiative2Title'),
+            description: t('initiative2Desc'),
             color: 'from-blue-500 to-cyan-500',
             bgColor: 'from-blue-50 to-cyan-50',
             borderColor: 'border-blue-100'
         },
         {
             icon: GraduationCap,
-            title: 'Startup Mentorships',
-            description: 'Empowering the next generation of entrepreneurs through mentorship programs, providing guidance, resources, and support to help startups thrive.',
+            title: t('initiative3Title'),
+            description: t('initiative3Desc'),
             color: 'from-purple-500 to-violet-500',
             bgColor: 'from-purple-50 to-violet-50',
             borderColor: 'border-purple-100'
         },
         {
             icon: HandHeart,
-            title: 'Interest-Free Lending',
-            description: 'Offering interest-free financial assistance to individuals and small businesses, enabling economic empowerment and sustainable growth.',
+            title: t('initiative4Title'),
+            description: t('initiative4Desc'),
             color: 'from-green-500 to-emerald-500',
             bgColor: 'from-green-50 to-emerald-50',
             borderColor: 'border-green-100'
         },
         {
             icon: Briefcase,
-            title: 'Worker & Employee Welfare',
-            description: 'Prioritizing the well-being of our workforce through comprehensive welfare programs, fair practices, and initiatives that support their families.',
+            title: t('initiative5Title'),
+            description: t('initiative5Desc'),
             color: 'from-orange-500 to-amber-500',
             bgColor: 'from-orange-50 to-amber-50',
             borderColor: 'border-orange-100'
         },
         {
             icon: Lightbulb,
-            title: 'Sustainable Ventures',
-            description: 'Supporting and investing in sustainable business ventures that create positive social and environmental impact while generating economic value.',
+            title: t('initiative6Title'),
+            description: t('initiative6Desc'),
             color: 'from-teal-500 to-cyan-500',
             bgColor: 'from-teal-50 to-cyan-50',
             borderColor: 'border-teal-100'
@@ -62,11 +63,11 @@ export default async function CSRPage() {
                 <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
                 <div className="container mx-auto max-w-4xl text-center relative z-10">
                     <span className="inline-block bg-white/10 text-white/90 px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wider mb-6">
-                        Corporate Social Responsibility
+                        {t('heroBadge')}
                     </span>
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-shadow-lg">Our CSR Commitment</h1>
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-shadow-lg">{t('title')}</h1>
                     <p className="text-xl text-white/90 font-light max-w-2xl mx-auto leading-relaxed">
-                        Building a better tomorrow through ethical business practices and meaningful social impact
+                        {t('subtitle')}
                     </p>
                 </div>
             </div>
@@ -77,10 +78,10 @@ export default async function CSRPage() {
                     <div className="max-w-4xl mx-auto">
                         <div className="space-y-6 text-slate leading-relaxed text-lg mb-12">
                             <p>
-                                At DryON, we are actively pursuing our Corporate Social Responsibility goals by supporting numerous social and sustainable ventures. Our commitment extends across a wide spectrum of initiatives, ranging from supporting orphans and community welfare programs to startup mentorships, interest-free lending, and comprehensive worker and employee welfare programs.
+                                {t('mainP1')}
                             </p>
                             <p>
-                                We believe that business success and social responsibility go hand in hand. Through our diverse CSR initiatives, we aim to create lasting positive change in the communities we serve while maintaining the highest standards of ethical business conduct.
+                                {t('mainP2')}
                             </p>
                         </div>
 
@@ -96,7 +97,7 @@ export default async function CSRPage() {
                                     </div>
                                 </div>
                                 <h2 className="text-3xl md:text-4xl font-bold text-secondary text-center mb-6">
-                                    Our Core Principle
+                                    {t('corePrinciple')}
                                 </h2>
                                 <div className="bg-white rounded-xl p-6 md:p-8 shadow-lg border border-gray-100">
                                     <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-center leading-relaxed">
@@ -119,7 +120,7 @@ export default async function CSRPage() {
                                     </div>
                                 </div>
                                 <p className="text-center text-slate mt-6 text-lg">
-                                    This principle guides every decision we make and every action we take, ensuring that our business growth is always aligned with positive social impact.
+                                    {t('principleDesc')}
                                 </p>
                             </div>
                         </div>
@@ -131,10 +132,10 @@ export default async function CSRPage() {
             <section className="py-20 bg-gray-50">
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="text-center mb-16">
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Our Impact</span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">CSR Initiatives</h2>
+                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">{t('ourImpact')}</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">{t('csrInitiatives')}</h2>
                         <p className="text-slate max-w-2xl mx-auto">
-                            We are committed to making a meaningful difference across multiple areas of social responsibility
+                            {t('initiativesDesc')}
                         </p>
                     </div>
 
@@ -164,32 +165,32 @@ export default async function CSRPage() {
                         </div>
                         <div className="relative z-10">
                             <div className="text-center mb-12">
-                                <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Commitment to Society</h2>
+                                <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('ourCommitment')}</h2>
                                 <p className="text-white/90 max-w-3xl mx-auto text-lg leading-relaxed">
-                                    At DryON, we firmly believe that sustainable business success is built on a foundation of ethical practices and genuine care for our community. Our CSR initiatives reflect our dedication to creating a positive impact that extends far beyond our business operations.
+                                    {t('commitmentDesc')}
                                 </p>
                             </div>
 
                             <div className="grid md:grid-cols-3 gap-6 mt-12">
                                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                                     <CheckCircle className="w-8 h-8 text-white mb-4" />
-                                    <h3 className="text-xl font-bold mb-2">Ethical Business</h3>
+                                    <h3 className="text-xl font-bold mb-2">{t('commitment1Title')}</h3>
                                     <p className="text-white/80 text-sm leading-relaxed">
-                                        Conducting business with integrity, transparency, and respect for all stakeholders
+                                        {t('commitment1Desc')}
                                     </p>
                                 </div>
                                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                                     <CheckCircle className="w-8 h-8 text-white mb-4" />
-                                    <h3 className="text-xl font-bold mb-2">Social Impact</h3>
+                                    <h3 className="text-xl font-bold mb-2">{t('commitment2Title')}</h3>
                                     <p className="text-white/80 text-sm leading-relaxed">
-                                        Creating meaningful change in communities through targeted social initiatives
+                                        {t('commitment2Desc')}
                                     </p>
                                 </div>
                                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                                     <CheckCircle className="w-8 h-8 text-white mb-4" />
-                                    <h3 className="text-xl font-bold mb-2">Sustainable Growth</h3>
+                                    <h3 className="text-xl font-bold mb-2">{t('commitment3Title')}</h3>
                                     <p className="text-white/80 text-sm leading-relaxed">
-                                        Building a business model that balances profit with purpose and long-term value
+                                        {t('commitment3Desc')}
                                     </p>
                                 </div>
                             </div>
@@ -201,18 +202,19 @@ export default async function CSRPage() {
             {/* CTA */}
             <section className="py-16 bg-gradient-to-r from-primary to-primary-dark">
                 <div className="container mx-auto px-6 text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Partner with Us</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{t('partnerWithUs')}</h2>
                     <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-                        Interested in learning more about our CSR initiatives or partnering with us on a social project? We&apos;d love to hear from you.
+                        {t('partnerDesc')}
                     </p>
                     <a 
                         href="/contact" 
                         className="btn-3d inline-flex items-center gap-2 bg-white text-primary hover:bg-gray-100 font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all"
                     >
-                        Get in Touch
+                        {t('getInTouch')}
                     </a>
                 </div>
             </section>
+            <Footer />
         </div>
     );
 }

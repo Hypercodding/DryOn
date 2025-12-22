@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Leaf, Shirt, Package, Apple, Wrench, Car, Ship, Factory, Coffee, Box, Building, Truck, Anchor } from 'lucide-react';
 import { Link } from '@/lib/navigation';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface IndustryCategory {
     id: string;
@@ -60,6 +61,7 @@ const ContainerShipSVG = ({ className = '' }: { className?: string }) => (
 );
 
 export default function IndustriesSection() {
+    const t = useTranslations('IndustriesSection');
     const [industries, setIndustries] = useState<IndustryCategory[]>(fallbackIndustries);
 
     useEffect(() => {
@@ -147,19 +149,19 @@ export default function IndustriesSection() {
                     >
                         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 px-4 py-2 rounded-full text-sm font-medium mb-4 border border-white/20">
                             <Ship className="w-4 h-4" />
-                            <span>Maritime Cargo Protection</span>
+                            <span>{t('badge')}</span>
                         </div>
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-                            Protecting Cargo Across All Industries
+                            {t('title')}
                         </h2>
                         <p className="text-white/80 text-lg leading-relaxed mb-8">
-                            From agriculture to automotive, our moisture control solutions protect valuable cargo across diverse sectors. We understand each industry&apos;s unique requirements and provide tailored solutions.
+                            {t('subtitle')}
                         </p>
                         <Link 
                             href="/solutions-by-industry"
                             className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-lg transition-all shadow-lg hover:shadow-xl group"
                         >
-                            Explore Industry Solutions
+                            {t('cta')}
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </motion.div>

@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/lib/navigation';
 import { useSearchParams } from 'next/navigation';
 import { Filter, CheckCircle, Droplets, Package, Leaf, Apple, Shield, Box } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 // Icon mapping for categories
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -16,35 +17,16 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     Box,
 };
 
-const WHY_CHOOSE = [
-    'High Absorption Capacity of up to 300%',
-    'Easy Installation',
-    'Cost-Effective',
-    'Leak-Proof Packaging',
-    'DMF-Free, Sustainable and Non-Toxic',
-    'Ideal for packaging, storage and sea voyages',
-    'Tested in real-time EU-Grade environmental chambers',
-];
-
-const BENEFITS = [
-    'Prevents Condensation and Container Rain',
-    'Eliminates Mold and Mildew',
-    'Stops Rust and Corrosion',
-    'Maintains Products Quality',
-    'Removes Unpleasant Odours',
-    'Enhances Shelf-Life of Goods',
-    'Reduces Product Rejections',
-    'Reduces Financial Losses',
-    'Preserves Business Reputation',
-    'Cost-Effective Moisture Prevention Solution',
-];
+// These will be populated from translations in the component
 
 interface ProductCategoryFromAPI {
     id: string;
     slug: string;
     icon: string;
     color: string;
-    translations: Array<{ locale: string; name: string }>;
+    name: string;
+    description: string;
+    translations: Array<{ locale: string; name: string; description?: string }>;
 }
 
 interface DisplayCategory {
@@ -82,13 +64,38 @@ export default function ProductsPage() {
     const [loading, setLoading] = useState(true);
     const [categoriesLoading, setCategoriesLoading] = useState(true);
     const t = useTranslations('ProductsPage');
+    const commonT = useTranslations('Common');
     const searchParams = useSearchParams();
+    const locale = useLocale();
+
+    const WHY_CHOOSE = [
+        t('whyChoose1'),
+        t('whyChoose2'),
+        t('whyChoose3'),
+        t('whyChoose4'),
+        t('whyChoose5'),
+        t('whyChoose6'),
+        t('whyChoose7'),
+    ];
+
+    const BENEFITS = [
+        t('benefit1'),
+        t('benefit2'),
+        t('benefit3'),
+        t('benefit4'),
+        t('benefit5'),
+        t('benefit6'),
+        t('benefit7'),
+        t('benefit8'),
+        t('benefit9'),
+        t('benefit10'),
+    ];
 
     // Fetch categories from backend
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await fetch('/api/product-categories');
+                const res = await fetch(`/api/product-categories?locale=${locale}`);
                 if (res.ok) {
                     const data: ProductCategoryFromAPI[] = await res.json();
                     
@@ -97,17 +104,23 @@ export default function ProductsPage() {
                         {
                             id: 'all',
                             slug: 'all',
-                            name: 'All Products',
+                            name: t('allProducts'),
                             icon: Package,
-                            description: 'View our complete range'
+                            description: t('viewCompleteRange')
                         },
-                        ...data.map(cat => ({
-                            id: cat.id,
-                            slug: cat.slug,
-                            name: cat.translations?.find(t => t.locale === 'en')?.name || cat.slug,
-                            icon: iconMap[cat.icon] || Package,
-                            description: ''
-                        }))
+                        ...data.map(cat => {
+                            // Find translation for current locale, fallback to English, then use API name/description
+                            const translation = cat.translations?.find(t => t.locale === locale) ||
+                                              cat.translations?.find(t => t.locale === 'en');
+                            
+                            return {
+                                id: cat.id,
+                                slug: cat.slug,
+                                name: translation?.name || cat.name || cat.slug,
+                                icon: iconMap[cat.icon] || Package,
+                                description: translation?.description || cat.description || ''
+                            };
+                        })
                     ];
                     
                     setCategories(displayCategories);
@@ -117,16 +130,16 @@ export default function ProductsPage() {
                 setCategories([{
                     id: 'all',
                     slug: 'all',
-                    name: 'All Products',
+                    name: t('allProducts'),
                     icon: Package,
-                    description: 'View our complete range'
+                    description: t('viewCompleteRange')
                 }]);
             } finally {
                 setCategoriesLoading(false);
             }
         };
         fetchCategories();
-    }, []);
+    }, [locale, t]);
 
     // Set initial category from URL
     useEffect(() => {
@@ -160,7 +173,7 @@ export default function ProductsPage() {
     };
 
     const getCategoryName = (product: Product) => {
-        if (!product.category) return 'Uncategorized';
+        if (!product.category) return t('uncategorized');
         const catTrans = product.category.translations?.find(t => t.locale === 'en');
         return catTrans?.name || product.category.slug;
     };
@@ -176,13 +189,13 @@ export default function ProductsPage() {
                 <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
                 <div className="container mx-auto max-w-4xl text-center relative z-10">
                     <span className="inline-block bg-white/10 text-white/90 px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wider mb-6">
-                        Our Solutions
+                        {t('heroBadge')}
                     </span>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-shadow-lg">
-                        All Products
+                        {t('heroTitle')}
                     </h1>
                     <p className="text-lg md:text-xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto">
-                        Our High-Performance and Sustainable Moisture-Control Solutions
+                        {t('heroSubtitle')}
                     </p>
                 </div>
             </div>
@@ -191,10 +204,10 @@ export default function ProductsPage() {
             <section className="py-16 bg-gray-50">
                 <div className="container mx-auto px-6 max-w-4xl text-center">
                     <p className="text-lg text-slate leading-relaxed mb-8">
-                        Our complete product range of moisture-control and cargo protection solutions are designed for safeguarding the valuable cargo from condensation, container rain, mold, fungus, decay, lumps, odours, discoloration, rust and corrosion during packaging, storage, and long sea voyages.
+                        {t('introDescription')}
                     </p>
                     <p className="text-secondary font-semibold">
-                        Explore our complete product line according to your need of moisture prevention.
+                        {t('introCTA')}
                     </p>
                 </div>
             </section>
@@ -204,7 +217,7 @@ export default function ProductsPage() {
                 <div className="container mx-auto px-6">
                     <div className="flex items-center gap-3 mb-6">
                         <Filter className="w-5 h-5 text-primary" />
-                        <h2 className="text-lg font-bold text-secondary">Filter by Category</h2>
+                        <h2 className="text-lg font-bold text-secondary">{t('filterByCategory')}</h2>
                     </div>
                     
                     {categoriesLoading ? (
@@ -237,11 +250,29 @@ export default function ProductsPage() {
 
                     {/* Category Description */}
                     {selectedCategory !== 'all' && getSelectedCategoryInfo() && (
-                        <div className="mt-6 p-4 bg-primary/5 rounded-xl border border-primary/10">
-                            <p className="text-slate">
-                                <strong className="text-secondary">{getSelectedCategoryInfo()?.name}:</strong>{' '}
-                                {getSelectedCategoryInfo()?.description || 'Browse products in this category.'}
-                            </p>
+                        <div className="mt-6 p-6 bg-primary/5 rounded-xl border border-primary/10">
+                            <div className="flex items-start gap-3">
+                                <div className="flex-shrink-0 mt-1">
+                                    {(() => {
+                                        const IconComponent = getSelectedCategoryInfo()?.icon || Package;
+                                        return <IconComponent className="w-6 h-6 text-primary" />;
+                                    })()}
+                                </div>
+                                <div className="flex-1">
+                                    <h3 className="text-lg font-bold text-secondary mb-2">
+                                        {getSelectedCategoryInfo()?.name}
+                                    </h3>
+                                    {getSelectedCategoryInfo()?.description ? (
+                                        <p className="text-slate leading-relaxed">
+                                            {getSelectedCategoryInfo()?.description}
+                                        </p>
+                                    ) : (
+                                        <p className="text-slate leading-relaxed">
+                                            {t('browseCategoryProducts')}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -253,17 +284,17 @@ export default function ProductsPage() {
                     {loading ? (
                         <div className="text-center py-20">
                             <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                            <p className="text-slate">Loading products...</p>
+                            <p className="text-slate">{t('loadingProducts')}</p>
                         </div>
                     ) : filteredProducts.length === 0 ? (
                         <div className="text-center py-20 bg-gray-50 rounded-xl">
                             <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                            <p className="text-slate text-lg">No products found in this category.</p>
+                            <p className="text-slate text-lg">{t('noProductsFound')}</p>
                             <button 
                                 onClick={() => setSelectedCategory('all')}
                                 className="mt-4 text-primary font-semibold hover:underline"
                             >
-                                View all products
+                                {t('viewAllProducts')}
                             </button>
                         </div>
                     ) : (
@@ -284,12 +315,27 @@ export default function ProductsPage() {
                                         <div className="bg-white rounded-xl overflow-hidden shadow-float hover:shadow-xl transition-all duration-300 h-full border border-gray-100 card-3d flex flex-col">
                                             {/* Image Area */}
                                             <div className="h-56 bg-gradient-to-br from-gray-50 to-gray-100 relative flex items-center justify-center overflow-hidden">
-                                                {images[0] ? (
-                                                    <img 
-                                                        src={images[0]} 
-                                                        alt={translation?.name || 'Product'} 
-                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                                    />
+                                                {images.length > 0 ? (
+                                                    <div className="w-full h-full flex">
+                                                        {/* First Image */}
+                                                        <div className="flex-1 relative overflow-hidden">
+                                                            <img 
+                                                                src={images[0]} 
+                                                                alt={translation?.name || 'Product'} 
+                                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                            />
+                                                        </div>
+                                                        {/* Second Image (if available) */}
+                                                        {images[1] && (
+                                                            <div className="flex-1 relative overflow-hidden border-l-2 border-white/50">
+                                                                <img 
+                                                                    src={images[1]} 
+                                                                    alt={translation?.name || 'Product'} 
+                                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                                />
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 ) : (
                                                     <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                                                         {categoryInfo?.icon && <categoryInfo.icon className="w-10 h-10 text-primary" />}
@@ -306,7 +352,7 @@ export default function ProductsPage() {
                                                 {product.featured && (
                                                     <div className="absolute top-3 right-3">
                                                         <span className="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
-                                                            Featured
+                                                            {t('featured')}
                                                         </span>
                                                     </div>
                                                 )}
@@ -315,18 +361,18 @@ export default function ProductsPage() {
                                             {/* Content Area */}
                                             <div className="p-6 flex-1 flex flex-col">
                                                 <h3 className="text-xl font-bold text-secondary mb-3 group-hover:text-primary transition-colors">
-                                                    {translation?.name || 'Unnamed Product'}
+                                                    {translation?.name || t('unnamedProduct')}
                                                 </h3>
                                                 <p className="text-slate text-sm line-clamp-3 mb-6 flex-1 leading-relaxed">
-                                                    {translation?.description || 'No description available.'}
+                                                    {translation?.description || t('noDescription')}
                                                 </p>
 
                                                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
                                                     <span className="text-xs font-mono bg-gray-50 px-3 py-1.5 rounded-md text-slate">
-                                                        SKU: {product.sku}
+                                                        {t('sku')}: {product.sku}
                                                     </span>
                                                     <span className="text-primary font-semibold text-sm flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
-                                                        View Details →
+                                                        {t('viewDetails')} →
                                                     </span>
                                                 </div>
                                             </div>
@@ -343,8 +389,8 @@ export default function ProductsPage() {
             <section className="py-20 bg-gray-50">
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="text-center mb-12">
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Our Advantage</span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary">Why Choose DryON Products?</h2>
+                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">{t('whyChooseTitle')}</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary">{t('whyChooseHeading')}</h2>
                     </div>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -362,9 +408,9 @@ export default function ProductsPage() {
             <section className="py-20 bg-white">
                 <div className="container mx-auto px-6 max-w-4xl">
                     <div className="bg-gradient-to-br from-secondary to-secondary-dark rounded-2xl p-10 md:p-14 text-white">
-                        <h2 className="text-2xl md:text-3xl font-bold mb-6">What is a Desiccant?</h2>
+                        <h2 className="text-2xl md:text-3xl font-bold mb-6">{t('whatIsDesiccantTitle')}</h2>
                         <p className="text-white/90 leading-relaxed text-lg">
-                            A desiccant is a moisture absorbent which is used to reduce the humidity inside the packaging, storage and shipping containers. It works by absorbing the excess moisture from the air and protect the goods from condensation, mold, decay, lumps, aflatoxin, odour and other moisture-related problems. It is widely used across various industries in the form of container desiccants or in-box desiccants.
+                            {t('whatIsDesiccantDescription')}
                         </p>
                     </div>
                 </div>
@@ -374,8 +420,8 @@ export default function ProductsPage() {
             <section className="py-20 bg-gray-50">
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="text-center mb-12">
-                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">Supply Chain Value</span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-secondary">Benefits of Using DryON Desiccants</h2>
+                        <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">{t('benefitsTitle')}</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-secondary">{t('benefitsHeading')}</h2>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-4">
@@ -394,18 +440,19 @@ export default function ProductsPage() {
             {/* CTA */}
             <section className="py-16 bg-gradient-to-r from-primary to-primary-dark">
                 <div className="container mx-auto px-6 text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Need Help Choosing the Right Product?</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{t('ctaTitle')}</h2>
                     <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-                        Our experts can help you select the perfect moisture protection solution for your specific needs.
+                        {t('ctaDescription')}
                     </p>
                     <a 
                         href="/contact" 
                         className="btn-3d inline-flex items-center gap-2 bg-white text-primary hover:bg-gray-100 font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all"
                     >
-                        Contact Us Today
+                        {t('ctaButton')}
                     </a>
                 </div>
             </section>
+            <Footer />
         </div>
     );
 }

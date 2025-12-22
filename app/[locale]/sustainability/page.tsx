@@ -1,5 +1,6 @@
 import { Leaf, Recycle, TrendingDown, Award } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
+import Footer from '@/components/Footer';
 
 export default async function SustainabilityPage() {
     const t = await getTranslations('SustainabilityPage');
@@ -86,6 +87,7 @@ export default async function SustainabilityPage() {
                     </a>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

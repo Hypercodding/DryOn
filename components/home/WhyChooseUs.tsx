@@ -2,51 +2,53 @@
 
 import { motion } from 'framer-motion';
 import { Shield, Droplets, Leaf, TestTube, BadgeCheck, Truck, Zap, HeartHandshake } from 'lucide-react';
-
-const features = [
-    {
-        icon: Droplets,
-        title: 'High Absorption',
-        description: 'Up to 300% moisture absorption capacity for maximum protection',
-    },
-    {
-        icon: Shield,
-        title: 'Leak-Proof',
-        description: 'Advanced packaging prevents any leakage during transit',
-    },
-    {
-        icon: Leaf,
-        title: 'Eco-Friendly',
-        description: 'DMF-Free, sustainable and non-toxic materials',
-    },
-    {
-        icon: TestTube,
-        title: 'In-House Testing Facility',
-        description: 'Real-time environmental chamber testing for quality assurance',
-    },
-    {
-        icon: BadgeCheck,
-        title: 'Certified Quality',
-        description: 'DUNS registered and internationally recognized standards',
-    },
-    {
-        icon: Truck,
-        title: 'Easy Installation',
-        description: 'Simple setup process for quick deployment',
-    },
-    {
-        icon: Zap,
-        title: 'Cost-Effective',
-        description: 'Affordable solutions without compromising on quality',
-    },
-    {
-        icon: HeartHandshake,
-        title: 'Expert Support',
-        description: 'Dedicated team for consultation and after-sales service',
-    },
-];
+import { useTranslations } from 'next-intl';
 
 export default function WhyChooseUs() {
+    const t = useTranslations('WhyChooseUs');
+    
+    const features = [
+        {
+            icon: Droplets,
+            title: t('features.highAbsorption.title'),
+            description: t('features.highAbsorption.description'),
+        },
+        {
+            icon: Shield,
+            title: t('features.leakProof.title'),
+            description: t('features.leakProof.description'),
+        },
+        {
+            icon: Leaf,
+            title: t('features.ecoFriendly.title'),
+            description: t('features.ecoFriendly.description'),
+        },
+        {
+            icon: TestTube,
+            title: t('features.inHouseTesting.title'),
+            description: t('features.inHouseTesting.description'),
+        },
+        {
+            icon: BadgeCheck,
+            title: t('features.certifiedQuality.title'),
+            description: t('features.certifiedQuality.description'),
+        },
+        {
+            icon: Truck,
+            title: t('features.easyInstallation.title'),
+            description: t('features.easyInstallation.description'),
+        },
+        {
+            icon: Zap,
+            title: t('features.costEffective.title'),
+            description: t('features.costEffective.description'),
+        },
+        {
+            icon: HeartHandshake,
+            title: t('features.expertSupport.title'),
+            description: t('features.expertSupport.description'),
+        },
+    ];
     return (
         <section className="py-24 bg-white">
             <div className="container mx-auto px-6">
@@ -58,7 +60,7 @@ export default function WhyChooseUs() {
                         viewport={{ once: true }}
                         className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block"
                     >
-                        Our Advantages
+                        {t('badge')}
                     </motion.span>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
@@ -67,7 +69,7 @@ export default function WhyChooseUs() {
                         transition={{ delay: 0.1 }}
                         className="text-3xl md:text-4xl lg:text-5xl font-bold text-secondary mb-6"
                     >
-                        Why Choose DryON?
+                        {t('title')}
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -76,7 +78,7 @@ export default function WhyChooseUs() {
                         transition={{ delay: 0.2 }}
                         className="text-slate text-lg max-w-2xl mx-auto"
                     >
-                        Industry-leading moisture protection with unmatched quality and service
+                        {t('subtitle')}
                     </motion.p>
                 </div>
 

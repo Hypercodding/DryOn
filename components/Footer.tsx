@@ -41,13 +41,13 @@ export default function Footer() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                         {/* Company Info */}
                         <div>
-                            <div className="mb-6 bg-white rounded-lg p-4 inline-block shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div className="mb-6 inline-block group">
                                 <Image
-                                    src="/images/DryON Pakistan.png"
+                                    src="/images/DryON Pakistan.svg"
                                     alt="DryOn Pakistan Logo"
                                     width={200}
                                     height={80}
-                                    className="h-16 md:h-20 w-auto object-contain"
+                                    className="h-16 md:h-20 w-auto object-contain brightness-110 contrast-110 drop-shadow-lg brightness-180 group-hover:scale-105 group-hover:brightness-190 transition-all duration-300"
                                 />
                             </div>
                             <p className="text-white/70 mb-6 text-sm leading-relaxed">
