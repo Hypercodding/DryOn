@@ -339,7 +339,7 @@ export default async function AboutPage() {
                         <div className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all border border-gray-100 group">
                             <div className="relative w-full h-32 mb-4 flex items-center justify-center">
                                 <Image
-                                    src="/RoHS.png"
+                                    src="/ROHS.jpg"
                                     alt="RoHS Compliance"
                                     width={120}
                                     height={120}

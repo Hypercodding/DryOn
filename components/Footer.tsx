@@ -118,71 +118,134 @@ export default function Footer() {
                     </div>
 
                     {/* Compliance Badges Section */}
-                    <div className="border-t border-white/10 pt-8 mt-8">
-                        <h3 className="font-bold mb-4 uppercase text-sm tracking-wide text-primary text-center">Compliance & Certifications</h3>
-                        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
-                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
-                                <Image
-                                    src="/RoHS.png"
-                                    alt="RoHS Compliance"
-                                    width={60}
-                                    height={60}
-                                    className="object-contain max-h-12 max-w-full"
-                                />
+                    <div className="border-t border-white/20 pt-10 mt-10">
+                        <h3 className="font-bold mb-6 uppercase text-base tracking-wide text-primary text-center">Compliance & Certifications</h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 md:gap-6">
+                            <div 
+                                className="bg-white/15 hover:bg-white/25 border-2 border-white/30 hover:border-primary/60 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-xl group cursor-pointer backdrop-blur-sm"
+                                role="img"
+                                aria-label="RoHS Compliance Certification"
+                                tabIndex={0}
+                            >
+                                <div className="relative w-24 h-24 md:w-28 md:h-28 mb-3 flex items-center justify-center bg-white/20 rounded-lg p-2 group-hover:bg-white/30 transition-colors">
+                                    <Image
+                                        src="/ROHS.jpg"
+                                        alt="RoHS Compliance"
+                                        width={112}
+                                        height={112}
+                                        className="object-contain w-full h-full drop-shadow-lg"
+                                        style={{ filter: 'brightness(1.2) contrast(1.1)' }}
+                                    />
+                                </div>
+                                <span className="text-xs md:text-sm text-white font-semibold text-center transition-colors group-hover:text-primary">RoHS</span>
                             </div>
-                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
-                                <Image
-                                    src="/REACH.png"
-                                    alt="REACH Compliance"
-                                    width={60}
-                                    height={60}
-                                    className="object-contain max-h-12 max-w-full"
-                                />
+                            <div 
+                                className="bg-white/15 hover:bg-white/25 border-2 border-white/30 hover:border-primary/60 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-xl group cursor-pointer backdrop-blur-sm"
+                                role="img"
+                                aria-label="REACH Compliance Certification"
+                                tabIndex={0}
+                            >
+                                <div className="relative w-24 h-24 md:w-28 md:h-28 mb-3 flex items-center justify-center bg-white/20 rounded-lg p-2 group-hover:bg-white/30 transition-colors">
+                                    <Image
+                                        src="/REACH.png"
+                                        alt="REACH Compliance"
+                                        width={112}
+                                        height={112}
+                                        className="object-contain w-full h-full drop-shadow-lg"
+                                        style={{ filter: 'brightness(1.2) contrast(1.1)' }}
+                                    />
+                                </div>
+                                <span className="text-xs md:text-sm text-white font-semibold text-center transition-colors group-hover:text-primary">REACH</span>
                             </div>
-                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
-                                <Image
-                                    src="/RECYCLE.png"
-                                    alt="Recyclable"
-                                    width={60}
-                                    height={60}
-                                    className="object-contain max-h-12 max-w-full"
-                                />
+                            <div 
+                                className="bg-white/15 hover:bg-white/25 border-2 border-white/30 hover:border-primary/60 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-xl group cursor-pointer backdrop-blur-sm"
+                                role="img"
+                                aria-label="Recyclable Material Certification"
+                                tabIndex={0}
+                            >
+                                <div className="relative w-24 h-24 md:w-28 md:h-28 mb-3 flex items-center justify-center bg-white/20 rounded-lg p-2 group-hover:bg-white/30 transition-colors">
+                                    <Image
+                                        src="/RECYCLE.png"
+                                        alt="Recyclable"
+                                        width={112}
+                                        height={112}
+                                        className="object-contain w-full h-full drop-shadow-lg"
+                                        style={{ filter: 'brightness(1.2) contrast(1.1)' }}
+                                    />
+                                </div>
+                                <span className="text-xs md:text-sm text-white font-semibold text-center transition-colors group-hover:text-primary">Recyclable</span>
                             </div>
-                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
-                                <Image
-                                    src="/DMF-FREE.png"
-                                    alt="DMF-Free Certified"
-                                    width={60}
-                                    height={60}
-                                    className="object-contain max-h-12 max-w-full"
-                                />
+                            <div 
+                                className="bg-white/15 hover:bg-white/25 border-2 border-white/30 hover:border-primary/60 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-xl group cursor-pointer backdrop-blur-sm"
+                                role="img"
+                                aria-label="DMF-Free Certified"
+                                tabIndex={0}
+                            >
+                                <div className="relative w-24 h-24 md:w-28 md:h-28 mb-3 flex items-center justify-center bg-white/20 rounded-lg p-2 group-hover:bg-white/30 transition-colors">
+                                    <Image
+                                        src="/DMF-FREE.png"
+                                        alt="DMF-Free Certified"
+                                        width={112}
+                                        height={112}
+                                        className="object-contain w-full h-full drop-shadow-lg"
+                                        style={{ filter: 'brightness(1.2) contrast(1.1)' }}
+                                    />
+                                </div>
+                                <span className="text-xs md:text-sm text-white font-semibold text-center transition-colors group-hover:text-primary">DMF-Free</span>
                             </div>
-                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
-                                <Image
-                                    src="/SGS.png"
-                                    alt="SGS Certified"
-                                    width={60}
-                                    height={60}
-                                    className="object-contain max-h-12 max-w-full"
-                                />
+                            <div 
+                                className="bg-white/15 hover:bg-white/25 border-2 border-white/30 hover:border-primary/60 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-xl group cursor-pointer backdrop-blur-sm"
+                                role="img"
+                                aria-label="SGS Certified"
+                                tabIndex={0}
+                            >
+                                <div className="relative w-24 h-24 md:w-28 md:h-28 mb-3 flex items-center justify-center bg-white/20 rounded-lg p-2 group-hover:bg-white/30 transition-colors">
+                                    <Image
+                                        src="/SGS.png"
+                                        alt="SGS Certified"
+                                        width={112}
+                                        height={112}
+                                        className="object-contain w-full h-full drop-shadow-lg"
+                                        style={{ filter: 'brightness(1.2) contrast(1.1)' }}
+                                    />
+                                </div>
+                                <span className="text-xs md:text-sm text-white font-semibold text-center transition-colors group-hover:text-primary">SGS</span>
                             </div>
-                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
-                                <Image
-                                    src="/ECO-FRIENDLY.png"
-                                    alt="Eco-Friendly"
-                                    width={60}
-                                    height={60}
-                                    className="object-contain max-h-12 max-w-full"
-                                />
+                            <div 
+                                className="bg-white/15 hover:bg-white/25 border-2 border-white/30 hover:border-primary/60 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-xl group cursor-pointer backdrop-blur-sm"
+                                role="img"
+                                aria-label="Eco-Friendly Certification"
+                                tabIndex={0}
+                            >
+                                <div className="relative w-24 h-24 md:w-28 md:h-28 mb-3 flex items-center justify-center bg-white/20 rounded-lg p-2 group-hover:bg-white/30 transition-colors">
+                                    <Image
+                                        src="/ECO-FRIENDLY.png"
+                                        alt="Eco-Friendly"
+                                        width={112}
+                                        height={112}
+                                        className="object-contain w-full h-full drop-shadow-lg"
+                                        style={{ filter: 'brightness(1.2) contrast(1.1)' }}
+                                    />
+                                </div>
+                                <span className="text-xs md:text-sm text-white font-semibold text-center transition-colors group-hover:text-primary">Eco-Friendly</span>
                             </div>
-                            <div className="bg-white/5 rounded-lg p-3 flex items-center justify-center hover:bg-white/10 transition-colors">
-                                <Image
-                                    src="/DUNS.png"
-                                    alt="DUNS Registered"
-                                    width={60}
-                                    height={60}
-                                    className="object-contain max-h-12 max-w-full"
-                                />
+                            <div 
+                                className="bg-white/15 hover:bg-white/25 border-2 border-white/30 hover:border-primary/60 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-xl group cursor-pointer backdrop-blur-sm"
+                                role="img"
+                                aria-label="DUNS Registered"
+                                tabIndex={0}
+                            >
+                                <div className="relative w-24 h-24 md:w-28 md:h-28 mb-3 flex items-center justify-center bg-white/20 rounded-lg p-2 group-hover:bg-white/30 transition-colors">
+                                    <Image
+                                        src="/DUNS.png"
+                                        alt="DUNS Registered"
+                                        width={112}
+                                        height={112}
+                                        className="object-contain w-full h-full drop-shadow-lg"
+                                        style={{ filter: 'brightness(1.2) contrast(1.1)' }}
+                                    />
+                                </div>
+                                <span className="text-xs md:text-sm text-white font-semibold text-center transition-colors group-hover:text-primary">DUNS</span>
                             </div>
                         </div>
                     </div>

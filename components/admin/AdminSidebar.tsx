@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { 
     LayoutDashboard, Package, Tags, Factory, Users, Shield, 
     Settings, LogOut, FileText, MessageSquare, Activity,
-    ChevronDown, Menu, X
+    ChevronDown, Menu, X, BookOpen
 } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
@@ -34,6 +34,16 @@ const navItems: NavItem[] = [
     },
     { icon: Tags, label: 'Categories', href: '/admin/categories', requiredPermission: 'categories.read' },
     { icon: Factory, label: 'Industries', href: '/admin/industries', requiredPermission: 'industries.read' },
+    { 
+        icon: BookOpen, 
+        label: 'Blogs', 
+        href: '/admin/blogs',
+        requiredPermission: null,
+        children: [
+            { label: 'All Blogs', href: '/admin/blogs' },
+            { label: 'Add New', href: '/admin/blogs/new' },
+        ]
+    },
     { icon: MessageSquare, label: 'Inquiries', href: '/admin/inquiries', requiredPermission: 'inquiries.read' },
     { icon: Users, label: 'Users', href: '/admin/users', requiredPermission: 'users.read' },
     { icon: Shield, label: 'Roles & Permissions', href: '/admin/roles', requiredPermission: 'roles.read' },

@@ -21,7 +21,7 @@ export default function PartnersSection() {
     ];
 
     const complianceBadges = [
-        { image: '/RoHS.png', name: 'RoHS', alt: 'RoHS Compliance' },
+        { image: '/ROHS.jpg', name: 'RoHS', alt: 'RoHS Compliance' },
         { image: '/REACH.png', name: 'REACH', alt: 'REACH Compliance' },
         { image: '/RECYCLE.png', name: 'RECYCLE', alt: 'Recyclable' },
         { image: '/DMF-FREE.png', name: 'DMF-Free', alt: 'DMF-Free Certified' },
